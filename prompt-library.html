@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Writing Prompts</title>
+<style>
+:root{--bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;--gy:#666;--wh:#fff;--am:#F4A62A;--yw:#FFF8E7;--border:#D0E4F2;--bg:#F7FAFD}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--dk);background:var(--bg)}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+.sub{font-size:16px;color:var(--gy);font-style:italic;margin-bottom:20px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;align-items:center}
+.filter-label{font-size:14px;font-weight:700;color:var(--gy);margin-right:4px;text-transform:uppercase;letter-spacing:.04em}
+.pill{border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:14px;font-weight:700;cursor:pointer;background:var(--wh);color:var(--gy);transition:.2s}
+.pill:hover,.pill.on{background:var(--bl);color:var(--wh);border-color:var(--bl)}
+.pill.level.on{background:var(--tl);border-color:var(--tl)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.pcard{background:var(--wh);border:1px solid var(--border);border-radius:8px;padding:14px;border-left:4px solid var(--tl)}
+.pcard[data-type="narrative"]{border-left-color:#8B3DB5}
+.pcard[data-type="descriptive"]{border-left-color:#2E7D32}
+.pcard[data-type="expository"]{border-left-color:#E65100}
+.pcard[data-type="argumentative"]{border-left-color:#C62828}
+.pcard[data-type="paragraph"]{border-left-color:var(--tl)}
+.pcard[data-type="sentence"]{border-left-color:#888}
+.type-tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:4px;margin-bottom:8px}
+.lvl-tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f0f0f0;color:#555;margin-bottom:8px}
+.prompt-text{font-size:15px;color:var(--dk);margin-bottom:8px;line-height:1.5;font-weight:600}
+.hook{font-size:13px;font-style:italic;color:var(--tl);line-height:1.4;border-top:1px solid var(--border);padding-top:6px;margin-top:6px}
+.none{color:var(--gy);font-style:italic;padding:24px 0;font-size:16px}
+.count{font-size:14px;color:var(--gy);margin-bottom:12px}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim img{height:26px;flex-shrink:0}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+<div class="wrap">
+<h1>Writing Prompts for Generation Alpha</h1>
+<p class="sub">Short, engaging, digital-friendly - rooted in students' real lives. Filter by writing type or CEFR level.</p>
+
+<div class="filters">
+  <span class="filter-label">Type:</span>
+  <button class="pill on" onclick="filter('type','all',this)">All types</button>
+  <button class="pill" onclick="filter('type','narrative',this)">Narrative</button>
+  <button class="pill" onclick="filter('type','descriptive',this)">Descriptive</button>
+  <button class="pill" onclick="filter('type','expository',this)">Expository</button>
+  <button class="pill" onclick="filter('type','argumentative',this)">Argumentative</button>
+  <button class="pill" onclick="filter('type','cause-effect',this)">Cause &amp; Effect</button>
+  <button class="pill" onclick="filter('type','compare-contrast',this)">Compare &amp; Contrast</button>
+  <button class="pill" onclick="filter('type','definition',this)">Definition</button>
+  <button class="pill" onclick="filter('type','problem-solution',this)">Problem-Solution</button>
+  <button class="pill" onclick="filter('type','opinion',this)">Opinion</button>
+  <button class="pill" onclick="filter('type','classification',this)">Classification</button>
+  <button class="pill" onclick="filter('type','paragraph',this)">Paragraph</button>
+</div>
+<div class="filters">
+  <span class="filter-label">Level:</span>
+  <button class="pill level on" onclick="filter('level','all',this)">All levels</button>
+  <button class="pill level" onclick="filter('level','A2',this)">A2</button>
+  <button class="pill level" onclick="filter('level','B1',this)">B1</button>
+  <button class="pill level" onclick="filter('level','B2',this)">B2</button>
+</div>
+
+<div class="count" id="count"></div>
+<div class="grid" id="grid"></div>
+</div>
+
+<script>
+const TC={'narrative':'#8B3DB5','descriptive':'#2E7D32','expository':'#E65100','argumentative':'#C62828','cause-effect':'#6D4C41','compare-contrast':'#00838F','definition':'#5E35B1','problem-solution':'#AD1457','opinion':'#1565C0','classification':'#558B2F','paragraph':'#2E86AB','sentence':'#888'};
+
+const PROMPTS=[
+  {type:'narrative',level:'A2',text:'Write about a time you were late for something important. What happened? How did you feel?',hook:'Start with the moment you realised you were late - not before. Gen Alpha storytellers know how to hook an audience.'},
+  {type:'narrative',level:'A2',text:'Write about your favourite place at home. What do you do there? Why do you like it?',hook:'Personal and concrete. Every student has a corner, a room, a roof. The challenge is English - not the memory.'},
+  {type:'narrative',level:'A2',text:'Write about something funny that happened with your family recently.',hook:'Low pressure, high engagement. Shared family moments are universal and emotionally rich.'},
+  {type:'narrative',level:'B1',text:'Write about a moment when technology helped you - or failed you - at the worst possible time.',hook:'This is their world. Every student has a story. The challenge is getting it from Arabic memory into English prose.'},
+  {type:'narrative',level:'B1',text:'You sent a message to the wrong person. Write what happened next.',hook:'Every Gen Alpha student has done this. Instant emotional investment before they write a word.'},
+  {type:'narrative',level:'B1',text:'Write about a food you hated as a child that you now love - or a food you loved that you now cannot stand.',hook:'Food is cultural, personal, and sensory. Rich ground for descriptive vocabulary within a narrative structure.'},
+  {type:'narrative',level:'B1',text:'Write about a moment when you solved a problem completely by yourself - no help from anyone.',hook:'Builds confidence and personal voice. Ask AI for vocabulary support only - the story must be real.'},
+  {type:'narrative',level:'B2',text:'Write about a moment when you changed your mind about something you were absolutely certain of.',hook:'Connects to argumentative thinking - showing, not just stating. Requires genuine reflection.'},
+  {type:'narrative',level:'B2',text:'Write about a moment when being online made a real-world situation better - or significantly worse.',hook:'High stakes and personally relevant. Forces them to think about the relationship between digital and physical life.'},
+
+  {type:'descriptive',level:'A2',text:'Describe your school canteen at the busiest moment of the day. What do you see, hear, and smell?',hook:'Known space, real sensory details - not imagined. The colour-coding technique works well as preparation here.'},
+  {type:'descriptive',level:'A2',text:'Describe your bedroom. Where is everything? What does it feel like to be there?',hook:'Spatial organisation practice. Near, far, above, below. Every student has a room - the English is the challenge.'},
+  {type:'descriptive',level:'A2',text:'Describe the last meal you really enjoyed. Do not use the words good, nice, or delicious.',hook:'The Lina activity. Directly attacks the flat-adjective problem. Use Sensory Word Banks before writing.'},
+  {type:'descriptive',level:'B1',text:'Describe a street or market in your city. Help someone who has never been there to imagine it completely.',hook:'Teaching the core descriptive skill: translating visual memory into language. Use sensory word bank first.'},
+  {type:'descriptive',level:'B1',text:'Describe the smell of a kitchen when someone is cooking your favourite food.',hook:'Single-sense constraint forces precision. The restriction is the scaffold - easier than "describe everything."'},
+  {type:'descriptive',level:'B1',text:'Describe a person without mentioning anything about their appearance. Only describe what they do, how they move, how they speak.',hook:'Forces precision and observation. Excellent for productive vocabulary development at B1+.'},
+  {type:'descriptive',level:'B2',text:'Describe a place at two different times of day. Show how the same place feels completely different.',hook:'Structural challenge built in. Comparison of atmosphere, not just description of one moment.'},
+  {type:'descriptive',level:'B2',text:'Describe a feeling using only physical sensations - no emotion words allowed.',hook:'The highest-level descriptive challenge: "my heart was loud" not "I was scared." Pushes B2 students toward literary language.'},
+
+  {type:'expository',level:'A2',text:'Explain how to do something you know how to do that most adults probably do not (for example: use an app, set up a feature on a phone).',hook:'Expert knowledge. They know something. The challenge is explaining it clearly in English - not finding the content.'},
+  {type:'expository',level:'A2',text:'Explain three things students can do to make studying less stressful.',hook:'Process essay structure in a personally relevant frame. Concrete, manageable, no research needed.'},
+  {type:'expository',level:'B1',text:'Explain why teenagers use TikTok or Snapchat differently from adults.',hook:'They are the experts. Builds on knowledge they already have. The task is organising and explaining it.'},
+  {type:'expository',level:'B1',text:'Explain what makes a good teacher - based only on your own experience in school.',hook:'Real context, real audience (potentially the teacher reading it). Connects personal experience to analytical writing.'},
+  {type:'expository',level:'B1',text:'Explain how to save money when you have very little. Give at least three specific steps.',hook:'Process essay with a real-world problem teenagers actually face. Forces specificity - "save money" is not a step.'},
+  {type:'expository',level:'B2',text:'Explain how AI is changing one specific area of daily life. Use one concrete example and fact-check every claim.',hook:'Critical AI literacy built into the task structure. Connects to Chapter 11 fact-checking activity.'},
+  {type:'expository',level:'B2',text:'Explain the difference between studying hard and studying smart. Use specific examples from your own experience.',hook:'Familiar concept, analytical structure. Requires comparison - not just description - of two approaches.'},
+
+  {type:'argumentative',level:'B1',text:'Should students be allowed to use their phones in class? Argue one side clearly. Then find the strongest argument against your position.',hook:'High engagement topic. The second instruction is the key - they must genuinely engage with the counterargument.'},
+  {type:'argumentative',level:'B1',text:'Is it better to learn from a teacher or from YouTube? Make a clear argument with at least two pieces of evidence.',hook:'Directly relevant. They already do both. The comparison is real and the positions are genuinely arguable.'},
+  {type:'argumentative',level:'B1',text:'Is it fair for teachers to give the same mark to a student who used AI and one who did not?',hook:'Real and immediate. They have strong feelings about this. Make them argue it with evidence, not just emotion.'},
+  {type:'argumentative',level:'B2',text:'Should AI-generated content always be labelled? Argue your position with evidence and a genuine engagement with the opposing view.',hook:'High stakes and personally relevant. Connects directly to Chapter 5 and the AI Collaboration Log concept.'},
+  {type:'argumentative',level:'B2',text:'Is it ever acceptable to use AI to help write an essay? Argue your position with a counterargument and a rebuttal.',hook:'The central question of the book - asked of students themselves. Their answers will be revealing and specific.'},
+  {type:'argumentative',level:'B2',text:'Should schools teach students how to use AI responsibly - or focus on teaching them to work without it?',hook:'Genuinely contested. Both positions have strong arguments. Excellent for teaching counterargument structure.'},
+
+  {type:'paragraph',level:'A2',text:'Write one paragraph about your morning routine. Use at least three time connectives: first, then, after that, finally.',hook:'PIE structure. Clear task, concrete connectives to practise. The constraint is the scaffold.'},
+  {type:'paragraph',level:'A2',text:'Write one PIE paragraph about an animal. Three facts and one explanation of why it is interesting.',hook:'Three-part structure. Concrete, manageable, no opinion pressure. Good for A2 paragraph structure practice.'},
+  {type:'paragraph',level:'B1',text:'Write one PEEL paragraph explaining why your city is a good - or bad - place for young people.',hook:'Topic sentence + 2 examples + explanation + link. Practise the full PEEL cycle on a personally relevant topic.'},
+  {type:'paragraph',level:'B1',text:'Write one PEEL paragraph giving advice to a student who is just starting to learn English.',hook:'Connects to their own experience. Real audience: themselves one year ago. Personal and motivating.'},
+  {type:'paragraph',level:'B1',text:'Write one paragraph: the most useful thing you have learned in school that was not in any textbook.',hook:'Opinion-based. Requires a clear position and at least one specific example. Strong personal voice expected.'},
+  {type:'paragraph',level:'B2',text:'Write one analytical paragraph about why students disengage from writing tasks in L2 classrooms.',hook:'Meta-level reflection. They are the subject. Excellent for developing analytical voice at B2.'},
+];
+
+  {type:'cause-effect',level:'B1',text:'Write a paragraph explaining one cause and two effects of spending too much time on a phone before bed.',hook:'Personally relevant; easy to generate two genuine effects from experience rather than invented ones.'},
+  {type:'cause-effect',level:'B1',text:'Explain the causes of plastic pollution in the ocean and at least two effects on sea life.',hook:'Pairs well with the descriptive sensory word bank activity from Chapter 10.'},
+  {type:'cause-effect',level:'B2',text:'Explain a chain of causation: how does a small habit (e.g., skipping breakfast) lead, step by step, through several effects to a larger outcome?',hook:'Chain causation appropriate for B2 - requires at least three linked causal markers.'},
+  {type:'compare-contrast',level:'B1',text:'Compare two apps or games you use. Use point-by-point structure to discuss features, cost, and audience.',hook:'High-interest, concrete subject. Forces a genuine point-by-point comparison rather than two separate lists.'},
+  {type:'compare-contrast',level:'B1',text:'Compare studying online and studying in a classroom. Which has more advantages for someone learning English?',hook:'Requires a controlling idea, not just a list - connects to remote-learning experience many students share.'},
+  {type:'compare-contrast',level:'B2',text:'Compare two online communities you are part of (two Discord servers, two gaming clans, two fan groups). What makes one feel more welcoming than the other?',hook:'Draws directly on Gen Alpha digital-social experience; strong source of genuine, specific detail.'},
+  {type:'definition',level:'B2',text:'Write a definition essay answering: what does "respect" really mean? Go beyond the dictionary definition.',hook:'Abstract concept ideal for the three-layer framework (dictionary base, extended explanation, illustration).'},
+  {type:'definition',level:'B2',text:'Define "success" using the three-layer framework. Include at least one example of how the concept is commonly misunderstood.',hook:'Personally meaningful and genuinely contestable - strong source of original illustration examples.'},
+  {type:'problem-solution',level:'B2',text:'Identify a specific problem at your school and propose one realistic, specific solution. Use the Who-What-When test on your solution before submitting.',hook:'Authentic agency - students propose change to something that actually affects them.'},
+  {type:'problem-solution',level:'B2',text:'Identify a problem caused by excessive screen time among teenagers and propose two possible solutions, evaluating which is more realistic.',hook:'Two-solution template; connects directly to the Chapter 1 discussion of digital habits.'},
+  {type:'opinion',level:'B1',text:'Do you think school uniforms are a good idea? State your position clearly and support it with two reasons and an example.',hook:'Classic three-paragraph opinion structure; clear, debatable, accessible at B1.'},
+  {type:'opinion',level:'B1',text:'Is it better to have a few close friends or many casual friends? Give your opinion with a clear thesis and supporting reasons.',hook:'Personally relevant; good practice for the three-part thesis (position, scope, qualifier).'},
+  {type:'classification',level:'B2',text:'Classify the different types of content you watch online into three or four categories. State your organising principle clearly before describing each category.',hook:'Forces an explicit organising principle - run categories through the Three-Test System before drafting.'},
+  {type:'classification',level:'B2',text:'Classify types of learners in a language classroom (e.g., by motivation, by learning style, or by another principle you choose) into distinct, non-overlapping categories.',hook:'Meta-relevant to students themselves; strong capstone task after Chapters 9–17.'},
+
+
+
+function color(t){return TC[t]||'#555'}
+
+function render(){
+  const filtered=PROMPTS.filter(p=>
+    (activeType==='all'||p.type===activeType)&&
+    (activeLevel==='all'||p.level===activeLevel)
+  );
+  document.getElementById('count').textContent=`Showing ${filtered.length} prompt${filtered.length!==1?'s':''}`;
+  const g=document.getElementById('grid');
+  if(!filtered.length){g.innerHTML='<p class="none">No prompts match this combination - try a different filter.</p>';return;}
+  g.innerHTML=filtered.map(p=>`
+<div class="pcard" data-type="${p.type}">
+  <span class="type-tag" style="background:${color(p.type)}22;color:${color(p.type)}">${p.type}</span>
+  <span class="lvl-tag">${p.level}</span>
+  <div class="prompt-text">${p.text}</div>
+  <div class="hook">💡 ${p.hook}</div>
+</div>`).join('');
+}
+
+function filter(dim,val,btn){
+  if(dim==='type'){
+    activeType=val;
+    document.querySelectorAll('.pill:not(.level)').forEach(p=>p.classList.remove('on'));
+  } else {
+    activeLevel=val;
+    document.querySelectorAll('.pill.level').forEach(p=>p.classList.remove('on'));
+  }
+  btn.classList.add('on');
+  render();
+}
+
+render();
+</script>
+
+
+
+<div class="gw-footer-slim">
+  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
+  <strong>GenAlphaWrite Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+  <span class="sep">|</span>
+  <span>Last update: 10 July 2026</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="gw-nav">
+  <a href="lesson-plans.html">← Implementation</a>
+  <a href="prompt-generator.html">Generator →</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Chapter Resources</title>
+<style>
+/* WriteAlpha Shared Styles - included in every page */
+:root{
+  --bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;
+  --gy:#666666;--wh:#ffffff;--am:#F4A62A;--yw:#FFF8E7;
+  --gr:#2E7D32;--border:#D0E4F2;--bg:#F7FAFD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;
+     line-height:1.6;color:var(--dk);background:var(--bg)}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+h2{font-size:21px;font-weight:700;color:var(--bl);margin:28px 0 10px;
+   padding-bottom:6px;border-bottom:2px solid var(--border)}
+h3{font-size:16px;font-weight:700;color:var(--tl);margin:16px 0 6px;
+   text-transform:uppercase;letter-spacing:.05em}
+p{margin-bottom:10px;font-size:16px}
+.sub{font-size:16px;color:var(--gy);font-style:italic;margin-bottom:20px}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0}
+.card{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+      padding:16px;border-left:4px solid var(--tl)}
+.card-title{font-weight:700;font-size:16px;color:var(--bl);margin-bottom:6px}
+.card p{font-size:15px;color:var(--gy);margin:0}
+.tag{display:inline-block;background:var(--lt);color:var(--tl);
+     font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:8px;margin-right:4px}
+
+/* Pull quote / info box */
+.pullquote{background:var(--lt);border-left:5px solid var(--bl);
+           padding:14px 18px;margin:20px 0;border-radius:0 8px 8px 0;
+           font-style:italic;font-size:17px;color:var(--bl)}
+.tip{background:var(--yw);border-left:4px solid var(--am);
+     border-radius:0 6px 6px 0;padding:12px 16px;margin:16px 0;font-size:15px}
+.tip strong{color:#8B5E00}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0}
+th{background:var(--bl);color:var(--wh);padding:8px 10px;text-align:left;font-weight:700}
+td{padding:7px 10px;border-bottom:1px solid var(--border)}
+tr:nth-child(even) td{background:var(--lt)}
+
+/* Lists */
+.item-list{list-style:none;margin:10px 0}
+.item-list li{padding:8px 12px;border-bottom:1px solid var(--border);
+              font-size:15px;display:flex;align-items:flex-start;gap:8px}
+.item-list li:last-child{border-bottom:none}
+.item-title{font-weight:700;color:var(--dk)}
+.item-desc{color:var(--gy);font-size:14px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;
+     border:1px solid var(--bl);border-radius:5px;background:transparent;
+     color:var(--bl);font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--bl);color:var(--wh)}
+.btn-primary{background:var(--bl);color:var(--wh);border-color:var(--bl)}
+.btn-primary:hover{background:#164a7a}
+.btn-teal{background:var(--tl);color:var(--wh);border-color:var(--tl)}
+.btn-teal:hover{background:#1a6e8a}
+
+/* Vignette */
+.vignette{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+           padding:14px 16px;margin:10px 0;display:flex;gap:12px}
+.vignette .ico{font-size:24px;flex-shrink:0}
+.vig-name{font-weight:700;color:var(--bl);font-size:15px}
+.vig-desc{font-size:14px;color:var(--gy)}
+.vig-quote{font-size:15px;font-style:italic;color:var(--dk);margin-top:4px;
+           border-top:1px solid var(--border);padding-top:4px}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:24px 0}
+
+/* Hero */
+.hero{background:var(--bl);color:var(--wh);border-radius:10px;
+      padding:32px 28px;margin-bottom:24px}
+.hero h1{color:var(--wh);font-size:28px}
+.hero p{opacity:.88;font-size:16px;margin-top:8px;max-width:620px}
+.hero-quote{font-style:italic;opacity:.75;font-size:15px;margin-top:12px;
+            border-top:1px solid rgba(255,255,255,.2);padding-top:10px}
+
+/* Start cards (home) */
+.start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.start-card{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+            padding:18px;text-align:center;cursor:pointer;transition:.2s}
+.start-card:hover{border-color:var(--tl);transform:translateY(-2px)}
+.start-icon{font-size:28px;margin-bottom:8px}
+.start-title{font-weight:700;color:var(--bl);font-size:15px;margin-bottom:4px}
+.start-desc{font-size:14px;color:var(--gy)}
+
+@media(max-width:600px){
+  .start-grid{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:1fr}
+}
+
+
+
+.ch-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.ch-tab{background:var(--wh);border:1px solid var(--border);border-radius:4px;
+        padding:5px 12px;font-size:14px;font-weight:700;color:var(--gy);cursor:pointer;transition:.2s}
+.ch-tab:hover,.ch-tab.on{background:var(--bl);color:var(--wh);border-color:var(--bl)}
+.ch-pane{display:none}.ch-pane.on{display:block}
+.ch-block{background:var(--wh);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:14px}
+.ch-block h2{margin-top:0;border:none;font-size:19px}
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.info-box{background:var(--lt);border-radius:6px;padding:12px;font-size:15px}
+.info-box h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--tl);margin-bottom:6px;font-weight:700}
+.info-box ul{padding-left:16px;color:var(--dk)}
+.info-box li{margin-bottom:3px}
+.dl-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.part-label{font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--tl);text-transform:uppercase;margin:18px 0 4px}
+@media(max-width:600px){.info-row{grid-template-columns:1fr}}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim img{height:26px;flex-shrink:0}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+
+<div class="wrap">
+
+<h1>Chapter Resources</h1>
+<p class="sub">All 21 chapters. Select a chapter to see the opening vignette, objectives, key tip, and link to its full companion page.</p>
+<div class="ch-tabs" id="ch-tabs">
+  <button class="ch-tab on" onclick="showCh(1)" id="tab1">Ch 1</button>
+  <button class="ch-tab" onclick="showCh(2)" id="tab2">Ch 2</button>
+  <button class="ch-tab" onclick="showCh(3)" id="tab3">Ch 3</button>
+  <button class="ch-tab" onclick="showCh(4)" id="tab4">Ch 4</button>
+  <button class="ch-tab" onclick="showCh(5)" id="tab5">Ch 5</button>
+  <button class="ch-tab" onclick="showCh(6)" id="tab6">Ch 6</button>
+  <button class="ch-tab" onclick="showCh(7)" id="tab7">Ch 7</button>
+  <button class="ch-tab" onclick="showCh(8)" id="tab8">Ch 8</button>
+  <button class="ch-tab" onclick="showCh(9)" id="tab9">Ch 9</button>
+  <button class="ch-tab" onclick="showCh(10)" id="tab10">Ch 10</button>
+  <button class="ch-tab" onclick="showCh(11)" id="tab11">Ch 11</button>
+  <button class="ch-tab" onclick="showCh(12)" id="tab12">Ch 12</button>
+  <button class="ch-tab" onclick="showCh(13)" id="tab13">Ch 13</button>
+  <button class="ch-tab" onclick="showCh(14)" id="tab14">Ch 14</button>
+  <button class="ch-tab" onclick="showCh(15)" id="tab15">Ch 15</button>
+  <button class="ch-tab" onclick="showCh(16)" id="tab16">Ch 16</button>
+  <button class="ch-tab" onclick="showCh(17)" id="tab17">Ch 17</button>
+  <button class="ch-tab" onclick="showCh(18)" id="tab18">Ch 18</button>
+  <button class="ch-tab" onclick="showCh(19)" id="tab19">Ch 19</button>
+  <button class="ch-tab" onclick="showCh(20)" id="tab20">Ch 20</button>
+  <button class="ch-tab" onclick="showCh(21)" id="tab21">Ch 21</button>
+</div>
+
+<div class="ch-pane on" id="ch1">
+  <div class="ch-block">
+    <h2>Chapter 1 - Understanding Generation Alpha</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Who is sitting in front of you, and what does that mean for how you teach writing?</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Joumana, 14 · Riyadh · B1</div>
+        <div class="vig-quote">On the bus she wrote 200 words in Arabic. In class she produced four words in English. Her teacher noted: 'does not engage with writing tasks.' This chapter explains why that note misreads the situation completely.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Define Generation Alpha and their digital upbringing</li><li>Describe the five cognitive and social traits shaped by technology</li><li>Understand the chat-to-composition gap and the Three-System Problem</li><li>Compare Gen Alpha to Gen Z in the writing classroom</li><li>Apply Vygotsky's ZPD to AI scaffolding</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Survey before you assume. Ask in week 1: What apps do you use? Have you used AI? You learn more in 10 minutes than any generational profile can tell you.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch01_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix A - Generation Alpha Learner Profile Toolkit</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch2">
+  <div class="ch-block">
+    <h2>Chapter 2 - The Lean Framework</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">What do my students need tomorrow, and what is the simplest way to give it to them?</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Every teacher, every Saturday night</div>
+        <div class="vig-quote">Find the stuck point. Choose the simplest tool. Try it. The Lean Framework is not a new curriculum - it is a three-step decision habit for the night before class.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Diagnose the five stuck points: blank page, one-draft, repeated errors, no audience, perfectionist shutdown</li><li>Use the Lean Tech Map to match tools to stuck points</li><li>Balance flow versus accuracy across the writing process</li><li>Run the four-stage Teaching-Learning Cycle, ending every AI-supported lesson in independent production</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Diagnose before you reach for a tool. Naming the stuck point in one sentence prevents the most common planning mistake: defaulting to 'more AI' or 'more grammar drilling' regardless of the actual problem.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch02_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix B - The Four Waves and the Lean Framework</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch3">
+  <div class="ch-block">
+    <h2>Chapter 3 - L2 Writing and Technology</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From word processors to AI and the Lean Framework for teaching it well</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Nada, 30 years in the classroom</div>
+        <div class="vig-quote">She has lived through four technological waves and watched each one trigger the same panic, followed by the same quiet adaptation. The teachers who navigated each wave well never banned the tool or surrendered to it - they understood it well enough to use it on purpose.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Trace the four waves: word processors, the internet, collaborative platforms, AI</li><li>Identify the permanent pedagogical insight each wave left behind</li><li>Locate where AI currently sits on the five-stage technology adoption curve</li><li>Connect product, process, and genre approaches to each wave</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">AI is Wave Four, not the first disruption writing teachers have faced. Naming the pattern - panic, experimentation, adaptation - makes the current moment feel less unprecedented and more manageable.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch03_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix B - The Four Waves and the Lean Framework</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch4">
+  <div class="ch-block">
+    <h2>Chapter 4 - Choosing Tools for the AI-Age Classroom</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Choosing tools that actually match your students, not just your lesson plan</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Need first, tool second</div>
+        <div class="vig-quote">The most common technology mistake in writing classrooms is not choosing the wrong tool - it is choosing the tool before the need is clear. This chapter inverts that order for every section that follows.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Distinguish synchronous from asynchronous digital activities</li><li>Build the Essential Free Toolkit across all stages of the writing process</li><li>Decide when one AI tool can, and cannot, replace a multi-tool workflow</li><li>Apply the SAMR model and BYOD adaptations to real resource constraints</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">A single AI tool cannot replace your full toolkit. AI excels at generating and explaining content but lacks built-in real-time collaboration, structured peer review, and classroom management features that dedicated tools provide.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch04_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix C - Tech Toolkit Builder</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch5">
+  <div class="ch-block">
+    <h2>Chapter 5 - AI-Powered Writing Assistants</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Using AI as a scaffold that builds writing ability rather than a shortcut that replaces it</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Khalid · B1 · Riyadh</div>
+        <div class="vig-quote">Staring at a blank page for six minutes, he typed 'write a paragraph about a neighbourhood' into ChatGPT. He got five polished generic sentences. He submitted them anyway. The problem was not that Khalid used AI. The problem was that nobody taught him how.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Write effective prompts using the CLEAR framework</li><li>Scaffold CLEAR prompts by CEFR level for teachers and students</li><li>Apply AI at each stage of the writing process without replacing student thinking</li><li>Use the AI Collaboration Log for transparency and academic integrity</li><li>Evaluate AI output for hallucination and accuracy risk</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">AI writing assistants are predictors, not fact-checkers. They confidently invent false information, fake citations, and incorrect grammar rules. Teaching students to verify AI output is a core AI-literacy skill, not an afterthought.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch05_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix D - AI Prompt Library for Teachers</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch6">
+  <div class="ch-block">
+    <h2>Chapter 6 - Vocabulary and Word Choice with Technology</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Moving Generation Alpha English learners from words they recognise to words they can use</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Fatima · B1 · Dammam</div>
+        <div class="vig-quote">In Arabic, vivid and precise. In English, everything she wrote was 'very very good.' Not a vocabulary problem in the usual sense - a vocabulary activation problem. She recognised hundreds of words she could not yet produce.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Distinguish productive from receptive vocabulary</li><li>Teach dictionary and thesaurus use intentionally, avoiding the synonym trap</li><li>Use corpus tools (SKELL, COCA, Ludwig.guru) to teach real collocation</li><li>Apply AI for vocabulary expansion without letting it create the content</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Never let a thesaurus alone choose a student's word. 'Exquisite' and 'good' are listed as synonyms, but 'exquisite' does not collocate with 'teacher.' Pair any thesaurus lookup with a collocation check.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch06_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix E - Vocabulary Instruction Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch7">
+  <div class="ch-block">
+    <h2>Chapter 7 - Teaching Sentence Writing</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From fragments and run-ons to clear, varied sentences in a second language</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">The compound challenge</div>
+        <div class="vig-quote">These learners have written millions of words in texts, posts, and comments, often with non-standard grammar - and are simultaneously building a second-language grammar system from scratch. Two different problems wearing the same disguise.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Diagnose fragments, run-ons, and dangling modifiers using technology tools</li><li>Teach simple, compound, and complex sentences in a deliberate progression</li><li>Run the seven-step diagnostic protocol for Grammarly and LanguageTool</li><li>Use AI as a sentence coach with the Ask-Don't-Tell protocol and Three Attempts Rule</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Never let students 'Accept All' on a grammar checker. The diagnostic protocol requires students to explain, in their own words, what each suggested change fixes before accepting it.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch07_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix F - Sentence Writing Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch8">
+  <div class="ch-block">
+    <h2>Chapter 8 - Teaching Paragraph Writing</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From sentences to coherent paragraphs: the building block of all academic writing</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Five paragraphs in a trench coat</div>
+        <div class="vig-quote">A student submits what looks like one paragraph: no blank lines, no indentation. Inside, five different ideas are smashed together. The student thinks: I wrote one paragraph. The missing concept is paragraph unity.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Teach topic sentences, supporting details, and concluding sentences with precision</li><li>Apply the PEEL and PIE paragraph models appropriately by task type</li><li>Build cohesion through transitions and reference chains</li><li>Scaffold paragraph writing from frames (A1–A2) to independent production</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">AI-generated paragraphs need human evaluation. A student who cannot write their own paragraph cannot judge whether an AI-generated one is actually coherent - they can only judge whether it looks polished.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch08_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix G - Paragraph Writing Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch9">
+  <div class="ch-block">
+    <h2>Chapter 9 - Narrative Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From digital storytelling to academic narrative in a foreign language</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Taki, 14 · Jeddah · B1</div>
+        <div class="vig-quote">'Last year I go to my uncle house. We eat food and play. It was nice. I like it.' Four sentences, no tension, no detail. Taki tells stories daily on TikTok in fluent, compelling Arabic. He is not a poor storyteller - he is a gifted storyteller whose English cannot yet carry the weight of what he already knows how to do.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Teach the key elements of narrative writing: setting, conflict, sequence, reflection</li><li>Transfer short-form video storytelling instincts into academic narrative structure</li><li>Translate emoji-coded emotion into written sensory description</li><li>Use AI for scaffolding only - vocabulary and structure, never the story itself</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">The lean rule for narrative writing: use AI for the scaffolding (structure, vocabulary, grammar). Keep the story itself entirely human. A story is the one thing in this book AI should never write for a student.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch09_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix H - Narrative Essay Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch10">
+  <div class="ch-block">
+    <h2>Chapter 10 - Descriptive Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Painting pictures with words: sensory detail, spatial order, and the emoji-to-words transfer</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Scrolling fluency, writing silence</div>
+        <div class="vig-quote">These students can scroll through a hundred images in a minute and describe none of them in writing beyond 'nice' or 'cool.' The gap is not visual attention - it is the translation step from seeing to naming.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Build sensory word banks across all five senses using AI and the CLEAR framework</li><li>Teach showing versus telling, replacing 'it was scary' with concrete physical detail</li><li>Organise descriptive writing spatially with a consistent dominant impression</li><li>Avoid the most common error: vivid speech, flat writing</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">The guiding principle for descriptive writing with AI: AI supplies the words, but the student supplies the seeing. Never let a generated word bank replace the student's own act of observation.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch10_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix I - Descriptive Essay Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch11">
+  <div class="ch-block">
+    <h2>Chapter 11 - Expository and Explanatory Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Teaching Generation Alpha English learners to explain clearly in a language they are still acquiring</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Familiar territory, unfamiliar structure</div>
+        <div class="vig-quote">These students consume explanatory content constantly: YouTube tutorials, how-to articles, Wikipedia. They already understand the genre as readers. The task is teaching them to produce it, not recognise it.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Identify the major sub-types of expository writing: process, comparison, cause-effect, classification</li><li>Sequence explanations logically using appropriate transition words</li><li>Distinguish fact from opinion within explanatory writing</li><li>Apply structure templates for the three main expository types at A2–B2</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Expository writing is the genre Gen Alpha learners already 'read' fluently online. Lean on that existing genre awareness explicitly - ask what makes a good tutorial video work, then map it onto paragraph structure.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch11_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix J - Expository Essay Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch12">
+  <div class="ch-block">
+    <h2>Chapter 12 - Argumentative and Persuasive Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From “because I'm right” to “because the evidence shows”</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Fluent arguers, unfamiliar genre</div>
+        <div class="vig-quote">These students argue constantly and fluently in their L1 - about games, about fairness, about who's right. Informal arguing and academic argument are different rhetorical activities entirely; fluency in one does not transfer automatically to the other.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Build claims supported by evidence and reasoning rather than repetition or emotion</li><li>Anticipate and address counterarguments and rebuttals</li><li>Distinguish expository from argumentative purpose</li><li>Use AI to generate balanced pro/con material without doing the student's thinking for them</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">A CLEAR prompt can generate an instant, balanced pro/con list students use as raw material - but the final position, the reasoning, and the rebuttal must remain the student's own intellectual work.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch12_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix K - Argumentative Essay Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch13">
+  <div class="ch-block">
+    <h2>Chapter 13 - Cause and Effect Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Teaching the language of causation: from doubled markers to clear causal chains</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Understanding causation, missing the vocabulary</div>
+        <div class="vig-quote">These students understand cause and effect intuitively from gaming, science content, and daily logic. The challenge is almost entirely linguistic: causal vocabulary beyond 'because' and 'so', and avoiding doubled markers transferred from L1.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Distinguish cause-focused, effect-focused, and chain organisational patterns</li><li>Expand causal transition vocabulary by function and CEFR level</li><li>Apply structure templates for B1-level cause-and-effect essays</li><li>Use AI to check, not generate, causal reasoning chains</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">At B1, target one clear cause with two clear effects (or the reverse) before introducing chain causation, which belongs at B2 and above.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch13_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix L - Assessment and Feedback Resources (see also companion essay-type packs)</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch14">
+  <div class="ch-block">
+    <h2>Chapter 14 - Compare and Contrast Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From seven sentences about A and seven about B to genuine comparative writing</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Comparison without a point</div>
+        <div class="vig-quote">These students compare constantly - phone models, game versions, streaming platforms - but a controlling idea ('A and B differ in ways that matter for this reason') rarely appears without explicit teaching.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Apply block and point-by-point organisational structures</li><li>Build a genuine controlling idea, not just a list of similarities and differences</li><li>Expand comparative transition vocabulary beyond 'but' and 'different'</li><li>Select the structure that matches student level and essay length</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Point-by-point structure is the recommended default at B1: it forces the comparison itself onto the page, rather than two parallel descriptions that never actually meet.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch14_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Companion essay-type pack (same pattern as Appendices H–K)</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch15">
+  <div class="ch-block">
+    <h2>Chapter 15 - Definition Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From dictionary copying to genuine layered definitions</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Beyond the dictionary</div>
+        <div class="vig-quote">These students already know what most things mean from a lifetime of online content. The trap is mistaking the dictionary definition for the whole essay, rather than its opening move.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Apply the three-layer definition framework: dictionary base, extended explanation, illustration</li><li>Paraphrase definitions instead of copying them, as a comprehension check</li><li>Distinguish definition essay sub-types appropriate to B2 learners</li><li>Avoid the forbidden formula: 'According to the dictionary...'</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">If a student cannot paraphrase a dictionary definition in their own words, they do not yet understand the concept well enough to write a definition essay about it.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch15_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Companion essay-type pack (same pattern as Appendices H–K)</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch16">
+  <div class="ch-block">
+    <h2>Chapter 16 - Problem-Solution Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From complaint to proposal: teaching students to solve, not just describe</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Complaint versus proposal</div>
+        <div class="vig-quote">Problem-solution writing asks students to think like someone with agency rather than someone venting. The shift from 'this is bad' to 'here is what should change, specifically' is the entire teaching task.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Apply the Four Questions of a problem-solution essay</li><li>Use the Who-What-When test for solution specificity</li><li>Choose between single-solution and two-solution templates at B2</li><li>Expand problem-solution vocabulary beyond 'because' and 'should'</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">The Who-What-When test is the single most powerful tool here: before accepting any solution sentence, ask who will do it, what exactly they will do, and when. Vague solutions fail this test immediately.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch16_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Companion essay-type pack (same pattern as Appendices H–K)</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch17">
+  <div class="ch-block">
+    <h2>Chapter 17 - Opinion Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">From informal assertion to structured academic position</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Beyond “I think”</div>
+        <div class="vig-quote">Opinion essays are the bridge between personal and analytical writing. At B1, they do not yet require counterargument - that comes later in Chapter 12 - but they do require a thesis that actually commits to a position.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Build a three-part thesis: clear position, specific scope, optional qualifier</li><li>Expand opinion vocabulary beyond 'I think' across formality levels</li><li>Apply three-paragraph (B1) and five-paragraph (B1–B2) templates</li><li>Sustain a single position consistently across the essay</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">A weak thesis produces a weak essay regardless of how well the body paragraphs are written. Spend disproportionate teaching time on the single sentence that drives everything else.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch17_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Companion essay-type pack (same pattern as Appendices H–K)</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch18">
+  <div class="ch-block">
+    <h2>Chapter 18 - Classification Essays</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">The final essay type: the structural discipline that all academic writing assumes</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">The capstone genre</div>
+        <div class="vig-quote">Classification is not one essay type among others - it is the cognitive operation underlying all of them. A comparison essay compares categories; an argument essay often argues for a category; this is where the skill becomes explicit.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Apply the Three-Test System for category quality: completeness, exclusivity, consistency</li><li>State an explicit organising principle rather than an arbitrary list</li><li>Use classification vocabulary appropriate to formal register</li><li>Recognise classification's absence from major exams as a gap worth correcting, not a reason to skip it</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Before a student writes a single body paragraph, run their categories through all three tests. Most category errors are caught here, not in the drafting.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch18_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Companion essay-type pack (same pattern as Appendices H–K)</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch19">
+  <div class="ch-block">
+    <h2>Chapter 19 - Assessment and Feedback</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Redesigning assessment for a world where AI is always available</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">The assumption that broke</div>
+        <div class="vig-quote">Traditional assessment assumed that if a student submitted a paper, the student wrote every word. AI broke that assumption permanently. The fix is not banning AI or trusting blindly - it is assessing the process, not just the product.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Place AI use on the spectrum from appropriate scaffolding to inappropriate replacement</li><li>Design AI-resilient assessments without a distrust framing</li><li>Use process-based assessment and the AI Collaboration Log as evidence</li><li>Apply diagnostic, not just evaluative, feedback practices</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Scaffolding supports a task the student is still doing themselves. Replacement substitutes AI output for the student's own work. The line between them is the single most important policy decision you will make.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch19_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix L - Assessment and Feedback Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch20">
+  <div class="ch-block">
+    <h2>Chapter 20 - Professional Development for Teachers</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">A sustainable approach to staying current in a rapidly changing field</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">Learn how to learn</div>
+        <div class="vig-quote">You cannot learn every new tool, predict what will matter in six months, or rely on training that is already outdated by the time it reaches you. The solution is not more information. It is a system for filtering it.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Build a 15-minutes-a-day professional reading habit</li><li>Curate reliable sources and unsubscribe ruthlessly from the rest</li><li>Evaluate new tools against pedagogical principles rather than features</li><li>Anticipate the next wave: AI agents and what they mean for writing teachers</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Follow, don't search. Let curated newsletters and feeds bring information to you rather than spending unscheduled time hunting for it - the single highest-leverage habit change in this chapter.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch20_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix M - Professional Development Resources</a>
+    </div>
+  </div>
+</div>
+<div class="ch-pane" id="ch21">
+  <div class="ch-block">
+    <h2>Chapter 21 - The Multi-Agent Essay Feedback System</h2>
+    <p style="color:var(--gy);font-style:italic;margin-bottom:12px">Submit, wait, revise: a system that scores, explains, and emails with zero ongoing effort</p>
+    <div class="vignette">
+      <div class="ico">🎭</div>
+      <div>
+        <div class="vig-name">The Friday afternoon problem</div>
+        <div class="vig-quote">There is a particular kind of exhaustion that arrives with the stack of essays. This chapter does not propose a faster version of the same broken feedback cycle. It proposes a different architecture entirely.</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-box">
+        <h4>🎯 Chapter Objectives</h4>
+        <ul><li>Understand why full automation is a pedagogical choice, not a shortcut</li><li>Map the five-agent pipeline: submission, evaluation, scoring, explanation, delivery</li><li>Build the complete grading rubric and revision-cycle design</li><li>Set up the technical pipeline with zero ongoing teacher effort after setup</li></ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Key Tip</h4>
+        <p style="font-size:15px;color:var(--dk)">Full automation is not a concession to convenience. Because the system runs without teacher effort, you can assign more writing tasks without increasing your own workload - frequency of writing, not feedback quality alone, drives improvement.</p>
+      </div>
+    </div>
+    <h3>Companion Page &amp; Resources</h3>
+    <div class="dl-row">
+      <a class="btn btn-primary" href="ch21_companion.html">📖 Full Chapter Companion Page</a>
+      <a class="btn" href="appendices.html">📥 Appendix N - Gemini Gems and the Multi-Agent System: Setup Overview</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+</div>
+<script>
+function showCh(n){
+  document.getElementById('ch1').classList.toggle('on', n===1);
+  document.getElementById('tab1').classList.toggle('on', n===1);
+  document.getElementById('ch2').classList.toggle('on', n===2);
+  document.getElementById('tab2').classList.toggle('on', n===2);
+  document.getElementById('ch3').classList.toggle('on', n===3);
+  document.getElementById('tab3').classList.toggle('on', n===3);
+  document.getElementById('ch4').classList.toggle('on', n===4);
+  document.getElementById('tab4').classList.toggle('on', n===4);
+  document.getElementById('ch5').classList.toggle('on', n===5);
+  document.getElementById('tab5').classList.toggle('on', n===5);
+  document.getElementById('ch6').classList.toggle('on', n===6);
+  document.getElementById('tab6').classList.toggle('on', n===6);
+  document.getElementById('ch7').classList.toggle('on', n===7);
+  document.getElementById('tab7').classList.toggle('on', n===7);
+  document.getElementById('ch8').classList.toggle('on', n===8);
+  document.getElementById('tab8').classList.toggle('on', n===8);
+  document.getElementById('ch9').classList.toggle('on', n===9);
+  document.getElementById('tab9').classList.toggle('on', n===9);
+  document.getElementById('ch10').classList.toggle('on', n===10);
+  document.getElementById('tab10').classList.toggle('on', n===10);
+  document.getElementById('ch11').classList.toggle('on', n===11);
+  document.getElementById('tab11').classList.toggle('on', n===11);
+  document.getElementById('ch12').classList.toggle('on', n===12);
+  document.getElementById('tab12').classList.toggle('on', n===12);
+  document.getElementById('ch13').classList.toggle('on', n===13);
+  document.getElementById('tab13').classList.toggle('on', n===13);
+  document.getElementById('ch14').classList.toggle('on', n===14);
+  document.getElementById('tab14').classList.toggle('on', n===14);
+  document.getElementById('ch15').classList.toggle('on', n===15);
+  document.getElementById('tab15').classList.toggle('on', n===15);
+  document.getElementById('ch16').classList.toggle('on', n===16);
+  document.getElementById('tab16').classList.toggle('on', n===16);
+  document.getElementById('ch17').classList.toggle('on', n===17);
+  document.getElementById('tab17').classList.toggle('on', n===17);
+  document.getElementById('ch18').classList.toggle('on', n===18);
+  document.getElementById('tab18').classList.toggle('on', n===18);
+  document.getElementById('ch19').classList.toggle('on', n===19);
+  document.getElementById('tab19').classList.toggle('on', n===19);
+  document.getElementById('ch20').classList.toggle('on', n===20);
+  document.getElementById('tab20').classList.toggle('on', n===20);
+  document.getElementById('ch21').classList.toggle('on', n===21);
+  document.getElementById('tab21').classList.toggle('on', n===21);
+}
+</script>
+
+
+
+<div class="gw-footer-slim">
+  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
+  <strong>GenAlphaWrite Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+  <span class="sep">|</span>
+  <span>Last update: 10 July 2026</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="gw-nav">
+  <a href="about-the-book.html">← About</a>
+  <a href="activity-library.html">Activities →</a>
+</div>
+</body>
+</html>

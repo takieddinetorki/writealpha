@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Tools Tables</title>
+<style>
+:root{
+  --bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;
+  --gy:#666666;--wh:#ffffff;--am:#F4A62A;--yw:#FFF8E7;
+  --gr:#2E7D32;--border:#D0E4F2;--bg:#F7FAFD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;
+     line-height:1.6;color:var(--dk);background:var(--bg)}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+h2{font-size:19px;font-weight:700;color:var(--bl);margin:28px 0 10px;
+   padding-bottom:5px;border-bottom:2px solid var(--border)}
+h3{font-size:15px;font-weight:700;color:var(--tl);margin:18px 0 6px;
+   text-transform:uppercase;letter-spacing:.05em}
+p{margin-bottom:10px;font-size:16px}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px}
+.hero{background:var(--bl);color:var(--wh);border-radius:10px;
+      padding:28px 24px;margin-bottom:24px}
+.hero h1{color:var(--wh)}
+.hero p{color:rgba(255,255,255,.82);font-size:16px;margin:6px 0 0}
+
+/* Filter tabs */
+.tab-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tab{padding:7px 14px;border:1px solid var(--border);border-radius:20px;
+     font-size:14px;font-weight:700;cursor:pointer;background:var(--wh);
+     color:var(--gy);transition:.15s}
+.tab:hover,.tab.active{background:var(--bl);color:var(--wh);border-color:var(--bl)}
+
+/* Tables */
+.table-section{background:var(--wh);border:1px solid var(--border);
+               border-radius:8px;margin-bottom:16px;overflow:hidden}
+.table-section.hidden{display:none}
+.table-header{background:var(--lt);padding:12px 16px;border-bottom:1px solid var(--border);
+              display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.table-title{font-weight:700;font-size:16px;color:var(--bl)}
+.table-subtitle{font-size:14px;color:var(--gy)}
+
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;
+     border-radius:10px;margin-left:6px;vertical-align:middle}
+.tag-free{background:#E8F5E9;color:var(--gr)}
+.tag-paid{background:#FFF3E0;color:#E65100}
+.tag-both{background:var(--lt);color:var(--tl)}
+
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{background:var(--bl);color:var(--wh);padding:9px 12px;text-align:left;
+   font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--lt)}
+tr:last-child td{border-bottom:none}
+.tool-name{font-weight:700;color:var(--bl)}
+.sp-badge{display:inline-block;font-size:12px;font-weight:700;padding:1px 7px;
+          border-radius:8px;white-space:nowrap}
+.sp-engagement{background:#F3E5F5;color:#6A1B9A}
+.sp-content{background:#E3F2FD;color:#0D47A1}
+.sp-language{background:#E8F5E9;color:#1B5E20}
+.sp-structure{background:#FFF3E0;color:#BF360C}
+.sp-revision{background:#FCE4EC;color:#880E4F}
+
+/* Stuck points legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:14px}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+/* Info box */
+.info{background:var(--yw);border-left:4px solid var(--am);
+      border-radius:0 6px 6px 0;padding:12px 16px;margin-bottom:20px;font-size:15px}
+.info strong{color:#8B5E00}
+
+@media(max-width:700px){
+  table,thead,tbody,tr,th,td{display:block}
+  th{display:none}
+  td{padding:6px 12px;border-bottom:none}
+  td:before{content:attr(data-label);font-weight:700;color:var(--gy);
+            font-size:13px;display:block;margin-bottom:2px}
+  tr{border-bottom:1px solid var(--border);padding:6px 0}
+}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim img{height:26px;flex-shrink:0}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>🛠️ Tools Tables</h1>
+    <p>AI and digital tools referenced across all 21 chapters - mapped to stuck points, writing stages, and CEFR levels</p>
+  </div>
+
+  <div class="info">
+    <strong>How to read these tables:</strong> Each table maps a tool or group of tools to the specific writing stuck point it addresses, the stage of the writing process where it is most effective, the minimum CEFR level appropriate for student use, and whether a free tier is available. For full setup guides, visit the <a href="#" style="color:var(--tl)">Tool Guides</a> page.
+  </div>
+
+  <!-- Stuck points legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#6A1B9A"></div>Engagement</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0D47A1"></div>Content knowledge</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1B5E20"></div>Language</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#BF360C"></div>Structure</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#880E4F"></div>Revision</div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="filterTables('all',this)">All Tables</button>
+    <button class="tab" onclick="filterTables('essential',this)">Essential Toolkit</button>
+    <button class="tab" onclick="filterTables('ai',this)">AI Writing Assistants</button>
+    <button class="tab" onclick="filterTables('vocab',this)">Vocabulary Tools</button>
+    <button class="tab" onclick="filterTables('sentence',this)">Sentence & Paragraph</button>
+    <button class="tab" onclick="filterTables('essay',this)">Essay Types</button>
+    <button class="tab" onclick="filterTables('assessment',this)">Assessment</button>
+  </div>
+
+  <!-- TABLE 1: Essential Free Toolkit -->
+  <div class="table-section" data-cat="essential">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 4.1 - The Essential Free Toolkit</div>
+        <div class="table-subtitle">Core tools for the AI-integrated EFL writing classroom · Ch 4</div>
+      </div>
+      <span class="tag tag-free">Free</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Primary Function</th>
+          <th>Stuck Point</th>
+          <th>Writing Stage</th>
+          <th>CEFR Min.</th>
+          <th>Free Tier</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Google Docs</span></td>
+          <td data-label="Primary Function">Collaborative drafting, commenting, Suggesting mode peer review</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-revision">Revision</span> <span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Writing Stage">All stages</td>
+          <td data-label="CEFR Min.">A2</td>
+          <td data-label="Free Tier">✅ Full</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Gemini</span></td>
+          <td data-label="Primary Function">AI writing assistant - brainstorming, vocabulary, CLEAR prompts, Ask Don't Tell feedback</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content</span> <span class="sp-badge sp-language">Language</span></td>
+          <td data-label="Writing Stage">Stages 1, 2, 5</td>
+          <td data-label="CEFR Min.">B1</td>
+          <td data-label="Free Tier">✅ Full</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Padlet</span></td>
+          <td data-label="Primary Function">Collaborative brainstorming, gallery walk, reducing blank-page anxiety</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-engagement">Engagement</span> <span class="sp-badge sp-content">Content</span></td>
+          <td data-label="Writing Stage">Stage 1 (pre-writing)</td>
+          <td data-label="CEFR Min.">A2</td>
+          <td data-label="Free Tier">✅ Limited (3 boards)</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Grammarly</span></td>
+          <td data-label="Primary Function">Grammar and spelling checking, vocabulary enhancement suggestions</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-language">Language</span></td>
+          <td data-label="Writing Stage">Stage 4–5 (editing)</td>
+          <td data-label="CEFR Min.">B1</td>
+          <td data-label="Free Tier">✅ Basic</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Google Slides</span></td>
+          <td data-label="Primary Function">Drag-and-drop clause ordering, visual sorting activities, class presentations</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Writing Stage">Stage 2 (planning)</td>
+          <td data-label="CEFR Min.">A2</td>
+          <td data-label="Free Tier">✅ Full</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Perplexity</span></td>
+          <td data-label="Primary Function">AI-powered research with inline source citations; content verification</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content</span></td>
+          <td data-label="Writing Stage">Stage 1 (research)</td>
+          <td data-label="CEFR Min.">B1</td>
+          <td data-label="Free Tier">✅ Limited</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE 2: AI Writing Assistants Comparison -->
+  <div class="table-section" data-cat="ai">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 5.1 - AI Writing Assistants Compared</div>
+        <div class="table-subtitle">Key assistants for EFL writing instruction · Ch 5</div>
+      </div>
+      <span class="tag tag-both">Free &amp; Paid</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Best Use in EFL Writing</th>
+          <th>CLEAR Compatible</th>
+          <th>L2 Restriction Support</th>
+          <th>Privacy Notes</th>
+          <th>Free Tier</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Gemini</span></td>
+          <td data-label="Best Use">CLEAR prompts, vocabulary generation, Ask Don't Tell feedback, classroom integration with Google Workspace</td>
+          <td data-label="CLEAR">✅ Full</td>
+          <td data-label="L2 Restriction">✅ Responds well to B1/B2 level restrictions</td>
+          <td data-label="Privacy">Check Google Workspace for Education settings; use anonymisation codes for submitted work</td>
+          <td data-label="Free Tier">✅ Yes</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">ChatGPT</span></td>
+          <td data-label="Best Use">Essay planning, paragraph modelling, feedback generation; Custom GPTs for specialised tasks</td>
+          <td data-label="CLEAR">✅ Full</td>
+          <td data-label="L2 Restriction">✅ Consistent with explicit CEFR-level restrictions</td>
+          <td data-label="Privacy">Do not submit student-identified writing; use three-digit codes per Saudi PDPL</td>
+          <td data-label="Free Tier">✅ Limited (GPT-3.5)</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Claude</span></td>
+          <td data-label="Best Use">Extended writing feedback, nuanced rubric application, metalinguistic explanation</td>
+          <td data-label="CLEAR">✅ Full</td>
+          <td data-label="L2 Restriction">✅ Strong adherence to level and restriction prompts</td>
+          <td data-label="Privacy">No persistent memory by default; suitable for anonymised essay submission</td>
+          <td data-label="Free Tier">✅ Limited</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Copilot</span></td>
+          <td data-label="Best Use">Microsoft 365 integration; Bing-sourced research tasks; available in institutional Microsoft accounts</td>
+          <td data-label="CLEAR">✅ Partial</td>
+          <td data-label="L2 Restriction">⚠️ Variable; test restrictions before student use</td>
+          <td data-label="Privacy">Institutional accounts offer enterprise data protection</td>
+          <td data-label="Free Tier">✅ Via Microsoft accounts</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE 3: CLEAR Components -->
+  <div class="table-section" data-cat="ai">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 5.2 - The CLEAR Framework Components</div>
+        <div class="table-subtitle">Prompt-engineering framework for EFL students · Ch 5</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>What to Include</th>
+          <th>Why It Matters for L2 Learners</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Component"><strong>C</strong> - Context</td>
+          <td data-label="What to Include">Who you are, your level, your class, your task</td>
+          <td data-label="Why">Allows AI to calibrate register and complexity appropriately</td>
+          <td data-label="Example">"I am a B1 EFL student writing an opinion essay for my university writing class."</td>
+        </tr>
+        <tr>
+          <td data-label="Component"><strong>L</strong> - Level / Length / Limits</td>
+          <td data-label="What to Include">CEFR level, word count, specific constraints</td>
+          <td data-label="Why">Prevents AI from defaulting to C1/C2 native-speaker output</td>
+          <td data-label="Example">"Write at B1 vocabulary level. Maximum 150 words. Use only present simple and present perfect tenses."</td>
+        </tr>
+        <tr>
+          <td data-label="Component"><strong>E</strong> - Example</td>
+          <td data-label="What to Include">A sample sentence, your thesis, or a model of what you want</td>
+          <td data-label="Why">Anchors AI output to the student's own voice and level</td>
+          <td data-label="Example">"My thesis is: Social media has more negative than positive effects on students."</td>
+        </tr>
+        <tr>
+          <td data-label="Component"><strong>A</strong> - Action</td>
+          <td data-label="What to Include">The specific task: generate, improve, explain, ask questions</td>
+          <td data-label="Why">Defines what the AI should produce - prevents vague, comprehensive output</td>
+          <td data-label="Example">"Give me one supporting paragraph with a topic sentence and two pieces of evidence."</td>
+        </tr>
+        <tr>
+          <td data-label="Component"><strong>R</strong> - Role / Restriction</td>
+          <td data-label="What to Include">The AI's persona; what it must NOT do</td>
+          <td data-label="Why">The most critical component for L2: prevents AI from replacing student thinking</td>
+          <td data-label="Example">"Act as a writing coach. Do not write the paragraph for me. Ask me two questions about my evidence instead."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE 4: Vocabulary Tools -->
+  <div class="table-section" data-cat="vocab">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 6.1 - Vocabulary Tools for EFL Writing</div>
+        <div class="table-subtitle">Two-step AI-corpus verification workflow · Ch 6</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Type</th>
+          <th>Best For</th>
+          <th>Workflow Step</th>
+          <th>Key Feature</th>
+          <th>Free</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Gemini / ChatGPT</span></td>
+          <td data-label="Type">AI assistant</td>
+          <td data-label="Best For">Generating vocabulary options, synonyms, collocations at specified CEFR level</td>
+          <td data-label="Workflow Step">Step 1 - Generate</td>
+          <td data-label="Key Feature">Can generate with B1/B2 CEFR level restriction; produces context-specific suggestions</td>
+          <td data-label="Free">✅</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">SKELL</span></td>
+          <td data-label="Type">Corpus tool</td>
+          <td data-label="Best For">Collocation verification; seeing how a word is actually used in native English</td>
+          <td data-label="Workflow Step">Step 2 - Verify</td>
+          <td data-label="Key Feature">Shows frequency-ranked collocations and authentic example sentences from a large corpus</td>
+          <td data-label="Free">✅</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Ludwig</span></td>
+          <td data-label="Type">Corpus tool</td>
+          <td data-label="Best For">Phrase-level verification; checking whether a specific phrase sounds natural</td>
+          <td data-label="Workflow Step">Step 2 - Verify</td>
+          <td data-label="Key Feature">Searches journalistic and academic corpora; shows alternative phrasings</td>
+          <td data-label="Free">✅ Limited</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">COCA</span></td>
+          <td data-label="Type">Academic corpus</td>
+          <td data-label="Best For">Genre-specific verification - checking whether a word is more common in academic vs. informal writing</td>
+          <td data-label="Workflow Step">Step 2 - Advanced</td>
+          <td data-label="Key Feature">400M+ word Corpus of Contemporary American English; genre filter (academic, news, fiction)</td>
+          <td data-label="Free">✅ Limited</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Grammarly</span></td>
+          <td data-label="Type">Writing assistant</td>
+          <td data-label="Best For">In-draft vocabulary enhancement suggestions; clarity and conciseness flags</td>
+          <td data-label="Workflow Step">Stage 4–5 (in-draft)</td>
+          <td data-label="Key Feature">Integrates with Google Docs; provides vocabulary alternatives in context</td>
+          <td data-label="Free">✅ Basic</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE 5: Lean Tech Map -->
+  <div class="table-section" data-cat="essential">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 2.1 - The Lean Tech Map</div>
+        <div class="table-subtitle">Mapping tools to stuck points and writing stages · Ch 2</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Stuck Point</th>
+          <th>When It Occurs</th>
+          <th>Recommended Tools</th>
+          <th>What the Tool Does</th>
+          <th>What AI Must NOT Do</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Stuck Point"><span class="sp-badge sp-engagement">Engagement</span></td>
+          <td data-label="When">Before writing begins; student reluctance, blank page</td>
+          <td data-label="Tools">Padlet, Gemini (brainstorming), topic choice menus</td>
+          <td data-label="What Tool Does">Lowers anxiety; generates topic options; scaffolds first thinking in either language</td>
+          <td data-label="What NOT to Do">Generate the essay topic or thesis for the student</td>
+        </tr>
+        <tr>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content Knowledge</span></td>
+          <td data-label="When">Stage 1–2; student knows what to say in L1 but not in English</td>
+          <td data-label="Tools">Perplexity, Gemini (content exploration), Google Scholar</td>
+          <td data-label="What Tool Does">Provides topic information at appropriate level; surfaces vocabulary for known concepts</td>
+          <td data-label="What NOT to Do">Write the argument or provide evidence the student accepts without verification</td>
+        </tr>
+        <tr>
+          <td data-label="Stuck Point"><span class="sp-badge sp-language">Language</span></td>
+          <td data-label="When">Stages 2–3; vocabulary gaps, collocation errors, sentence errors</td>
+          <td data-label="Tools">Gemini (CLEAR prompts), SKELL, Ludwig, Grammarly</td>
+          <td data-label="What Tool Does">Generates vocabulary options; verifies collocations; identifies sentence errors</td>
+          <td data-label="What NOT to Do">Correct sentences for the student without asking the student to think first (see Ask Don't Tell)</td>
+        </tr>
+        <tr>
+          <td data-label="Stuck Point"><span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="When">Stages 2–3; difficulty organising paragraphs or whole essay</td>
+          <td data-label="Tools">Google Slides (clause ordering), essay outliners, Gemini (outline feedback)</td>
+          <td data-label="What Tool Does">Scaffolds paragraph structure; provides templates; gives feedback on organisation</td>
+          <td data-label="What NOT to Do">Write the outline or paragraph plan in the student's place</td>
+        </tr>
+        <tr>
+          <td data-label="Stuck Point"><span class="sp-badge sp-revision">Revision</span></td>
+          <td data-label="When">Stages 4–5; student unsure how to improve their draft</td>
+          <td data-label="Tools">Multi-Agent Feedback System (Ch 21), Gemini (targeted revision prompts), peer review via Google Docs</td>
+          <td data-label="What Tool Does">Identifies specific weaknesses by dimension; produces prioritised revision targets</td>
+          <td data-label="What NOT to Do">Rewrite the draft; AI-free Stage 4 is non-negotiable</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE 6: Sentence-level tools -->
+  <div class="table-section" data-cat="sentence">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 7.1 - Tools for Sentence and Paragraph Work</div>
+        <div class="table-subtitle">Targeted use for syntax and cohesion development · Ch 7–8</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Activity Type</th>
+          <th>Target Error / Skill</th>
+          <th>AI-free Stage 4?</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Google Slides</span></td>
+          <td data-label="Activity">Clause drag-and-drop ordering</td>
+          <td data-label="Target">Complex sentences; concessive, causal, conditional clause order</td>
+          <td data-label="AI-free">✅ - original sentences written after</td>
+          <td data-label="Notes">Teacher pre-builds slides with scrambled clause boxes; students drag to reconstruct</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Gemini - Ask Don't Tell</span></td>
+          <td data-label="Activity">AI-mediated error feedback</td>
+          <td data-label="Target">Any sentence-level error; hypothesis-testing about English grammar</td>
+          <td data-label="AI-free">✅ - student writes revised sentence independently</td>
+          <td data-label="Notes">Student instructs AI: "Ask me two questions about this sentence rather than correcting it."</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Google Docs - Colour Coding</span></td>
+          <td data-label="Activity">Paragraph structure diagnosis</td>
+          <td data-label="Target">Topic sentence identification; trench coat problem; paragraph unity</td>
+          <td data-label="AI-free">✅ - diagnosis and revision entirely student-driven</td>
+          <td data-label="Notes">Highlight tool: blue = topic sentence, green = support, gold = conclusion/link</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Grammarly</span></td>
+          <td data-label="Activity">Surface error flagging</td>
+          <td data-label="Target">Spelling, grammar, punctuation; vocabulary suggestions</td>
+          <td data-label="AI-free">⚠️ Use with caution - student must evaluate each suggestion, not accept all</td>
+          <td data-label="Notes">Teach students to assess whether each Grammarly suggestion improves their intended meaning</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Padlet</span></td>
+          <td data-label="Activity">Collaborative sentence gallery</td>
+          <td data-label="Target">Peer review of sentence variety; sharing strong topic sentences</td>
+          <td data-label="AI-free">✅</td>
+          <td data-label="Notes">Students post their best sentence from the lesson; class votes on clearest topic sentence</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE 7: Essay type tools -->
+  <div class="table-section" data-cat="essay">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table Part III - AI Tools by Essay Type</div>
+        <div class="table-subtitle">Recommended tool use for each of the ten essay types · Ch 9–18</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Essay Type</th>
+          <th>Chapter</th>
+          <th>Key Tool(s)</th>
+          <th>Stuck Point Addressed</th>
+          <th>Critical AI Restriction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Essay Type"><strong>Narrative</strong></td>
+          <td data-label="Ch">9</td>
+          <td data-label="Tools">Gemini (vocabulary bank), Majd Story Audit template</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content</span> <span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Restriction">AI must not generate any part of the story itself - the narrative is entirely human</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Descriptive</strong></td>
+          <td data-label="Ch">10</td>
+          <td data-label="Tools">Gemini (sensory word bank), SKELL (collocation check)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-language">Language</span></td>
+          <td data-label="Restriction">Restrict AI output to vocabulary only; no spatial organisation generated by AI</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Expository</strong></td>
+          <td data-label="Ch">11</td>
+          <td data-label="Tools">Perplexity (sourced research), Gemini (And-Then replacement)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content</span> <span class="sp-badge sp-language">Language</span></td>
+          <td data-label="Restriction">AI provides language; student provides verified content - never accept AI-generated facts without source check</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Argumentative</strong></td>
+          <td data-label="Ch">12</td>
+          <td data-label="Tools">Perplexity (evidence), Gemini (Khalid Counterargument Cards)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content</span> <span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Restriction">Student must construct the argument; AI may only help identify the counterargument to research</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Cause and Effect</strong></td>
+          <td data-label="Ch">13</td>
+          <td data-label="Tools">Gemini (causal connector practice), Google Slides (event ordering)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-language">Language</span> <span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Restriction">AI must not generate the causal analysis; use AI only to practise connector vocabulary</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Compare &amp; Contrast</strong></td>
+          <td data-label="Ch">14</td>
+          <td data-label="Tools">Gemini (comparison paragraph template), Google Slides (criterion sorting)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-structure">Structure</span> <span class="sp-badge sp-language">Language</span></td>
+          <td data-label="Restriction">AI provides the comparison sentence template only; student generates all content for both subjects</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Definition</strong></td>
+          <td data-label="Ch">15 *</td>
+          <td data-label="Tools">Gemini (Three-Layer prompt), SKELL (genre-specific usage)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Restriction">AI may check structure only; the three layers must be written entirely by the student</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Problem-Solution</strong></td>
+          <td data-label="Ch">16</td>
+          <td data-label="Tools">Gemini (solution generation for feasibility ranking), Perplexity (solution research)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-content">Content</span> <span class="sp-badge sp-engagement">Engagement</span></td>
+          <td data-label="Restriction">Use AI to generate solutions students then evaluate; never accept AI's feasibility judgment</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Opinion</strong></td>
+          <td data-label="Ch">17</td>
+          <td data-label="Tools">Gemini (Reason Ladder), arguability test prompt</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-structure">Structure</span> <span class="sp-badge sp-content">Content</span></td>
+          <td data-label="Restriction">The opinion must be genuinely the student's own; AI may only check that the thesis is arguable</td>
+        </tr>
+        <tr>
+          <td data-label="Essay Type"><strong>Classification</strong></td>
+          <td data-label="Ch">18 *</td>
+          <td data-label="Tools">Padlet (Sort-Label activity), Gemini (Three-Test System check)</td>
+          <td data-label="Stuck Point"><span class="sp-badge sp-structure">Structure</span></td>
+          <td data-label="Restriction">Classification principle must be identified by the student; AI may check exhaustive/exclusive/consistent only</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:10px 12px;font-size:13px;color:var(--gy);background:var(--lt)">
+      * Chapters 15 and 18 are hosted on the companion website. Full chapter content available at writealpha.com
+    </div>
+  </div>
+
+  <!-- TABLE 8: Assessment tools -->
+  <div class="table-section" data-cat="assessment">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Table 19–21 - Assessment and Feedback Tools</div>
+        <div class="table-subtitle">AI-integrated assessment design · Ch 19, 20, 21</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool / System</th>
+          <th>Function</th>
+          <th>Chapter</th>
+          <th>Teacher vs. Student Use</th>
+          <th>Privacy Requirement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">AI Collaboration Log</span></td>
+          <td data-label="Function">Structured student record of AI use at each writing stage; transparency and metacognition tool</td>
+          <td data-label="Chapter">19, 21</td>
+          <td data-label="Use">Student - completed alongside every draft</td>
+          <td data-label="Privacy">No personal data submitted to external AI; log remains within the institution</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Multi-Agent Essay Feedback System</span></td>
+          <td data-label="Function">Five-agent Google Apps Script pipeline (Grammar, Vocabulary, Structure, Organisation, Synthesiser) producing dimensional feedback on submitted drafts</td>
+          <td data-label="Chapter">21</td>
+          <td data-label="Use">Teacher deploys; students submit via anonymised three-digit code</td>
+          <td data-label="Privacy">Three-digit submission codes replace student names; compliant with Saudi PDPL</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Google Apps Script</span></td>
+          <td data-label="Function">Automation layer connecting Google Forms (submission), Gemini API (five agents), and Google Sheets (grade recording)</td>
+          <td data-label="Chapter">21</td>
+          <td data-label="Use">Teacher - setup and maintenance; students see only the output</td>
+          <td data-label="Privacy">All data stored in teacher-controlled Google Drive; no third-party access</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Process Portfolio (Google Drive)</span></td>
+          <td data-label="Function">Folder structure collecting handwritten Draft 1 scan, revision plan, Draft 2, AI Collaboration Log, and reflection</td>
+          <td data-label="Chapter">19</td>
+          <td data-label="Use">Student collects; teacher reviews and confirms grade</td>
+          <td data-label="Privacy">Student-controlled Drive folder shared with teacher only; no AI tools access the full portfolio</td>
+        </tr>
+        <tr>
+          <td data-label="Tool"><span class="tool-name">Gemini (Four-Horizon PD Tool)</span></td>
+          <td data-label="Function">CLEAR-prompted tool evaluation for teacher professional development; planning AI integration at four time horizons (this week, this term, this year, longer term)</td>
+          <td data-label="Chapter">20</td>
+          <td data-label="Use">Teacher - professional reflection tool, not student-facing</td>
+          <td data-label="Privacy">No student data involved; teacher uses their own account</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:32px;padding:14px;background:var(--lt);border-radius:8px;
+              text-align:center;font-size:14px;color:var(--gy)">
+    <em>Teaching English Writing to Generation Alpha EFL Learners</em> &nbsp;·&nbsp; Dr. Saad Torki &nbsp;·&nbsp;
+    <a href="https://writealpha.com" style="color:var(--tl)">writealpha.com</a>
+    &nbsp;·&nbsp; For full tool setup guides see the <strong>Tool Guides</strong> page.
+  </div>
+
+</div>
+
+<script>
+function filterTables(cat, btn){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.table-section').forEach(s => {
+    if(cat === 'all') s.classList.remove('hidden');
+    else if(s.dataset.cat === cat) s.classList.remove('hidden');
+    else s.classList.add('hidden');
+  });
+}
+</script>
+
+
+
+<div class="gw-footer-slim">
+  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
+  <strong>GenAlphaWrite Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+  <span class="sep">|</span>
+  <span>Last update: 10 July 2026</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="gw-nav">
+  <a href="glossary.html">← Glossary</a>
+  <a href="contact.html">Contact →</a>
+</div>
+</body>
+</html>

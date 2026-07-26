@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Glossary of Key Terms</title>
+<style>
+:root{
+  --bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;
+  --gy:#666666;--wh:#ffffff;--am:#F4A62A;--yw:#FFF8E7;
+  --gr:#2E7D32;--border:#D0E4F2;--bg:#F7FAFD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;
+     line-height:1.6;color:var(--dk);background:var(--bg)}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+p{margin-bottom:10px;font-size:16px}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+.hero{background:var(--bl);color:var(--wh);border-radius:10px;
+      padding:28px 24px;margin-bottom:24px}
+.hero h1{color:var(--wh)}
+.hero p{color:rgba(255,255,255,.82);font-size:16px;margin:6px 0 0}
+
+/* Search bar */
+.search-wrap{position:relative;margin-bottom:18px}
+.search-wrap input{width:100%;padding:10px 14px 10px 38px;
+  border:1px solid var(--border);border-radius:6px;font-size:16px;
+  background:var(--wh);color:var(--dk);outline:none}
+.search-wrap input:focus{border-color:var(--tl)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+             font-size:17px;color:var(--gy)}
+
+/* Alpha filter */
+.alpha-bar{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px}
+.alpha-btn{padding:4px 9px;border:1px solid var(--border);border-radius:4px;
+           font-size:14px;font-weight:700;cursor:pointer;background:var(--wh);
+           color:var(--tl);transition:.15s}
+.alpha-btn:hover,.alpha-btn.active{background:var(--tl);color:var(--wh);border-color:var(--tl)}
+
+/* Stats */
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.stat{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+      padding:10px 16px;text-align:center;flex:1;min-width:90px}
+.stat-n{font-size:24px;font-weight:700;color:var(--bl)}
+.stat-l{font-size:13px;color:var(--gy);text-transform:uppercase;letter-spacing:.04em}
+
+/* Letter section */
+.letter-section{margin-bottom:6px}
+.letter-anchor{font-size:22px;font-weight:800;color:var(--bl);
+               padding:10px 0 4px;border-bottom:2px solid var(--border);
+               margin-bottom:8px;display:block}
+
+/* Term cards */
+.term-card{background:var(--wh);border:1px solid var(--border);
+           border-radius:8px;padding:14px 16px;margin-bottom:8px;
+           border-left:4px solid var(--tl)}
+.term-card.hidden{display:none}
+.term-name{font-weight:700;font-size:16px;color:var(--bl);margin-bottom:4px}
+.term-abbr{font-size:13px;color:var(--tl);font-weight:700;margin-left:6px;
+           background:var(--lt);padding:1px 7px;border-radius:10px}
+.term-def{font-size:15px;color:#333;line-height:1.6}
+.term-chapter{font-size:13px;color:var(--gy);margin-top:6px}
+
+/* No results */
+.no-results{text-align:center;padding:40px;color:var(--gy);display:none}
+.no-results.show{display:block}
+
+@media(max-width:600px){.stats{gap:8px}.stat{padding:8px 10px}}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim img{height:26px;flex-shrink:0}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>📖 Glossary of Key Terms</h1>
+    <p>43 terms from <em>Teaching English Writing to Generation Alpha EFL Learners</em> &nbsp;·&nbsp; Dr. Saad Torki</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">43</div><div class="stat-l">Terms</div></div>
+    <div class="stat"><div class="stat-n">21</div><div class="stat-l">Chapters</div></div>
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">Parts</div></div>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search terms, definitions..." oninput="filterTerms()">
+  </div>
+
+  <div class="alpha-bar" id="alphaBar">
+    <button class="alpha-btn active" onclick="filterLetter('ALL',this)">All</button>
+  </div>
+
+  <div id="glossaryContent"></div>
+  <div class="no-results" id="noResults">No terms found. Try a different search.</div>
+
+  <div style="margin-top:32px;padding:14px;background:var(--lt);border-radius:8px;
+              text-align:center;font-size:14px;color:var(--gy)">
+    <em>Teaching English Writing to Generation Alpha EFL Learners</em> &nbsp;·&nbsp; Dr. Saad Torki &nbsp;·&nbsp;
+    <a href="https://writealpha.com" style="color:var(--tl)">writealpha.com</a>
+  </div>
+
+</div>
+
+<script>
+const terms = [
+  {
+    term: "AI Collaboration Log",
+    abbr: "ACL",
+    def: "A structured student record documenting how AI tools were used at each stage of the writing process, including what prompts were submitted, what AI produced, what the student kept or changed, and why. The log functions as both a transparency mechanism and a metacognitive reflection tool.",
+    chapter: "Ch 19, 21"
+  },
+  {
+    term: "AI-free Stage 4",
+    abbr: "",
+    def: "The non-negotiable final stage of the Lean Framework in which the student produces original written text without any AI assistance. Ensures that L2 output - and the hypothesis-testing and acquisition it enables - occurs in every lesson regardless of how AI was used in earlier stages.",
+    chapter: "Ch 5, 2"
+  },
+  {
+    term: "Alpha L2 Intersection",
+    abbr: "",
+    def: "An analytical lens developed in the book for diagnosing student writing errors by considering two overlapping sources: Generation Alpha digital habits (informal writing norms acquired through messaging and social media) and Arabic L1 transfer patterns (structural features of the student's first language that predict specific English errors).",
+    chapter: "Ch 7"
+  },
+  {
+    term: "And-Then Replacement Chart",
+    abbr: "",
+    def: "A classroom tool for teaching expository and causal prose. Students identify places in their draft where they have written 'and then' and replace each instance with a more precise causal or temporal connector (subsequently, as a result, this led to, consequently), making the relationship between steps explicit rather than implicit.",
+    chapter: "Ch 11, 13"
+  },
+  {
+    term: "Argumentative Essay",
+    abbr: "",
+    def: "An essay type that presents a debatable claim, supports it with evidence and reasoning, acknowledges and refutes counterarguments, and reaches a conclusion that restates the position in light of the evidence. Distinguished from opinion essays by its requirement to engage with opposing views and from persuasive essays by its reliance on logos over pathos.",
+    chapter: "Ch 12"
+  },
+  {
+    term: "Ask, Don't Tell Protocol",
+    abbr: "",
+    def: "An AI feedback prompt strategy in which the student instructs the AI to ask two diagnostic questions about a sentence or paragraph rather than correcting or rewriting it. Designed to trigger the student's own grammatical reasoning and L2 hypothesis-testing rather than providing a correct form the student passively receives.",
+    chapter: "Ch 7"
+  },
+  {
+    term: "Cause and Effect Essay",
+    abbr: "",
+    def: "An essay type that analyses why something happened (causes) or what resulted from it (effects), or both. Requires causal connectors that encode the mechanism of causation, not merely sequence, and must distinguish between proximate causes, distal causes, and contributing factors.",
+    chapter: "Ch 13"
+  },
+  {
+    term: "CEFR",
+    abbr: "Common European Framework of Reference for Languages",
+    def: "The international standard for describing language proficiency, ranging from A1 (beginner) to C2 (mastery). Used throughout the book to specify appropriate levels for tasks, vocabulary, AI prompts, and assessment benchmarks. The majority of Gulf university EFL writing students enter at A2–B1 and target B2 by course end.",
+    chapter: "Throughout"
+  },
+  {
+    term: "Classification Essay",
+    abbr: "",
+    def: "An essay type that groups items, people, or concepts into categories according to a single, consistent organising principle. Must satisfy the Three-Test System: all categories must be exhaustive (every item fits somewhere), exclusive (no item fits in two categories), and consistent (all categories derive from the same classification principle).",
+    chapter: "Ch 18"
+  },
+  {
+    term: "CLEAR Framework",
+    abbr: "",
+    def: "A five-component prompt-engineering framework developed in the book to help EFL students and teachers write effective AI prompts. The five components are: Context (who you are and why you are writing), Level/Length/Limits (CEFR level, word count, constraints), Example (a sample of the desired output), Action (the specific task the AI should perform), and Role/Restriction (the persona AI should adopt and what it must not do).",
+    chapter: "Ch 5"
+  },
+  {
+    term: "Collaborative Default",
+    abbr: "",
+    def: "One of the five core Generation Alpha learning traits described in Chapter 1. Refers to the tendency of Alpha learners to find group-produced work more natural and comfortable than individual silent writing. Has implications for how writing tasks are sequenced and how pre-writing activities are structured.",
+    chapter: "Ch 1"
+  },
+  {
+    term: "Compare and Contrast Essay",
+    abbr: "",
+    def: "An essay type that examines two or more subjects on the same set of criteria, making explicit comparisons and contrasts using appropriate linguistic structures. Organised using either block structure (all of Subject A, then all of Subject B) or point-by-point structure (one criterion at a time across both subjects). The book recommends point-by-point for B1 and above.",
+    chapter: "Ch 14"
+  },
+  {
+    term: "Corpus Tool",
+    abbr: "",
+    def: "A searchable database of authentic language use that shows how words and phrases actually occur in real text. Used in the book primarily for collocation verification (SKELL, Ludwig) and register analysis (COCA). Corpus tools train the habit of verifying AI-suggested vocabulary against authentic native-speaker usage.",
+    chapter: "Ch 6"
+  },
+  {
+    term: "Definition Essay",
+    abbr: "",
+    def: "An essay type that explains the meaning, scope, and application of a concept, term, or phenomenon using the Three-Layer Definition Framework: class (the broader category the term belongs to), differentiation (what distinguishes the term from other members of that category), and example/application (a concrete illustration of the term in use). Available on the companion website.",
+    chapter: "Ch 15"
+  },
+  {
+    term: "Descriptive Essay",
+    abbr: "",
+    def: "An essay type that creates a sensory and spatial impression of a person, place, object, or experience. Requires multi-sensory language (not only visual description), spatial organisation (near-to-far, top-to-bottom, or movement through space), and specific rather than vague vocabulary.",
+    chapter: "Ch 10"
+  },
+  {
+    term: "Doubled-Marker Error",
+    abbr: "",
+    def: "A predictable L1 transfer error in which an Arabic-speaking student blends the prepositional cause structure ('because of') with the conjunctive cause structure ('because ... causes'), producing 'because of stress causes'. Results from interference between two parallel Arabic causal structures (بسبب vs. لأن) that have direct but non-interchangeable English equivalents.",
+    chapter: "Ch 13"
+  },
+  {
+    term: "Expository Essay",
+    abbr: "",
+    def: "An essay type that explains, describes, or informs about a topic in a factual, organised manner without argumentation or personal opinion. Requires causal and temporal connectors that name the mechanism of each step rather than simply sequencing events with 'and then'. Most vulnerable to AI-generated content errors at the content level.",
+    chapter: "Ch 11"
+  },
+  {
+    term: "Five-Agent Automated Feedback System",
+    abbr: "MAEFS",
+    def: "The Multi-Agent Essay Feedback System described in Chapter 21. Consists of five specialised AI agents - Grammar, Vocabulary, Structure, Organisation, and Synthesiser - that evaluate student essays on separate dimensions and produce a structured feedback report. Designed to address the limitations of holistic AI feedback by separating dimensional assessment from synthesis.",
+    chapter: "Ch 21"
+  },
+  {
+    term: "Generation Alpha",
+    abbr: "",
+    def: "The generational cohort born from approximately 2010 to 2025. The first generation to grow up entirely after the smartphone became ubiquitous. Named by researcher Mark McCrindle using a Greek alphabet restart to signal their status as the first generation born entirely in the twenty-first century. Characterised in Chapter 1 by five key learning traits relevant to EFL writing instruction.",
+    chapter: "Ch 1"
+  },
+  {
+    term: "Hyper-Stimulation Dependency",
+    abbr: "",
+    def: "One of the five core Generation Alpha learning traits. Refers to the tendency to disengage rapidly from sustained text-based tasks and to require frequent task-switching, visual variety, or interaction to maintain engagement. Has direct implications for lesson pacing, activity design, and the management of extended writing tasks.",
+    chapter: "Ch 1"
+  },
+  {
+    term: "Interlanguage",
+    abbr: "",
+    def: "The developing linguistic system of a second language learner, which has its own internal rules distinct from both the learner's L1 and the target L2. The concept, developed by Larry Selinker, explains why learner errors are systematic and predictable rather than random. Central to understanding how L2 writing develops over time and why AI-generated writing cannot serve as a model for interlanguage development.",
+    chapter: "Ch 3, 19"
+  },
+  {
+    term: "L1 Transfer",
+    abbr: "",
+    def: "The influence of a learner's first language on their production in a second language. In the book, L1 transfer specifically refers to Arabic structural features that predict recurrent errors in Gulf EFL students' English writing, including article omission, doubled causal markers, verb-initial clause structures, and the absence of topic sentence conventions in Arabic paragraph organisation.",
+    chapter: "Ch 7, 13"
+  },
+  {
+    term: "Lean Framework",
+    abbr: "",
+    def: "The core pedagogical framework of the book, named for the principle of targeted, purposeful tool use. The Lean Framework maps AI and digital tools to the five writing stuck points (engagement, content knowledge, language, structure, revision) and to a four-stage writing process, ensuring that every tool use addresses a specific learner need rather than decorating the lesson.",
+    chapter: "Ch 2"
+  },
+  {
+    term: "Lean Tech Map",
+    abbr: "",
+    def: "A visual planning tool derived from the Lean Framework that maps specific digital and AI tools to the stage of the writing process and the stuck point each tool addresses. Used by teachers to design AI-integrated lessons in which every tool has a pedagogical justification.",
+    chapter: "Ch 2"
+  },
+  {
+    term: "Majd Story Audit",
+    abbr: "",
+    def: "A structural pre-writing template named after a vignette character in the book, used in narrative essay chapters. Students map their story onto a structural template (orientation, complication, rising action, climax, resolution, reflection) before drafting, allowing them to focus on language production during drafting without simultaneously managing narrative structure.",
+    chapter: "Ch 9"
+  },
+  {
+    term: "Narrative Essay",
+    abbr: "",
+    def: "An essay type in which the writer recounts a personal or observed event using narrative structure, sensory language, and temporal sequencing. Distinguished from descriptive essays by its focus on event and change over time rather than on the static impression of a scene. The book argues that the story itself must remain entirely human even when AI is used for structural scaffolding and vocabulary preparation.",
+    chapter: "Ch 9"
+  },
+  {
+    term: "Opinion Essay",
+    abbr: "",
+    def: "An essay type in which the writer expresses and defends a personal position on a debatable issue, supported by reasons and evidence. Placed late in Part III of the book because it requires skills from all preceding genres: clear thesis (argument), evidence discipline (argument), paragraph structure (paragraph writing), and sensory specificity (descriptive and narrative). Requires an arguable thesis, not merely a topic announcement.",
+    chapter: "Ch 17"
+  },
+  {
+    term: "Output Hypothesis",
+    abbr: "",
+    def: "Merrill Swain's theoretical claim that producing language (output) - not only receiving it (input) - drives L2 acquisition by pushing learners to notice gaps in their interlanguage, test hypotheses, and develop metalinguistic awareness. Central to the book's argument that AI-generated text cannot substitute for student writing because the acquisition value lies in the cognitive effort of producing the text, not in the product itself.",
+    chapter: "Ch 7, 19"
+  },
+  {
+    term: "Parallel Attention Paradox",
+    abbr: "",
+    def: "The observation that Generation Alpha learners appear to sustain multiple information streams simultaneously but show reduced depth of engagement with any single stream. The paradox is that what looks like superior multitasking is often sustained surface processing across several inputs rather than deep processing of any one. Has direct implications for device management and writing task design in EFL classrooms.",
+    chapter: "Ch 1"
+  },
+  {
+    term: "Perplexity",
+    abbr: "",
+    def: "An AI-powered research tool that cites its sources inline, allowing students to trace AI-generated content back to verifiable original sources. Recommended in the book for expository and argumentative writing tasks where content accuracy must be verified before evidence is incorporated into an essay.",
+    chapter: "Ch 11, 12"
+  },
+  {
+    term: "Point-by-Point Structure",
+    abbr: "",
+    def: "An organisational structure for compare-and-contrast essays in which the essay proceeds criterion by criterion, comparing both subjects on each criterion before moving to the next. Produces more explicit comparison language than block structure and is recommended in the book for B1 learners and above, supported by a comparison paragraph template.",
+    chapter: "Ch 14"
+  },
+  {
+    term: "Problem-Solution Essay",
+    abbr: "",
+    def: "An essay type that identifies a problem, analyses its causes, proposes one or more feasible solutions, and evaluates their likely effectiveness. Solutions must pass the Three-Question Feasibility Test: Is this realistic? Is it affordable? Does it create new problems? Recommendation language (must/should/could/might) encodes the writer's epistemic certainty about each solution.",
+    chapter: "Ch 16"
+  },
+  {
+    term: "Process Portfolio",
+    abbr: "",
+    def: "An assessment format that includes multiple drafts of a student essay alongside revision plans, AI Collaboration Logs, and reflections on changes made between drafts. Functions as an AI-resistant assessment design because a coherent revision process cannot be fabricated by AI without the student's active engagement at each stage.",
+    chapter: "Ch 19"
+  },
+  {
+    term: "SAMR Model",
+    abbr: "Substitution, Augmentation, Modification, Redefinition",
+    def: "A framework for evaluating the level of technology integration in learning tasks. Substitution: digital replaces analogue without functional change. Augmentation: digital replaces analogue with functional improvement. Modification: technology allows significant task redesign. Redefinition: technology enables tasks previously impossible. Used in the book to help teachers evaluate whether AI integration represents genuine pedagogical change.",
+    chapter: "Ch 4"
+  },
+  {
+    term: "Saudi PDPL",
+    abbr: "Personal Data Protection Law",
+    def: "Saudi Arabia's data protection legislation (Royal Decree M/19, 2021, in force 2023) governing the collection, processing, and storage of personal data. Relevant to the book's Chapter 21 guidance on anonymising student essays before submitting them to AI feedback systems, using three-digit submission codes in place of student names.",
+    chapter: "Ch 21"
+  },
+  {
+    term: "SKELL",
+    abbr: "Sketch Engine for Language Learning",
+    def: "A free, simplified corpus tool providing collocation data and example sentences from a corpus of English. Used in the book's vocabulary instruction sequence as the verification step in the two-step AI-corpus habit: students generate vocabulary options using AI, then verify collocation and naturalness using SKELL before using a word in their essay.",
+    chapter: "Ch 6"
+  },
+  {
+    term: "Sort-Label-Write Pipeline",
+    abbr: "",
+    def: "A pre-writing classification activity in which students physically or digitally sort items into groups before labelling the groups (identifying the classification principle) and only then begin drafting the essay. Making the sorting act visible separates the cognitive tasks of classification and language production, which students typically attempt simultaneously with poor results.",
+    chapter: "Ch 18"
+  },
+  {
+    term: "Stuck Points",
+    abbr: "",
+    def: "The five specific points in the writing process at which EFL learners are most likely to stop or produce poor output, identified by the Lean Framework: engagement (motivation and blank-page anxiety), content knowledge (not knowing what to say in English), language (not knowing how to say it), structure (not knowing how to organise it), and revision (not knowing how to improve it). Every AI tool in the book is evaluated by which stuck point it addresses.",
+    chapter: "Ch 2"
+  },
+  {
+    term: "Synthesiser Agent",
+    abbr: "",
+    def: "The fifth agent in the Multi-Agent Essay Feedback System (Chapter 21), responsible for integrating the feedback from the four specialist agents (Grammar, Vocabulary, Structure, Organisation) into a single, prioritised, student-readable report. Uses British spelling throughout. Produces a three-priority action list for the student's Draft 2 revision plan.",
+    chapter: "Ch 21"
+  },
+  {
+    term: "Three-Draft Assignment Cycle",
+    abbr: "",
+    def: "The assessment structure used in the Chapter 21 system. Draft 1 is submitted for multi-agent AI feedback. Students produce a written revision plan identifying their three priority changes. Draft 2 is submitted incorporating those changes. The teacher reviews the AI-assigned grade and may adjust. Draft 3 (optional) is reserved for borderline cases or students who request a further revision opportunity.",
+    chapter: "Ch 21"
+  },
+  {
+    term: "Three-Layer Definition Framework",
+    abbr: "",
+    def: "A pedagogical adaptation of the Aristotelian genus-differentia definition structure, developed in the book for B2 EFL writers. The three layers are: class (the broader category the defined term belongs to), differentiation (what distinguishes the term from other members of that category), and example/application (a concrete illustration showing the term in use). Specifically designed to prevent circular and synonym-only definitions.",
+    chapter: "Ch 15"
+  },
+  {
+    term: "Three-Test System",
+    abbr: "",
+    def: "The classification validity test used in Chapter 18. A set of classification categories is valid only if it is simultaneously exhaustive (every item in the domain fits at least one category), exclusive (no item fits more than one category), and consistent (all categories derive from the same single organising principle). Failures in any of the three tests indicate a fundamental classification error, not merely a structural one.",
+    chapter: "Ch 18"
+  },
+  {
+    term: "Trench Coat Problem",
+    abbr: "",
+    def: "A metaphor used in Chapter 8 to describe the most common paragraph error among Gulf EFL students with strong L1 literacy: five or more discrete, topic-related sentences that share a paragraph but do not form a coherent argumentative unit - like five strangers wearing a single trench coat. The fix is teaching the topic sentence as a claim that the other sentences must actively support, not merely relate to.",
+    chapter: "Ch 8"
+  },
+  {
+    term: "Two-Step AI-Corpus Habit",
+    abbr: "",
+    def: "The vocabulary verification protocol recommended throughout Part II of the book. Step 1: use AI (Gemini) to generate vocabulary options or suggestions. Step 2: verify the most appropriate option using a corpus tool (SKELL or Ludwig) before writing it into the essay. Trains the habit of verification over acceptance, replacing the native-speaker intuition that EFL students have not yet developed.",
+    chapter: "Ch 6"
+  }
+];
+
+// Build alphabet
+const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
+const alphaBar = document.getElementById('alphaBar');
+letters.forEach(l => {
+  const btn = document.createElement('button');
+  btn.className = 'alpha-btn';
+  btn.textContent = l;
+  btn.onclick = () => filterLetter(l, btn);
+  alphaBar.appendChild(btn);
+});
+
+let activeLetter = 'ALL';
+
+function renderTerms(filtered) {
+  const container = document.getElementById('glossaryContent');
+  const noRes = document.getElementById('noResults');
+  container.innerHTML = '';
+
+  if (filtered.length === 0) {
+    noRes.classList.add('show');
+    return;
+  }
+  noRes.classList.remove('show');
+
+  // Group by letter
+  const groups = {};
+  filtered.forEach(t => {
+    const l = t.term[0].toUpperCase();
+    if (!groups[l]) groups[l] = [];
+    groups[l].push(t);
+  });
+
+  Object.keys(groups).sort().forEach(letter => {
+    const section = document.createElement('div');
+    section.className = 'letter-section';
+    const anchor = document.createElement('div');
+    anchor.className = 'letter-anchor';
+    anchor.textContent = letter;
+    section.appendChild(anchor);
+
+    groups[letter].forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'term-card';
+      card.innerHTML = `
+        <div class="term-name">${t.term}${t.abbr ? `<span class="term-abbr">${t.abbr}</span>` : ''}</div>
+        <div class="term-def">${t.def}</div>
+        <div class="term-chapter">📖 ${t.chapter}</div>
+      `;
+      section.appendChild(card);
+    });
+    container.appendChild(section);
+  });
+}
+
+function filterLetter(letter, btn) {
+  activeLetter = letter;
+  document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  applyFilters();
+}
+
+function filterTerms() {
+  activeLetter = 'ALL';
+  document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.alpha-btn').classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  let filtered = terms;
+  if (activeLetter !== 'ALL') {
+    filtered = filtered.filter(t => t.term[0].toUpperCase() === activeLetter);
+  }
+  if (query.length > 0) {
+    filtered = filtered.filter(t =>
+      t.term.toLowerCase().includes(query) ||
+      t.def.toLowerCase().includes(query) ||
+      t.abbr.toLowerCase().includes(query)
+    );
+  }
+  renderTerms(filtered);
+}
+
+// Initial render
+renderTerms(terms);
+</script>
+
+
+
+<div class="gw-footer-slim">
+  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
+  <strong>GenAlphaWrite Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+  <span class="sep">|</span>
+  <span>Last update: 10 July 2026</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="gw-nav">
+  <a href="answer-keys.html">← Answer Keys</a>
+  <a href="tools-tables.html">Tools Tables →</a>
+</div>
+</body>
+</html>

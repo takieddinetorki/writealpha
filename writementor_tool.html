@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WriteMentor — Writing Checker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEE6D3;
+    --paper-edge:#E2D7BE;
+    --ink:#1C2541;
+    --ink-soft:#4A5570;
+    --ink-faint:#8A93A8;
+    --gold:#A9782E;
+    --gold-deep:#8A5F1F;
+
+    --gram:#B23A48;
+    --gram-bg:#F7E7E8;
+    --voc:#6B4E9E;
+    --voc-bg:#EFE8F6;
+    --struct:#1F7A5C;
+    --struct-bg:#E3F2EC;
+    --word:#C1752B;
+    --word-bg:#FBEAD9;
+    --prep:#2E6E8E;
+    --prep-bg:#E3EEF3;
+    --punct:#9C4F6E;
+    --punct-bg:#F5E6ED;
+    --cap:#8B5E34;
+    --cap-bg:#F3E6D8;
+    --other:#5C5548;
+    --other-bg:#EDEAE2;
+
+    --radius:14px;
+    --shadow: 0 1px 2px rgba(28,37,65,0.06), 0 8px 24px rgba(28,37,65,0.08);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: #DCD2B8;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.25), transparent 60%),
+      linear-gradient(180deg, #DED4BA 0%, #D6CAAC 100%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding: 40px 20px 80px;
+  }
+
+  .wrap{max-width:880px; margin:0 auto;}
+
+  header{ margin-bottom:34px; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Spectral', serif;
+    font-weight:600;
+    font-size:clamp(34px,5vw,50px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{ font-style:italic; color:var(--gold-deep); }
+  .tagline{
+    font-family:'Spectral', serif;
+    font-style:italic;
+    font-size:18px;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .subtag{
+    font-size:15px;
+    color:var(--ink-faint);
+    max-width:640px;
+    line-height:1.6;
+  }
+
+  .welcome-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:16px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    margin:0 0 2px;
+  }
+  .welcome-for{
+    font-family:'Spectral', serif;
+    font-style:italic;
+    font-size:23px;
+    color:var(--ink-soft);
+    margin:0 0 14px;
+  }
+
+  .cat-gram{ color:var(--gram); font-weight:700; border-bottom:2px solid var(--gram); }
+  .cat-voc{ color:var(--voc); font-weight:700; border-bottom:2px solid var(--voc); }
+  .cat-struct{ color:var(--struct); font-weight:700; border-bottom:2px solid var(--struct); white-space:nowrap; }
+  .cat-word{ color:var(--word); font-weight:700; border-bottom:2px solid var(--word); white-space:nowrap; }
+  .cat-prep{ color:var(--prep); font-weight:700; border-bottom:2px solid var(--prep); }
+  .cat-punct{ color:var(--punct); font-weight:700; border-bottom:2px solid var(--punct); }
+  .cat-cap{ color:var(--cap); font-weight:700; border-bottom:2px solid var(--cap); white-space:nowrap; }
+
+  .speed-note{
+    display:block;
+    font-size:13px;
+    font-style:italic;
+    color:var(--ink-faint);
+    margin-top:4px;
+  }
+
+  .page{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:32px;
+    position:relative;
+    border:1px solid var(--paper-edge);
+  }
+  .page::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:3px;
+    border-radius:var(--radius) 0 0 var(--radius);
+    background:linear-gradient(180deg, var(--gold), var(--struct) 33%, var(--gram) 66%, var(--prep));
+    opacity:0.55;
+  }
+
+  /* Name / self-reported ID card */
+  .name-card{
+    background:#fff;
+    border:1px solid var(--paper-edge);
+    border-radius:var(--radius);
+    padding:16px 24px;
+    margin-bottom:16px;
+  }
+  .name-label{
+    display:block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    margin-bottom:6px;
+  }
+  .name-input{
+    width:100%;
+    max-width:320px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    padding:9px 12px;
+    border:1px solid var(--paper-edge);
+    border-radius:8px;
+    outline:none;
+    color:var(--ink);
+    background:var(--paper);
+  }
+  .name-input:focus{ border-color:var(--gold); }
+  .name-hint{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    margin:6px 0 0;
+  }
+
+  textarea{
+    width:100%;
+    min-height:220px;
+    resize:vertical;
+    border:none;
+    background:transparent;
+    font-family:'Spectral', serif;
+    font-size:18px;
+    line-height:1.75;
+    color:var(--ink);
+    outline:none;
+    padding:0;
+  }
+  textarea::placeholder{ color:var(--ink-faint); font-style:italic; }
+
+  .toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px dashed var(--paper-edge);
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+  }
+
+  .actions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+  button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border:none;
+    cursor:pointer;
+    border-radius:999px;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .btn-primary{
+    background:var(--ink);
+    color:#F3EEE1;
+    padding:12px 22px;
+    box-shadow: 0 1px 2px rgba(28,37,65,0.2);
+    display:flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(28,37,65,0.25); }
+  .btn-primary:disabled{ opacity:0.5; cursor:default; transform:none; box-shadow:none; }
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    padding:12px 16px;
+    border:1px solid var(--paper-edge);
+  }
+  .btn-ghost:hover{ border-color:var(--ink-faint); color:var(--ink); }
+  .btn-danger-ghost{
+    background:transparent;
+    color:var(--gram);
+    padding:12px 16px;
+    border:1px solid var(--gram-bg);
+  }
+  .btn-danger-ghost:hover{ border-color:var(--gram); background:var(--gram-bg); }
+
+  .seal{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:8px; margin: 22px 0 0; }
+  .chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.02em;
+    padding:6px 11px 6px 9px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--ink);
+    background:#fff;
+    border:1px solid var(--paper-edge);
+  }
+  .chip .dot{ width:8px; height:8px; border-radius:50%; }
+
+  .results{ margin-top:26px; }
+  .result-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .result-title{
+    font-family:'Spectral', serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--ink-soft);
+  }
+  .view-toggle{
+    display:flex;
+    background:#fff;
+    border:1px solid var(--paper-edge);
+    border-radius:999px;
+    padding:3px;
+    gap:2px;
+  }
+  .view-toggle button{
+    padding:7px 14px;
+    border-radius:999px;
+    background:transparent;
+    color:var(--ink-faint);
+    font-size:12.5px;
+  }
+  .view-toggle button.active{ background:var(--ink); color:#F3EEE1; }
+
+  /* ---- Audio player controls ---- */
+  .listen-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+    flex-wrap:wrap;
+    background:#fff;
+    border:1px solid var(--paper-edge);
+    border-radius:999px;
+    padding:8px 14px;
+  }
+  .listen-player-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--paper);
+    color:var(--ink);
+    border:1px solid var(--paper-edge);
+    font-size:14px;
+    flex-shrink:0;
+  }
+  .listen-player-btn:hover{ border-color:var(--gold); color:var(--gold-deep); }
+  .listen-player-btn.play-pause{
+    width:40px; height:40px;
+    background:var(--ink);
+    color:#F3EEE1;
+    border:none;
+    font-size:15px;
+  }
+  .listen-player-btn.play-pause:hover{ transform:scale(1.05); }
+  .listen-progress{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--ink-faint);
+    min-width:64px;
+    text-align:center;
+  }
+  .speed-toggle{
+    display:flex;
+    background:var(--paper);
+    border:1px solid var(--paper-edge);
+    border-radius:999px;
+    padding:3px;
+    gap:2px;
+    margin-left:auto;
+  }
+  .speed-btn{
+    padding:6px 11px;
+    border-radius:999px;
+    background:transparent;
+    color:var(--ink-faint);
+    font-size:12px;
+  }
+  .speed-btn.active{ background:var(--gold); color:#fff; }
+
+  .annotated, .corrected{
+    font-family:'Spectral', serif;
+    font-size:18px;
+    line-height:2.05;
+    white-space:pre-wrap;
+  }
+  .corrected{ color:var(--ink-soft); display:none; }
+  .corrected.show{ display:block; }
+  .annotated.hide{ display:none; }
+
+  .sentence-highlight{
+    background: var(--word-bg);
+    border-radius:3px;
+  }
+
+  mark{
+    background:transparent;
+    color:inherit;
+    padding:0 1px;
+    border-bottom:2.5px solid;
+    cursor:help;
+    position:relative;
+    text-decoration:none;
+  }
+  mark.gram{ border-color:var(--gram); }
+  mark.voc{ border-color:var(--voc); }
+  mark.struct{ border-color:var(--struct); }
+  mark.word{ border-color:var(--word); }
+  mark.prep{ border-color:var(--prep); }
+  mark.punct{ border-color:var(--punct); }
+  mark.cap{ border-color:var(--cap); }
+  mark.other{ border-color:var(--other); }
+
+  .tooltip{
+    position:absolute;
+    z-index:20;
+    max-width:280px;
+    background:var(--ink);
+    color:#F3EEE1;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    line-height:1.5;
+    padding:12px 14px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    pointer-events:none;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .12s ease, transform .12s ease;
+  }
+  .tooltip.show{ opacity:1; transform:translateY(0); }
+  .tooltip .cat{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    opacity:0.7;
+    margin-bottom:5px;
+    display:block;
+  }
+  .tooltip .fix{ color:#fff; font-weight:600; }
+  .tooltip .fix::before{ content:"→ "; opacity:0.6; }
+
+  .empty-note, .loading, .error-note, .save-note{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    color:var(--ink-faint);
+    margin-top:8px;
+  }
+  .error-note{ color:var(--gram); }
+  .save-note{ color:var(--struct); }
+
+  .loading{ display:flex; align-items:center; gap:10px; }
+  .spinner{
+    width:14px; height:14px;
+    border-radius:50%;
+    border:2px solid var(--paper-edge);
+    border-top-color:var(--gold-deep);
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .stats-row{ display:flex; gap:22px; margin-top:6px; flex-wrap:wrap; }
+  .stat{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+  }
+  .stat b{ color:var(--ink); font-size:15px; display:block; font-family:'Spectral', serif; font-weight:600;}
+
+  .sample-link{
+    background:none;border:none;color:var(--ink-faint);
+    font-size:13px; text-decoration:underline; text-underline-offset:3px;
+    cursor:pointer; padding:0;
+  }
+  .sample-link:hover{ color:var(--ink); }
+
+  footer{
+    text-align:center;
+    margin-top:30px;
+    font-size:12px;
+    color:var(--ink-faint);
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  @media (max-width:600px){
+    .page{ padding:22px; }
+    textarea{ font-size:16px; }
+    .annotated, .corrected{ font-size:16px; }
+    .speed-toggle{ margin-left:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  .intro-card{
+    background:#fff;
+    border:1px solid var(--paper-edge);
+    border-radius:var(--radius);
+    padding:20px 24px;
+    margin-bottom:20px;
+  }
+  .intro-title{
+    font-family:'Spectral', serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--ink);
+    margin-bottom:10px;
+  }
+  .steps-list{ margin:0; padding-left:20px; font-size:14px; line-height:1.7; color:var(--ink-soft); }
+  .steps-list li{ margin-bottom:2px; }
+  .steps-list b{ color:var(--ink); }
+
+  .stepper{ display:flex; gap:6px; margin-bottom:20px; }
+  .step{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+    background:#fff;
+    border:1px solid var(--paper-edge);
+    border-radius:999px;
+    padding:8px 14px;
+    transition: all .2s ease;
+  }
+  .step-n{
+    width:18px; height:18px;
+    border-radius:50%;
+    background:var(--paper-edge);
+    color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px;
+    flex-shrink:0;
+  }
+  .step.active{ color:var(--ink); border-color:var(--gold); background:#fff; }
+  .step.active .step-n{ background:var(--gold); color:#fff; }
+  .step.done{ color:var(--struct); }
+  .step.done .step-n{ background:var(--struct); color:#fff; }
+
+  .next-step-note{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    background:var(--word-bg);
+    border-left:3px solid var(--word);
+    padding:10px 14px;
+    border-radius:6px;
+    margin:18px 0 0;
+  }
+  .next-step-note:empty{ display:none; margin:0; padding:0; border:none; }
+
+  @media (max-width:600px){
+    .stepper{ flex-wrap:wrap; }
+    .step{ flex:1 1 calc(50% - 6px); }
+  }
+
+  .edit-hint{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-style:italic;
+    color:var(--ink-faint);
+    margin:0;
+  }
+
+  .annotated[contenteditable="true"]{
+    outline: 1.5px dashed var(--gold);
+    outline-offset:8px;
+    border-radius:8px;
+    cursor:text;
+  }
+  .annotated[contenteditable="true"]:focus{
+    outline-style: solid;
+    outline-color: var(--gold-deep);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="welcome-eyebrow">Welcome to</p>
+    <h1>Write<em>Mentor</em></h1>
+    <p class="welcome-for">for students and teachers</p>
+    <p class="subtag">This is where you paste your writing and get instant, teacher-like feedback. Mistakes are underlined in different colors by category — <span class="cat-gram">grammar</span>, <span class="cat-voc">vocabulary</span>, <span class="cat-struct">sentence structure</span>, <span class="cat-word">word order</span>, <span class="cat-prep">prepositions</span>, <span class="cat-punct">punctuation</span>, <span class="cat-cap">capital letters</span> — each with a plain-English hint. No grammar jargon. Free to use, open to everyone — no sign-up required.</p>
+  </header>
+
+  <div class="name-card">
+    <span class="name-label">Your name or ID (optional)</span>
+    <input type="text" class="name-input" id="studentName" placeholder="e.g. Sara K.">
+    <p class="name-hint">This is just so your teacher can tell sessions apart. It isn't verified, so use whatever name you like.</p>
+  </div>
+
+  <div class="intro-card">
+    <div class="intro-title">How to use it</div>
+    <ol class="steps-list">
+      <li><b>Step 1.</b> Paste your writing, or write it directly in the box provided — up to 1,500 words.
+        <span class="speed-note">Shorter texts get checked faster, especially on a slower internet connection — a paragraph or two works best if speed matters more than length.</span>
+      </li>
+      <li><b>Step 2.</b> Click "Check my writing." WriteMentor underlines every mistake in the color of its category.</li>
+      <li><b>Step 3.</b> Hover over (or tap) any underlined mistake to see a hint — the answer isn't shown yet.</li>
+      <li><b>Step 4.</b> Think about the mistake and correct it yourself, directly on the page.</li>
+      <li><b>Step 5.</b> Click "Check my correction" to see your progress — you can now also reveal the fully corrected version to compare.</li>
+    </ol>
+  </div>
+
+  <div class="stepper" id="stepper">
+    <div class="step active" data-step="1"><span class="step-n">1</span>Write</div>
+    <div class="step" data-step="2"><span class="step-n">2</span>Look</div>
+    <div class="step" data-step="3"><span class="step-n">3</span>Fix</div>
+    <div class="step" data-step="4"><span class="step-n">4</span>Compare</div>
+  </div>
+
+  <div class="page">
+    <textarea id="input" placeholder="Paste your writing here (up to about 1,200-1,500 words) — a description, an opinion essay, an email... anything you'd like checked."></textarea>
+    <p class="edit-hint" id="editHint" style="display:none;">Your text has moved below, into the marked-up box — click right into it to fix your mistakes directly, then use the button on the right.</p>
+
+    <div class="toolbar">
+      <span class="count" id="count">0 words</span>
+      <div class="actions">
+        <button class="sample-link" id="sampleBtn" type="button">Try a sample</button>
+        <button class="btn-ghost" id="newTaskBtn" type="button">↺ New task</button>
+        <button class="btn-primary" id="checkBtn" type="button">
+          <span class="seal"></span> Check my writing
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend" id="legend">
+    <span class="chip"><span class="dot" style="background:var(--gram)"></span>Grammar</span>
+    <span class="chip"><span class="dot" style="background:var(--voc)"></span>Vocabulary</span>
+    <span class="chip"><span class="dot" style="background:var(--struct)"></span>Sentence structure</span>
+    <span class="chip"><span class="dot" style="background:var(--word)"></span>Word order</span>
+    <span class="chip"><span class="dot" style="background:var(--prep)"></span>Prepositions</span>
+    <span class="chip"><span class="dot" style="background:var(--punct)"></span>Punctuation</span>
+    <span class="chip"><span class="dot" style="background:var(--cap)"></span>Capital letters</span>
+    <span class="chip"><span class="dot" style="background:var(--other)"></span>Other</span>
+  </div>
+
+  <div class="results" id="results" style="display:none;">
+    <div class="page">
+      <div class="result-head">
+        <span class="result-title" id="resultTitle">Marked up</span>
+        <div class="view-toggle" id="viewToggle" style="display:none;">
+          <button class="active" id="viewMarked" type="button">Marked up</button>
+          <button id="viewCorrected" type="button">Corrected</button>
+        </div>
+      </div>
+
+      <div class="listen-row" id="listenControls" style="display:none;">
+        <button class="listen-player-btn" id="rewindBtn" type="button" title="Previous sentence">⏮</button>
+        <button class="listen-player-btn play-pause" id="playPauseBtn" type="button" title="Play">▶</button>
+        <button class="listen-player-btn" id="forwardBtn" type="button" title="Next sentence">⏭</button>
+        <button class="listen-player-btn" id="stopBtn" type="button" title="Stop">⏹</button>
+        <span class="listen-progress" id="listenProgress">0 / 0</span>
+        <div class="speed-toggle">
+          <button class="speed-btn active" data-rate="0.7" type="button">Slow</button>
+          <button class="speed-btn" data-rate="1" type="button">Normal</button>
+        </div>
+      </div>
+
+      <div class="annotated" id="annotated"></div>
+      <div class="corrected" id="corrected"></div>
+      <div class="stats-row" id="statsRow"></div>
+      <p class="next-step-note" id="nextStepNote"></p>
+    </div>
+  </div>
+
+  <div id="statusArea"></div>
+
+  <footer>made for writers who want to get better, one line at a time</footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
+// Paste your deployed Apps Script Web App URL below (it ends in /exec).
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw92E9pPFZ5IYpiRec72TAzJZlMubdgjode6OhnDbD1IpVQRLR1KU11uZ3giHrk1iK1hQ/exec";
+// ────────────────────────────────────────────────────────────────────────
+
+const CATS = {
+  gram: {label:'Grammar', color:'var(--gram)'},
+  voc: {label:'Vocabulary', color:'var(--voc)'},
+  struct: {label:'Sentence structure', color:'var(--struct)'},
+  word: {label:'Word order', color:'var(--word)'},
+  prep: {label:'Prepositions', color:'var(--prep)'},
+  punct: {label:'Punctuation', color:'var(--punct)'},
+  cap: {label:'Capital letters', color:'var(--cap)'},
+  other: {label:'Other', color:'var(--other)'}
+};
+
+const input = document.getElementById('input');
+const countEl = document.getElementById('count');
+const checkBtn = document.getElementById('checkBtn');
+const sampleBtn = document.getElementById('sampleBtn');
+const newTaskBtn = document.getElementById('newTaskBtn');
+const resultsEl = document.getElementById('results');
+const annotatedEl = document.getElementById('annotated');
+const correctedEl = document.getElementById('corrected');
+const statsRow = document.getElementById('statsRow');
+const statusArea = document.getElementById('statusArea');
+const tooltip = document.getElementById('tooltip');
+const viewMarked = document.getElementById('viewMarked');
+const viewCorrected = document.getElementById('viewCorrected');
+const viewToggle = document.getElementById('viewToggle');
+const nextStepNote = document.getElementById('nextStepNote');
+const stepper = document.getElementById('stepper');
+const studentNameInput = document.getElementById('studentName');
+const editHint = document.getElementById('editHint');
+
+let round = 0; // 0 = not yet checked, 1 = first check done, 2+ = revision checked
+let lastCounts = {};
+let lastOriginalText = '';
+let sessionSaved = false;
+
+// ── SAMPLE TEXT ────────────────────────────────────────────────────────
+const SAMPLE = "Yesterday, I go to the market for buy some vegetable. My mother she told me to don't forget the onions, but I forgot it anyway. When I arrived at home, she was very angry on me, and I felt bad about the situation because I know how much she depend on me for the shopping.";
+
+// ── WORD COUNT ─────────────────────────────────────────────────────────
+function updateCount(){
+  const words = input.value.trim().length ? input.value.trim().split(/\s+/).length : 0;
+  countEl.textContent = words + (words === 1 ? ' word' : ' words');
+}
+input.addEventListener('input', updateCount);
+updateCount();
+
+function updateCountFromAnnotated(){
+  const words = annotatedEl.textContent.trim().length ? annotatedEl.textContent.trim().split(/\s+/).length : 0;
+  countEl.textContent = words + (words === 1 ? ' word' : ' words');
+}
+annotatedEl.addEventListener('input', updateCountFromAnnotated);
+
+sampleBtn.addEventListener('click', () => {
+  resetToNewTask();
+  input.value = SAMPLE;
+  updateCount();
+  input.focus();
+});
+
+// ── NEW TASK / RESET ───────────────────────────────────────────────────
+function resetToNewTask(){
+  stopSpeech();
+  round = 0;
+  sessionSaved = false;
+  lastOriginalText = '';
+  lastCounts = {};
+  updateStepper();
+  resultsEl.style.display = 'none';
+  document.getElementById('listenControls').style.display = 'none';
+  checkBtn.innerHTML = '<span class="seal"></span> Check my writing';
+  input.value = '';
+  input.style.display = 'block';
+  editHint.style.display = 'none';
+  annotatedEl.setAttribute('contenteditable', 'false');
+  annotatedEl.innerHTML = '';
+  correctedEl.textContent = '';
+  correctedEl.classList.remove('show');
+  annotatedEl.classList.remove('hide');
+  statsRow.innerHTML = '';
+  nextStepNote.textContent = '';
+  setStatus('');
+  updateCount();
+  input.focus();
+}
+newTaskBtn.addEventListener('click', resetToNewTask);
+
+viewMarked.addEventListener('click', () => setView('marked'));
+viewCorrected.addEventListener('click', () => setView('corrected'));
+
+function setView(mode){
+  if(mode === 'marked'){
+    annotatedEl.classList.remove('hide');
+    correctedEl.classList.remove('show');
+    viewMarked.classList.add('active');
+    viewCorrected.classList.remove('active');
+  } else {
+    annotatedEl.classList.add('hide');
+    correctedEl.classList.add('show');
+    viewCorrected.classList.add('active');
+    viewMarked.classList.remove('active');
+  }
+}
+
+function updateStepper(){
+  const steps = stepper.querySelectorAll('.step');
+  steps.forEach(s => {
+    const n = parseInt(s.dataset.step, 10);
+    s.classList.remove('active','done');
+    if(round === 0){
+      if(n === 1) s.classList.add('active');
+    } else if(round === 1){
+      if(n <= 1) s.classList.add('done');
+      if(n === 2 || n === 3) s.classList.add('active');
+    } else {
+      if(n <= 3) s.classList.add('done');
+      if(n === 4) s.classList.add('active');
+    }
+  });
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function setStatus(html){
+  statusArea.innerHTML = html;
+}
+
+// ── CHECK WRITING ──────────────────────────────────────────────────────
+async function checkWriting(){
+  const text = (round === 0) ? input.value.trim() : annotatedEl.textContent.trim();
+  if(!text){
+    setStatus('<p class="error-note">Paste some writing first — there is nothing to check yet.</p>');
+    return;
+  }
+
+  if(round === 0){ lastOriginalText = text; }
+
+  if(APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === 0){
+    setStatus('<p class="error-note">WriteMentor is not connected to a backend yet. Deploy Code.gs as a Web App and paste the URL into APPS_SCRIPT_URL at the top of the script.</p>');
+    return;
+  }
+
+  stopSpeech();
+  checkBtn.disabled = true;
+  checkBtn.innerHTML = '<span class="spinner"></span> Reading closely…';
+  setStatus('<p class="loading"><span class="spinner"></span> Marking it up like a teacher would…</p>');
+  resultsEl.style.display = 'none';
+  if(round > 0){
+    annotatedEl.setAttribute('contenteditable', 'false');
+  }
+
+  try{
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ text: text, attempt: round + 1 })
+    });
+
+    const data = await response.json();
+    if(data.error){ throw new Error(data.error); }
+
+    const clean = (data.raw || '').replace(/```json/g,'').replace(/```/g,'').trim();
+    let parsed;
+    try {
+      parsed = JSON.parse(clean);
+    } catch (parseErr) {
+      console.error('Malformed response from AI:', parseErr, clean);
+      throw new Error('The AI response got garbled this time — this happens occasionally. Please click "Check" again.');
+    }
+    const segments = parsed.segments || [];
+
+    renderResults(segments);
+    setStatus('');
+  } catch(err){
+    console.error(err);
+    setStatus('<p class="error-note">Something went wrong: ' + escapeHtml(String(err.message || err)) + '</p>');
+    if(round > 0){
+      resultsEl.style.display = 'block';
+      annotatedEl.setAttribute('contenteditable', 'true');
+    }
+  } finally {
+    checkBtn.disabled = false;
+    if(round === 0){
+      checkBtn.innerHTML = '<span class="seal"></span> Check my writing';
+    } else if(round === 1){
+      checkBtn.innerHTML = '<span class="seal"></span> Check my correction';
+    } else {
+      checkBtn.innerHTML = '<span class="seal"></span> Check again';
+    }
+  }
+}
+
+function renderResults(segments){
+  let annotatedHtml = '';
+  let correctedText = '';
+  const counts = {gram:0,voc:0,struct:0,word:0,prep:0,punct:0,cap:0,other:0};
+  const revealFix = round >= 1;
+
+  segments.forEach((seg, i) => {
+    if(seg.t === 'text'){
+      annotatedHtml += escapeHtml(seg.c || '');
+      correctedText += (seg.c || '');
+    } else if(seg.t === 'err'){
+      const cat = CATS[seg.cat] ? seg.cat : 'other';
+      counts[cat] = (counts[cat] || 0) + 1;
+      annotatedHtml += `<mark class="${cat}" data-idx="${i}" data-cat="${cat}" data-fix="${escapeHtml(seg.x || '')}" data-explain="${escapeHtml(seg.e || '')}" data-show-fix="${revealFix}">${escapeHtml(seg.o || '')}</mark>`;
+      correctedText += (seg.x || '');
+    }
+  });
+
+  annotatedEl.innerHTML = annotatedHtml;
+  correctedEl.textContent = correctedText;
+  setView('marked');
+
+  const totalErrors = Object.values(counts).reduce((a,b)=>a+b,0);
+  lastCounts = counts;
+  statsRow.innerHTML = `
+    <div class="stat"><b>${totalErrors}</b>${totalErrors === 1 ? 'issue found' : 'issues found'}</div>
+    ${Object.entries(counts).filter(([k,v])=>v>0).map(([k,v]) => `<div class="stat"><b>${v}</b>${CATS[k].label.toLowerCase()}</div>`).join('')}
+  `;
+
+  round += 1;
+  updateStepper();
+
+  input.style.display = 'none';
+  editHint.style.display = 'block';
+  annotatedEl.setAttribute('contenteditable', 'true');
+
+  if(round === 1){
+    viewToggle.style.display = 'none';
+    document.getElementById('resultTitle').textContent = 'Your mistakes, marked';
+    checkBtn.innerHTML = '<span class="seal"></span> Check my correction';
+    if(totalErrors > 0){
+      nextStepNote.textContent = 'Click right into the marked-up text below, fix what you can using the hints, then click "Check my correction."';
+    } else {
+      nextStepNote.textContent = 'No mistakes found! You can still tweak your writing above and check again if you like.';
+    }
+  } else {
+    viewToggle.style.display = 'flex';
+    document.getElementById('resultTitle').textContent = 'Feedback on your revision';
+    checkBtn.innerHTML = '<span class="seal"></span> Check again';
+    if(totalErrors > 0){
+      nextStepNote.textContent = 'Some issues remain — fix them above and check again, or tap "Corrected" to compare with the full fix.';
+    } else {
+      nextStepNote.textContent = 'Great work — no issues left! Tap "Corrected" to compare with the full fix.';
+    }
+    // Step four reached (self-fix vs. model answer comparison available): auto-save once.
+    if(!sessionSaved){
+      saveSession(correctedText, totalErrors);
+      sessionSaved = true;
+    }
+  }
+
+  resultsEl.style.display = 'block';
+  document.getElementById('listenControls').style.display = 'flex';
+  attachTooltips();
+  resetPlayer();
+}
+
+// ── AUTO-SAVE TO SHEET ─────────────────────────────────────────────────
+async function saveSession(modelAnswerText, totalErrors){
+  if(APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === 0){ return; }
+  const payload = {
+    action: 'save',
+    name: (studentNameInput.value || '').trim() || 'Anonymous',
+    timestamp: new Date().toISOString(),
+    originalText: lastOriginalText,
+    selfCorrectedText: annotatedEl.textContent.trim(),
+    modelAnswer: modelAnswerText,
+    totalIssues: totalErrors,
+    tally: lastCounts
+  };
+  try{
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    setStatus('<p class="save-note">✓ Saved to your teacher\'s records.</p>');
+  } catch(err){
+    console.error('Save failed:', err);
+    setStatus('<p class="error-note">Could not save this session automatically. Your feedback above is still here to copy or screenshot.</p>');
+  }
+}
+
+function attachTooltips(){
+  const marks = annotatedEl.querySelectorAll('mark');
+  marks.forEach(m => {
+    m.addEventListener('mouseenter', showTooltip);
+    m.addEventListener('mouseleave', hideTooltip);
+    m.addEventListener('click', (e) => { e.stopPropagation(); showTooltip.call(m, e); });
+  });
+  document.addEventListener('click', hideTooltip);
+}
+
+function showTooltip(e){
+  const cat = this.dataset.cat;
+  const fix = this.dataset.fix;
+  const explain = this.dataset.explain;
+  const showFix = this.dataset.showFix === 'true';
+  const label = CATS[cat] ? CATS[cat].label : 'Other';
+
+  tooltip.innerHTML = `<span class="cat">${label}</span>${explain}` + (showFix ? `<div class="fix">${fix}</div>` : '');
+  const rect = this.getBoundingClientRect();
+  let left = rect.left + window.scrollX;
+
+  tooltip.style.top = (rect.top + window.scrollY - 8) + 'px';
+  tooltip.style.left = left + 'px';
+  tooltip.classList.add('show');
+
+  requestAnimationFrame(() => {
+    const th = tooltip.offsetHeight;
+    tooltip.style.top = (rect.top + window.scrollY - th - 10) + 'px';
+    const tw = tooltip.offsetWidth;
+    if(left + tw > window.innerWidth - 20){
+      left = window.innerWidth - tw - 20;
+      tooltip.style.left = left + 'px';
+    }
+  });
+}
+
+function hideTooltip(e){
+  if(e && e.target && e.target.tagName === 'MARK') return;
+  tooltip.classList.remove('show');
+}
+
+checkBtn.addEventListener('click', checkWriting);
+input.addEventListener('keydown', (e) => {
+  if((e.metaKey || e.ctrlKey) && e.key === 'Enter'){
+    checkWriting();
+  }
+});
+
+// ── LISTEN PLAYER (sentence-chunked, with real controls) ───────────────
+const playPauseBtn = document.getElementById('playPauseBtn');
+const stopBtn = document.getElementById('stopBtn');
+const rewindBtn = document.getElementById('rewindBtn');
+const forwardBtn = document.getElementById('forwardBtn');
+const listenProgress = document.getElementById('listenProgress');
+
+let speechRate = 0.7; // defaults to slow, good for pronunciation practice
+let sentences = [];
+let currentIndex = 0;
+let playerState = 'stopped'; // 'stopped' | 'playing' | 'paused'
+
+function splitIntoSentences(text){
+  const trimmed = (text || '').trim();
+  if(!trimmed) return [];
+  // Split on sentence-ending punctuation, keeping the punctuation.
+  const matches = trimmed.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g);
+  return (matches || [trimmed]).map(s => s.trim()).filter(Boolean);
+}
+
+function getActiveText(){
+  return correctedEl.classList.contains('show') ? correctedEl.textContent : annotatedEl.textContent;
+}
+
+function resetPlayer(){
+  stopSpeech();
+  sentences = splitIntoSentences(getActiveText());
+  currentIndex = 0;
+  updateProgress();
+}
+
+function updateProgress(){
+  listenProgress.textContent = sentences.length ? `${Math.min(currentIndex+1, sentences.length)} / ${sentences.length}` : '0 / 0';
+}
+
+function speakFrom(index){
+  if(!('speechSynthesis' in window)){
+    setStatus('<p class="error-note">Text-to-speech isn\'t supported in this browser.</p>');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  if(index >= sentences.length){
+    playerState = 'stopped';
+    playPauseBtn.textContent = '▶';
+    currentIndex = 0;
+    updateProgress();
+    return;
+  }
+  currentIndex = index;
+  updateProgress();
+  const utterance = new SpeechSynthesisUtterance(sentences[currentIndex]);
+  utterance.lang = 'en-US';
+  utterance.rate = speechRate;
+  utterance.onend = () => {
+    if(playerState === 'playing'){
+      speakFrom(currentIndex + 1);
+    }
+  };
+  window.speechSynthesis.speak(utterance);
+  playerState = 'playing';
+  playPauseBtn.textContent = '❚❚';
+}
+
+function stopSpeech(){
+  if('speechSynthesis' in window){ window.speechSynthesis.cancel(); }
+  playerState = 'stopped';
+  currentIndex = 0;
+  playPauseBtn.textContent = '▶';
+  updateProgress();
+}
+
+playPauseBtn.addEventListener('click', () => {
+  if(!sentences.length){
+    sentences = splitIntoSentences(getActiveText());
+  }
+  if(!sentences.length) return;
+
+  if(playerState === 'playing'){
+    // Pause
+    window.speechSynthesis.pause();
+    playerState = 'paused';
+    playPauseBtn.textContent = '▶';
+  } else if(playerState === 'paused'){
+    // Resume
+    window.speechSynthesis.resume();
+    playerState = 'playing';
+    playPauseBtn.textContent = '❚❚';
+  } else {
+    // Stopped → start from currentIndex (0 unless rewound/forwarded)
+    speakFrom(currentIndex);
+  }
+});
+
+stopBtn.addEventListener('click', stopSpeech);
+
+rewindBtn.addEventListener('click', () => {
+  if(!sentences.length) return;
+  const wasPlaying = playerState === 'playing' || playerState === 'paused';
+  const newIndex = Math.max(0, currentIndex - 1);
+  if(wasPlaying){
+    speakFrom(newIndex);
+  } else {
+    currentIndex = newIndex;
+    updateProgress();
+  }
+});
+
+forwardBtn.addEventListener('click', () => {
+  if(!sentences.length) return;
+  const wasPlaying = playerState === 'playing' || playerState === 'paused';
+  const newIndex = Math.min(sentences.length - 1, currentIndex + 1);
+  if(wasPlaying){
+    speakFrom(newIndex);
+  } else {
+    currentIndex = newIndex;
+    updateProgress();
+  }
+});
+
+document.querySelectorAll('.speed-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    speechRate = parseFloat(btn.dataset.rate);
+    if(playerState === 'playing'){
+      speakFrom(currentIndex); // restart current sentence at new rate
+    }
+  });
+});
+
+viewMarked.addEventListener('click', resetPlayer);
+viewCorrected.addEventListener('click', resetPlayer);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Lesson Plans</title>
+<style>
+:root{--bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;--gy:#666;--wh:#fff;--am:#F4A62A;--yw:#FFF8E7;--border:#D0E4F2;--bg:#F7FAFD}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--dk);background:var(--bg)}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+h2{font-size:19px;font-weight:700;color:var(--bl);margin:0 0 8px}
+.sub{font-size:16px;color:var(--gy);font-style:italic;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:24px}
+.card{background:var(--wh);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:4px solid var(--bl);cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(31,92,153,.1)}
+.card.open{border-top-color:var(--tl)}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:4px;margin-bottom:8px}
+.tag-a{background:#E8F5E9;color:#1B5E20}
+.tag-b{background:#E3F2FD;color:#0D47A1}
+.tag-b2{background:#FFF3E0;color:#BF360C}
+.tag-pd{background:#F3E5F5;color:#4A148C}
+.card-title{font-weight:700;font-size:16px;color:var(--bl);margin-bottom:3px}
+.card-sub{font-size:14px;color:var(--gy)}
+.expand{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+.card.open .expand{display:block}
+.obj{font-size:14px;font-style:italic;color:var(--gy);margin-bottom:10px;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+th{background:var(--bl);color:var(--wh);padding:6px 8px;text-align:left;font-weight:700}
+td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--lt)}
+.ai-col{color:var(--tl);font-style:italic}
+.dl-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border:1px solid var(--bl);border-radius:5px;background:transparent;color:var(--bl);font-size:13px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none}
+.btn:hover{background:var(--bl);color:var(--wh)}
+.tip{background:var(--yw);border-left:4px solid var(--am);border-radius:0 6px 6px 0;padding:10px 14px;font-size:14px;margin-top:10px}
+.tip strong{color:#8B5E00}
+.arrow{display:inline-block;transition:.3s;font-size:13px;margin-left:4px;color:var(--tl)}
+.card.open .arrow{transform:rotate(180deg)}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim img{height:26px;flex-shrink:0}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+<div class="wrap">
+<h1>Lesson Plans</h1>
+<p class="sub">Click any plan to expand the full Stage / Time / Activity / AI Role / Student Task table. Download the editable Word file from inside each plan.</p>
+<div class="grid" id="grid"></div>
+<div class="tip"><strong>📋 Lesson Plan Format:</strong> Every lesson follows the book's standard table - Stage · Time · Activity · AI Role · Student Task. The AI Role column shows exactly what AI does (and what it does not do) at each stage. Download any plan as an editable Word file and adapt for your class.</div>
+</div>
+<script>
+// Real file links go here as materials are built and uploaded.
+// Any download name not listed here renders as a plain (non-functional) button.
+const downloadUrls={
+  'Lean Framework Planner (.docx)':'https://docs.google.com/document/d/1PqNJ45CFrlZQBT_tCBR16N5sYuW05mdeAeWepIwPTCY/edit?usp=sharing',
+  'Five Stuck Points Chart':'https://drive.google.com/file/d/1ufW0xZBHPYSGFDWXexXr92eHRegY5p7C/view?usp=sharing',
+  'Wave Timeline Poster':'https://drive.google.com/file/d/1_4jsi9Ya2NQdRqVfiaGU2TLEnFWO4tUP/view?usp=sharing',
+  'Chapter 2 Reflection Questions':'https://docs.google.com/document/d/1CzobXM16cmL4bJDSFGN5jbyJn9MaO7l5ug1q9OBR9G0/edit?usp=sharing',
+  // Lesson 4 (Ch7) - error log and drill cards already live in Appendix F
+  'Arabic-English Sentence Error Log':'https://docs.google.com/document/d/15xikmeG6TdURG3Ao5zDSDZcC57nEWS5S-rFnkZWYnaU/edit?usp=drive_link',
+  'Sentence Variety Drill Cards':'https://docs.google.com/document/d/15xikmeG6TdURG3Ao5zDSDZcC57nEWS5S-rFnkZWYnaU/edit?usp=drive_link',
+  // Lesson 6 (Ch9) - story audit already lives in Appendix H
+  'Story Audit Checklist':'https://docs.google.com/document/d/1Cg3L5EYGZs_L2MpTQahiCFLLq633gctseaXOLOKs07Y/edit?usp=drive_link',
+  // Lesson 8 (Ch12) - counterargument cards already live in Appendix K
+  'Counterargument Cards (10 topics)':'https://docs.google.com/document/d/1oHusgxo1ZHIrDJvOxcjJk5zCY0Z1LWamsbDwQiC5Ycc/edit?usp=drive_link',
+  // Lesson 2 (Ch5) - Persuasive Paragraph with AI
+  'Persuasive Paragraph Lesson Plan (.docx)':'https://docs.google.com/document/d/1DA5O05wjMRZAhVxBfj6dipUlxMPQtHiwzc_IZnG-2LQ/edit?usp=sharing',
+  'PEEL Scaffold Strip B1':'https://drive.google.com/file/d/1b4DY-93R_JteAaLc-IYjMsZkbrBI2zNQ/view?usp=sharing',
+  'CLEAR Prompt Card':'https://drive.google.com/file/d/1-b9WW7qNF740DG8Qf0x2m4_nhZEnnZur/view?usp=sharing',
+  'AI Collaboration Log':'https://docs.google.com/document/d/1TWO2P7-D-zRm6u5XrK_tFCTmuJj1fr_Vy4tEchyyobo/edit?usp=sharing',
+  // Lesson 3 (Ch6) - Word Upgrade with Technology
+  'Word Upgrade Lesson Plan (.docx)':'https://docs.google.com/document/d/1FG27Zj6o9xvN0JVPkbR0cShESZFdSzfw5oHBK1lyX2w/edit?usp=sharing',
+  'Sensory Word Banks':'https://drive.google.com/file/d/1K_Jgkq6edGNO-ns7ydYimyAfIhB2U5zc/view?usp=sharing',
+  'SKELL Setup Guide':'https://drive.google.com/file/d/1QcGkWktU5FI1KwfU3KbhX7z-68u0gNpA/view?usp=sharing',
+  'Vocabulary Notebook Template':'https://docs.google.com/document/d/1zwlEMulhIo1nackRiqTGsCc2OlF_9k-DTt9y4Ag6Zaw/edit?usp=sharing',
+  // Lesson 4 (Ch7) - Compound Sentences with Technology
+  'Compound Sentences Lesson Plan (.docx)':'https://docs.google.com/document/d/171aBMkbqX6iNcMiWC-t1tx58y3GNUteO6YodN7IjvBs/edit?usp=sharing',
+  'Grammarly Diagnostic Guide':'https://drive.google.com/file/d/17xRiwYuURVhgAT7-7IfUCab5mGoMEBnk/view?usp=sharing',
+  // Lesson 5 (Ch8) - PEEL
+  'PEEL Lesson Plan (.docx)':'https://docs.google.com/document/d/122iRZRokaq8ykR8-nLQsBvCJMP2X8OUf0vbjG_AboNk/edit?usp=sharing',
+  'PEEL Scaffold Strip (A2/B1/B2)':'https://drive.google.com/file/d/1xHR79m-lkU3meNZMqFhFxYobnA43Gk0e/view?usp=sharing',
+  'PIE Scaffold Strip':'https://drive.google.com/file/d/1PQ6yKrybgnO3VhQ32mvdnJ4tr6QnsGDn/view?usp=sharing',
+  'AI Collaboration Log':'https://docs.google.com/document/d/1ASrjLr7pBySD5LuT-IH5ZaDgk6RCR5aAT_JVMTY5yms/edit?usp=sharing',
+  // Lesson 6 (Ch9) - Narrative
+  'Narrative Lesson Plan (.docx)':'https://docs.google.com/document/d/1XR9R5PjPGVglXtQiNjs49NqGx4f5_TBYhS1edR6VpRY/edit?usp=sharing',
+  'CLEAR Prompts - Narrative Starters':'https://drive.google.com/file/d/1ATsKR3XaHN0fRVYDOM7QpUAv50NsmxO1/view?usp=sharing',
+  'Transition Word Card':'https://drive.google.com/file/d/1HhimXIpQIPanL7aikRJtXsOa-AvhwCaR/view?usp=sharing',
+  // Lesson 7 (Ch10) - Descriptive
+  'Descriptive Lesson Plan (.docx)':'https://docs.google.com/document/d/1MUN2Q_ZGtWO42XrGvRfuCotrBcBodQBTuIxVuurVpNc/edit?usp=sharing',
+  'Showing vs Telling Cards':'https://drive.google.com/file/d/1N7vnwX9EQe30gNfSy_P6xSXQbCuUHQjB/view?usp=sharing',
+  'CLEAR Prompts - Sensory Vocabulary':'https://drive.google.com/file/d/12tZ4dh4FacGf_cHnRZGZ0S8txGKCpdKx/view?usp=sharing',
+  // Lesson 8 (Ch11) - Process Essay
+  'Process Essay Lesson Plan (.docx)':'https://docs.google.com/document/d/1g9-zZn_XvXp_t4zvMpRVb_v9rVikhK94uxomafVMGf8/edit?usp=sharing',
+  'Process Essay Template':'https://docs.google.com/document/d/1ue83QGRFSU6bCs-1zEH_ux0frIJV7vUySlQkIPyNsCA/edit?usp=sharing',
+  'Fact-Checking Activity Sheet':'https://drive.google.com/file/d/1APU_-y8JsvgBg7rsEj7_4n67BDP-685u/view?usp=sharing',
+  // Lesson 9 (Ch12) - Argumentative
+  'Argumentative Lesson Plan (.docx)':'https://docs.google.com/document/d/1_2cUNMz2VdhwtQ6BUgLze6PH-fnloi78VSjV2KHLKgg/edit?usp=sharing',
+  'Logical Fallacy Handout':'https://drive.google.com/file/d/1jdDLkow36Lflf1T29njzdw7vDd_pCH2Y/view?usp=sharing',
+  'CLEAR Prompts - Argument Building':'https://drive.google.com/file/d/1ib372DdSy2x3_-Dbn1WrQDns3rKp1G98/view?usp=sharing',
+  // Lesson 10 (Ch19) - PD Workshop
+  'PD Workshop Facilitator Pack (.docx)':'https://docs.google.com/document/d/1TINNuo4lXOGjrAA8xCHQJpt1DgKQUfFEsxR6qdlMRrQ/edit?usp=sharing',
+  'Process Portfolio Checklist':'https://docs.google.com/document/d/1v2oxycDOaMiHdLpVXkOS1RUxQcn6AiKnNsupagmi15A/edit?usp=sharing',
+  'AI Collaboration Log (teacher version)':'https://docs.google.com/document/d/1CkKJ3R8F-a06qnBvbBFGTWXttaC__otk_OTxhuY2QXA/edit?usp=sharing',
+  'CLEAR Feedback Prompt Examples':'https://drive.google.com/file/d/1ms3rgNLQGgBs-RLCD5J2A6xizZcBG6BG/view?usp=sharing',
+  // Lesson 7 (Ch10) - Sensory Word Banks 5 topics
+  'Sensory Word Banks (5 topics)':'https://drive.google.com/file/d/1DriT0_eDD3WsrhyT46I-ejlHAihXTQIU/view?usp=sharing',
+  // Lesson 10 (Ch21) - Multi-Agent System
+  'Multi-Agent Workshop Facilitator Pack (.docx)':'https://docs.google.com/document/d/10pEcm3olE3GvIs0YXphQrN_FIHCaEp0lhCFZGW3oK4U/edit?usp=sharing',
+  'Multi-Agent Five-Dimension Rubric':'https://drive.google.com/file/d/1tJrPNp-xWWnDW_WjPXSUwyPIpH8swO0s/view?usp=sharing',
+  'Multi-Agent System Setup Guide':'https://drive.google.com/file/d/1QQQ_BSXlvEHCkuYMXteV_X0sra4JEV4j/view?usp=sharing',
+  'Multi-Agent Failure Conditions Checklist':'https://drive.google.com/file/d/1IeDlX3klOnJ36qXoWQ37YZJPPtZoZ0sQ/view?usp=sharing'
+};
+const LP=[{id:'l0',title:'Lean Framework Lesson Planning Workshop',ch:'Ch 2',level:'Teacher PD',time:'45 min',levelTag:'tag-pd',
+   obj:'Teachers apply the Lean Framework to redesign one of their own lessons using the five stuck points as the organising principle.',
+   stages:[
+    ['Identify','10 min','Each teacher names one writing task their students consistently struggle with. Which of the 5 stuck points applies?','None','Name the stuck point: Starting / Organising / Vocabulary / Revision / Feedback'],
+    ['Map','10 min','Map the task using the Lean Framework: Purpose → Stuck Point → Scaffold → Produce → Reflect','Lean Framework Planner','Complete the one-page planner for their chosen task'],
+    ['Tool Match','10 min','Which tool from the essential free toolkit addresses their stuck point? Choose one.','Tool reference card','Select and justify one tool'],
+    ['Redesign','10 min','Redesign the lesson with the chosen scaffold built in','Planner','Write the revised lesson structure'],
+    ['Share','5 min','One teacher shares their before/after. Group identifies the stuck point and agrees with or challenges the tool choice.','None','Listen and give one piece of specific feedback'],
+   ],
+   downloads:['Lean Framework Planner (.docx)','Five Stuck Points Chart','Wave Timeline Poster','Chapter 2 Reflection Questions']},
+  {id:'l1',title:'Persuasive Paragraph with AI',ch:'Ch 5',level:'B1',time:'60 min',levelTag:'tag-b',
+   obj:'Students write a persuasive paragraph using AI for brainstorming and evidence generation, keeping the argument and voice entirely their own.',
+   stages:[
+    ['Warm-up','5 min','Read 4 persuasive sentences. Which are convincing and why?','None','Discuss in pairs - identify what makes each one work'],
+    ['Input','10 min','Teacher demonstrates: use CLEAR prompt to generate 3 reasons FOR school uniforms','ChatGPT demo on projector','Observe and note how the prompt is structured'],
+    ['Guided','15 min','Pairs choose a topic and generate a pro/con list using AI','AI for evidence generation only - not for writing','Generate, evaluate relevance, choose strongest 2 points'],
+    ['Write','20 min','Write persuasive paragraph using PEEL structure - AI Collaboration Log open','AI Log only - no further AI assistance','Write independently, document any AI use'],
+    ['Review','10 min','Share with partner. Highlight: claim / evidence / your voice','Optional: AI tone check - "does this sound like me?"','Peer check + revise one sentence'],
+   ],
+   downloads:['Persuasive Paragraph Lesson Plan (.docx)','PEEL Scaffold Strip B1','CLEAR Prompt Card','AI Collaboration Log']},
+  {id:'l2',title:'Word Upgrade with Technology',ch:'Ch 6',level:'B1',time:'45 min',levelTag:'tag-b',
+   obj:'Students upgrade flat adjectives using SKELL and AI. The Lucía activity - moving from "very very good" to vivid and precise vocabulary.',
+   stages:[
+    ['Warm-up','5 min','Read 4 sentences all using "good." Which is most boring?','Projector','Vote and explain why - no right answer'],
+    ['Discover','10 min','Teacher prompts AI: suggest 5 alternatives for "good" at B1 with example sentences','ChatGPT demo','Note alternatives - which feel natural vs forced?'],
+    ['Practice','15 min','Match 8 alternatives (delicious, vibrant, comforting) to 8 sentences','SKELL - search each word to confirm collocation','Match and confirm with corpus evidence'],
+    ['Apply','15 min','Rewrite 5 sentences from their own previous writing - upgrade one adjective per sentence','Google Docs + SKELL','Replace and explain their choice in a comment'],
+   ],
+   downloads:['Word Upgrade Lesson Plan (.docx)','Sensory Word Banks','SKELL Setup Guide','Vocabulary Notebook Template']},
+  {id:'l3',title:'Compound Sentences with Technology',ch:'Ch 7',level:'B1',time:'45 min',levelTag:'tag-b',
+   obj:'Students move from simple to compound and complex sentences using Grammarly for diagnosis and AI for sentence expansion practice.',
+   stages:[
+    ['Warm-up','5 min','Sentence or fragment? Mark 8 phrases S or F on the board','Board','Identify and explain the rule for each'],
+    ['Input','10 min','Introduce FANBOYS (for, and, nor, but, or, yet, so) with examples from Taki\'s paragraph','Google Slides','Note examples and identify the conjunction in each'],
+    ['Practice','15 min','Combine 10 simple sentence pairs using the correct conjunction','Google Docs (shared doc)','Combine and justify conjunction choice'],
+    ['Independent','15 min','Write 5 compound sentences about yesterday using 5 different conjunctions','Google Docs then Grammarly check','Write, then read Grammarly suggestions critically - accept or reject with a reason'],
+   ],
+   downloads:['Compound Sentences Lesson Plan (.docx)','Arabic-English Sentence Error Log','Grammarly Diagnostic Guide','Sentence Variety Drill Cards']},
+  {id:'l4',title:'PEEL Paragraph with Technology',ch:'Ch 8',level:'B1',time:'60 min',levelTag:'tag-b',
+   obj:'Students write a coherent paragraph using PEEL scaffold strips, Google Docs Suggesting Mode for peer review, and AI for feedback questions - not corrections.',
+   stages:[
+    ['Warm-up','5 min','Highlight each new idea in a partner\'s paragraph in a different colour','Google Docs','Count colours = count ideas. More than one colour = more than one paragraph'],
+    ['Input','10 min','Introduce PEEL: Point / Evidence / Explanation / Link - identify in a model paragraph','PEEL strip (printed or on screen)','Label each sentence P, E, E, or L'],
+    ['Guided','15 min','Teacher writes Point sentence live. Class suggests Evidence using AI together','AI for evidence ideas only - class evaluates each suggestion','Decide: is this evidence relevant? Specific? Verifiable?'],
+    ['Write','20 min','Write full PEEL paragraph - AI Collaboration Log open throughout','AI Log - document any AI use at any stage','Write independently. Log every AI interaction.'],
+    ['Peer Review','10 min','Switch documents. Use Suggesting Mode to label each sentence P, E, E, or L','Google Docs Suggesting Mode','Give specific feedback on one element that could be stronger'],
+   ],
+   downloads:['PEEL Lesson Plan (.docx)','PEEL Scaffold Strip (A2/B1/B2)','PIE Scaffold Strip','AI Collaboration Log']},
+  {id:'l5',title:'TikTok to Academic Narrative',ch:'Ch 9',level:'B1',time:'60 min',levelTag:'tag-b',
+   obj:'Students analyse a TikTok-style story structure, then transfer those same elements - hook, tension, resolution, point - to a written English narrative. The Taki lesson.',
+   stages:[
+    ['Warm-up','5 min','Show a 30-second phone video. What is the hook? What is the point?','Projector + phone','Identify: hook / tension / resolution / point'],
+    ['Analyse','10 min','Map the video using the Story Audit: Hook → Character → Conflict → Resolution → Point','Story Audit worksheet','Complete the structure map for the video'],
+    ['Bridge','15 min','Teacher asks AI for story starters: "10 narrative starters at B1 for 13–15 year olds. No fantasy. Real, relatable situations."','ChatGPT/Claude demo','Choose one that matches a real memory - the starter must be true, not invented'],
+    ['Write','25 min','Write narrative paragraph using chosen starter + Story Audit checklist throughout','Story Audit + AI Log','Write, self-audit each element, revise before submitting'],
+    ['Share','5 min','Volunteer reads opening sentence only. Class: what do you want to know next?','None','Listen and ask one genuine question'],
+   ],
+   downloads:['Narrative Lesson Plan (.docx)','Story Audit Checklist','CLEAR Prompts - Narrative Starters','Transition Word Card']},
+  {id:'l6',title:'Descriptive Paragraph with AI Support',ch:'Ch 10',level:'A2–B1',time:'60 min',levelTag:'tag-a',
+   obj:'AI generates sensory word banks. Students observe, select, and describe. AI writes nothing - students choose and use only words that match what they actually experienced. The Lina lesson.',
+   stages:[
+    ['Warm-up','5 min','Read Lina\'s paragraph: "The food was good. The place was nice." What is missing?','Projector','Identify: zero sensory detail - what do we actually see, hear, or smell?'],
+    ['Word Bank','15 min','Each student chooses a real place. Teacher prompts AI for sensory words by topic and sense','ChatGPT/Claude demo','Choose 3 words that match what THEY actually experienced - reject words that do not fit'],
+    ['Practice','10 min','Write 3 sentences using chosen sensory words - one sight, one sound, one smell','Google Docs','Draft with word bank open. Do not use AI for sentence writing.'],
+    ['Expand','20 min','Write full descriptive paragraph: at least one detail per sense + spatial organisation','Sensory Word Bank + AI Log','Write. Then self-check: is every detail one you actually observed?'],
+    ['Peer Check','10 min','Partner circles the strongest sensory detail and asks: "I want to know more about..."','Google Docs Suggesting Mode','Receive and respond to one peer question in the revision'],
+   ],
+   downloads:['Descriptive Lesson Plan (.docx)','Sensory Word Banks (5 topics)','Showing vs Telling Cards','CLEAR Prompts - Sensory Vocabulary']},
+  {id:'l7',title:'Process Essay with AI Support',ch:'Ch 11',level:'A2–B1',time:'60 min',levelTag:'tag-a',
+   obj:'Scaffold the visual-to-verbal translation. Replace "and then" with specific transitions. Fact-check AI output. The Faisal lesson.',
+   stages:[
+    ['Warm-up','5 min','Show Faisal\'s essay: 10 sentences, 8 start with "and then." Count them.','Projector','Identify the pattern - then name what each "and then" actually means: sequence? cause? result?'],
+    ['Transition','10 min','AI prompt: "Identify 3 places I used \'and then\' and suggest a more specific transition for each."','ChatGPT demo','See the before/after - is the suggestion actually more accurate?'],
+    ['Scaffold','15 min','Students draw or photograph their process first. Annotate steps in L1.','Phone or paper','Complete the visual map before writing a single English word'],
+    ['Write','20 min','Write the process paragraph from the visual map, using the Transition Word Card','Transition Card + AI Log','Write from visual to verbal - document any AI use'],
+    ['Fact-check','10 min','AI prompt: "Is this information correct? Check one claim in my paragraph and tell me what to verify."','ChatGPT - critical literacy','Verify at least one factual claim before submitting'],
+   ],
+   downloads:['Process Essay Lesson Plan (.docx)','Transition Word Card','Process Essay Template','Fact-Checking Activity Sheet']},
+  {id:'l8',title:'Argumentative Essay with AI Support',ch:'Ch 12',level:'B2',time:'90 min',levelTag:'tag-b2',
+   obj:'Students write a full argumentative essay. AI generates the opposing side. Students must engage with counterarguments genuinely before writing their rebuttal. The Khalid lesson.',
+   stages:[
+    ['Warm-up','5 min','Read Khalid\'s essay: "Schools should not wear uniforms because they are boring. I am right." What is missing?','Projector','Identify: no evidence, no counterargument, no logical structure'],
+    ['Claim','10 min','Students write ONE precise claim sentence on their chosen topic','None - this must be entirely their own thinking','Write: "[X] should/should not because [specific reason]..."'],
+    ['Other Side','20 min','AI prompt: "Give me 3 reasons why [opposite position] might be correct. I need to genuinely understand the other side."','ChatGPT/Claude','Read all 3. Choose the strongest counterargument - the one that is hardest to answer'],
+    ['Plan','15 min','Build 5-paragraph plan: Intro / Claim+Evidence / Counterargument / Rebuttal / Conclusion','Outline template','Complete before writing. Do not start the essay without a complete plan.'],
+    ['Write','30 min','Write full argumentative essay following the plan - AI Log open','AI Log only - no AI assistance with the writing itself','Write independently. Document. Every AI interaction logged.'],
+    ['Review','10 min','Partner reads the rebuttal paragraph only: is the counterargument addressed fairly and specifically?','Google Docs Suggesting Mode','Peer feedback specifically on the rebuttal quality'],
+   ],
+   downloads:['Argumentative Lesson Plan (.docx)','Counterargument Cards (10 topics)','Logical Fallacy Handout','CLEAR Prompts - Argument Building']},
+  {id:'l9',title:'Process-Based Assessment Workshop',ch:'Ch 19',level:'Teacher PD',time:'60 min',levelTag:'tag-pd',
+   obj:'Teachers learn to assess the full writing process - not just the final draft. Based on the process-assessment model from Chapter 19. For department PD sessions.',
+   stages:[
+    ['Problem','10 min','What does a student actually do with your feedback comment? (Usually: look at grade, throw paper away)','Discussion - no tech needed','Reflect honestly on own experience as a student and as a teacher'],
+    ['The AI Problem','10 min','AI can produce a perfect B1 paragraph in 8 seconds. What does final-draft grading measure now?','Case study: Khalid\'s submission','Identify the gap between what we assess and what we need to know'],
+    ['CLEAR Feedback','20 min','Practice: write a CLEAR prompt for AI as feedback assistant (not grader). Try with a real student text.','ChatGPT/Claude + CLEAR card','Write and send one feedback prompt. Read the result critically: is this useful?'],
+    ['Portfolio','15 min','Walk through the 5-stage portfolio checklist. What would you collect at each stage in your current class?','Process Portfolio Checklist','Complete for one assignment you are running now'],
+    ['Commit','5 min','One concrete change to your next assignment design. Write it on the PD plan card.','PD Plan template','Name the change, the date, and how you will know if it worked'],
+   ],
+   downloads:['PD Workshop Facilitator Pack (.docx)','Process Portfolio Checklist','AI Collaboration Log (teacher version)','CLEAR Feedback Prompt Examples']},
+  {id:'l10',title:'Multi-Agent Writing Feedback System',ch:'Ch 21',level:'Teacher PD',time:'60 min',levelTag:'tag-pd',
+   obj:'Teachers set up the 5-agent automated writing feedback pipeline. Students submit once; the system delivers a rubric-scored, multi-dimensional report by email with zero teacher marking effort per essay.',
+   stages:[
+    ['The problem','10 min','How many minutes do you spend on first-draft marking per assignment? Estimate honestly.','Discussion \u2014 no tech needed','Share one number. What would you do with that time?'],
+    ['System overview','10 min','Walk through the 5-step pipeline. Key message: teacher sets it up once; it runs forever.','Slide or board diagram','Ask one clarifying question about how the pipeline works.'],
+    ['Five agents','15 min','Show Table 21.1. Why is constraint more important than intelligence in agent design?','Multi-Agent Setup Guide','In pairs: which agent would be hardest to prompt well, and why?'],
+    ['Rubric','15 min','Walk through the 5-dimension rubric. Key message: the rubric IS the system.','Five-Dimension Rubric card','Score a sample student essay using the rubric, independently.'],
+    ['Three risks','10 min','Cover data governance, feedback accuracy, and absence of mediation honestly.','Failure Conditions Checklist','Which risk concerns you most? Why?'],
+    ['Commit','5 min','What will participants try first? Facilitate open discussion.','Nothing \u2014 just conversation','Commit to one concrete next step in writing.'],
+   ],
+   downloads:['Multi-Agent Workshop Facilitator Pack (.docx)','Multi-Agent Five-Dimension Rubric','Multi-Agent System Setup Guide','Multi-Agent Failure Conditions Checklist']},
+];
+
+function build(){
+  const g=document.getElementById('grid');
+  g.innerHTML=LP.map(l=>`
+<div class="card" id="${l.id}" onclick="toggle('${l.id}')">
+  <span class="tag ${l.levelTag}">${l.level}</span>
+  <span class="tag tag-b" style="background:#F5F5F5;color:#555">${l.time}</span>
+  <div class="card-title">${l.title} <span class="arrow">▾</span></div>
+  <div class="card-sub">${l.ch}</div>
+  <div class="expand">
+    <p class="obj">${l.obj}</p>
+    <table>
+      <tr><th>Stage</th><th>Time</th><th>Activity</th><th>AI Role</th><th>Student Task</th></tr>
+      ${l.stages.map((s,i)=>`<tr>
+        <td style="font-weight:700;color:var(--bl);white-space:nowrap">${s[0]}</td>
+        <td style="white-space:nowrap">${s[1]}</td>
+        <td>${s[2]}</td>
+        <td class="ai-col">${s[3]}</td>
+        <td>${s[4]}</td>
+      </tr>`).join('')}
+    </table>
+    <div class="dl-row">
+      ${l.downloads.map(d=>downloadUrls[d]?`<a class="btn" href="${downloadUrls[d]}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📥 ${d}</a>`:`<button class="btn" onclick="event.stopPropagation()">📥 ${d}</button>`).join('')}
+    </div>
+  </div>
+</div>`).join('');
+}
+
+function toggle(id){
+  const el=document.getElementById(id);
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'));
+  if(!isOpen)el.classList.add('open');
+}
+
+build();
+</script>
+
+
+
+<div class="gw-footer-slim">
+  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
+  <strong>GenAlphaWrite Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+  <span class="sep">|</span>
+  <span>Last update: 10 July 2026</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="gw-nav">
+  <a href="tool-setup-guides.html">← Tools Glossary</a>
+  <a href="prompt-library.html">Prompts →</a>
+</div>
+</body>
+</html>

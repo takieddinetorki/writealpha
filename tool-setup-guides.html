@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Tool Guides</title>
+<style>
+/* WriteAlpha Shared Styles - included in every page */
+:root{
+  --bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;
+  --gy:#666666;--wh:#ffffff;--am:#F4A62A;--yw:#FFF8E7;
+  --gr:#2E7D32;--border:#D0E4F2;--bg:#F7FAFD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;
+     line-height:1.6;color:var(--dk);background:var(--bg)}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+h2{font-size:21px;font-weight:700;color:var(--bl);margin:28px 0 10px;
+   padding-bottom:6px;border-bottom:2px solid var(--border)}
+h3{font-size:16px;font-weight:700;color:var(--tl);margin:16px 0 6px;
+   text-transform:uppercase;letter-spacing:.05em}
+p{margin-bottom:10px;font-size:16px}
+.sub{font-size:16px;color:var(--gy);font-style:italic;margin-bottom:20px}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0}
+.card{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+      padding:16px;border-left:4px solid var(--tl)}
+.card-title{font-weight:700;font-size:16px;color:var(--bl);margin-bottom:6px}
+.card p{font-size:15px;color:var(--gy);margin:0}
+.tag{display:inline-block;background:var(--lt);color:var(--tl);
+     font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:8px;margin-right:4px}
+
+/* Pull quote / info box */
+.pullquote{background:var(--lt);border-left:5px solid var(--bl);
+           padding:14px 18px;margin:20px 0;border-radius:0 8px 8px 0;
+           font-style:italic;font-size:17px;color:var(--bl)}
+.tip{background:var(--yw);border-left:4px solid var(--am);
+     border-radius:0 6px 6px 0;padding:12px 16px;margin:16px 0;font-size:15px}
+.tip strong{color:#8B5E00}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0}
+th{background:var(--bl);color:var(--wh);padding:8px 10px;text-align:left;font-weight:700}
+td{padding:7px 10px;border-bottom:1px solid var(--border)}
+tr:nth-child(even) td{background:var(--lt)}
+
+/* Lists */
+.item-list{list-style:none;margin:10px 0}
+.item-list li{padding:8px 12px;border-bottom:1px solid var(--border);
+              font-size:15px;display:flex;align-items:flex-start;gap:8px}
+.item-list li:last-child{border-bottom:none}
+.item-title{font-weight:700;color:var(--dk)}
+.item-desc{color:var(--gy);font-size:14px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;
+     border:1px solid var(--bl);border-radius:5px;background:transparent;
+     color:var(--bl);font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--bl);color:var(--wh)}
+.btn-primary{background:var(--bl);color:var(--wh);border-color:var(--bl)}
+.btn-primary:hover{background:#164a7a}
+.btn-teal{background:var(--tl);color:var(--wh);border-color:var(--tl)}
+.btn-teal:hover{background:#1a6e8a}
+
+/* Vignette */
+.vignette{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+           padding:14px 16px;margin:10px 0;display:flex;gap:12px}
+.vignette .ico{font-size:24px;flex-shrink:0}
+.vig-name{font-weight:700;color:var(--bl);font-size:15px}
+.vig-desc{font-size:14px;color:var(--gy)}
+.vig-quote{font-size:15px;font-style:italic;color:var(--dk);margin-top:4px;
+           border-top:1px solid var(--border);padding-top:4px}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:24px 0}
+
+/* Hero */
+.hero{background:var(--bl);color:var(--wh);border-radius:10px;
+      padding:32px 28px;margin-bottom:24px}
+.hero h1{color:var(--wh);font-size:28px}
+.hero p{opacity:.88;font-size:16px;margin-top:8px;max-width:620px}
+.hero-quote{font-style:italic;opacity:.75;font-size:15px;margin-top:12px;
+            border-top:1px solid rgba(255,255,255,.2);padding-top:10px}
+
+/* Start cards (home) */
+.start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.start-card{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+            padding:18px;text-align:center;cursor:pointer;transition:.2s}
+.start-card:hover{border-color:var(--tl);transform:translateY(-2px)}
+.start-icon{font-size:28px;margin-bottom:8px}
+.start-title{font-weight:700;color:var(--bl);font-size:15px;margin-bottom:4px}
+.start-desc{font-size:14px;color:var(--gy)}
+
+@media(max-width:600px){
+  .start-grid{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:1fr}
+}
+
+
+
+.tool-anchor{scroll-margin-top:20px}
+.tool-card{background:var(--wh);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin:18px 0;border-top:4px solid var(--tl)}
+.tool-card h2{border:none;margin-top:0;font-size:20px}
+.steps{padding-left:20px}
+.steps li{margin-bottom:6px;font-size:15px}
+.persp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.persp .box{background:var(--lt);border-radius:6px;padding:10px 12px;font-size:12.5px}
+.persp .box h4{font-size:13px;text-transform:uppercase;color:var(--tl);margin-bottom:4px}
+.shot{background:#E8ECEF;border:1px dashed var(--gy);border-radius:6px;padding:30px;text-align:center;
+  color:var(--gy);font-size:14px;margin:10px 0}
+@media(max-width:600px){.persp{grid-template-columns:1fr}}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim img{height:26px;flex-shrink:0}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+
+<div class="wrap">
+
+<h1>Tool Setup Guides</h1>
+<p class="sub">Step-by-step setup, troubleshooting, and classroom use for every tool named in the book. 🟢 Easy &middot; 🟡 Moderate &middot; 🔴 Takes practice</p>
+
+<h2>Quick index</h2>
+<div class="dl-row">
+<a class="btn" href="#google-docs">Google Docs</a><a class="btn" href="#chatgpt">ChatGPT</a><a class="btn" href="#claude">Claude</a><a class="btn" href="#gemini">Gemini</a><a class="btn" href="#grammarly">Grammarly</a><a class="btn" href="#languagetool">LanguageTool</a><a class="btn" href="#padlet">Padlet</a><a class="btn" href="#skell">SKELL</a><a class="btn" href="#hypothesis">Hypothesis</a><a class="btn" href="#quill">Quill</a></div>
+<div class="tool-card tool-anchor" id="google-docs">
+  <h2>Google Docs <span style="font-size:14px;color:var(--gy)">🟢 &middot; used in Chapters 3, 6, 7, 8, 12</span></h2>
+  <p><strong>Purpose:</strong> A free, cloud-based word processor that makes revision history, suggesting-mode peer feedback, and voice typing available to any class with browser access.</p>
+  <div class="shot">[Screenshot placeholder: Google Docs main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to docs.google.com and sign in with a school or personal Google account.</li><li>Create a new document and rename it using a consistent class naming convention (e.g., Class-StudentName-Task).</li><li>Share with students or classmates via the Share button, setting permission to 'Comment' or 'Editor' as appropriate.</li><li>Turn on Suggesting mode (top-right dropdown, currently set to 'Editing') for peer-review tasks so changes are proposed, not applied directly.</li><li>Use Tools → Voice typing for students who benefit from speaking ideas before typing them.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Students editing directly instead of suggesting → require Suggesting mode for all peer-review tasks and check the mode before reading submissions.</li><li>Lost work from accidental deletion → use File → Version history → See version history to restore any previous draft.</li><li>Students unable to access shared docs on shared family devices → use 'Anyone with the link can comment' for low-stakes tasks instead of requiring individual logins.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">During a peer-review lesson, pair students and require each reader to leave at least two comments and one suggested edit using Suggesting mode before the writer is allowed to revise.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Always check Suggesting mode is on before a peer-review lesson begins.</li><li>Use Revision History to assess individual contribution in group-written documents.</li><li>Pair Voice Typing with the speed-write activities in Chapter 2 for perfectionist-shutdown students.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Reduces marking time on group projects because Revision History shows exactly who wrote what, even when the final document looks seamless.</div>
+    <div class="box"><h4>Student perspective</h4>Suggesting mode feels safer than editing directly - it doesn't feel like 'ruining' a classmate's work, which makes students more willing to give honest feedback.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="chatgpt">
+  <h2>ChatGPT <span style="font-size:14px;color:var(--gy)">🟢 &middot; used in Chapters 5, 8–11</span></h2>
+  <p><strong>Purpose:</strong> A general-purpose AI chatbot, useful for brainstorming, explaining grammar, generating model texts, and answering CLEAR-built prompts.</p>
+  <div class="shot">[Screenshot placeholder: ChatGPT main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to chat.openai.com and create a free account (an email address is sufficient; no payment required for the free tier).</li><li>Start a new chat and paste a CLEAR-built prompt (see Chapter 5 and the AI Prompt Library).</li><li>Read the output critically before sharing it with students - check for hallucinated facts or overly advanced vocabulary.</li><li>For repeated classroom prompts, save them in a separate document so the same CLEAR prompt can be reused across classes.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Generic, overly polished output → add explicit Audience and Length constraints to the prompt; vague prompts produce vague results.</li><li>Free-tier usage limits during peak hours → have a backup prompt ready in Claude or Gemini for the same task.</li><li>Students pasting whole essays for AI to 'fix' → enforce the AI Collaboration Log requirement (Chapter 5) so every AI interaction is visible and accountable.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Give students a CLEAR prompt template with blanks to fill in (topic, level, length, audience) rather than free-form access, so the first thing they learn is prompt structure, not just chatting.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Never let AI output go directly into a final submission - always require a human revision pass.</li><li>Demonstrate at least one hallucinated 'fact' live in class early in the term to build healthy scepticism.</li><li>Keep a personal library of three or four CLEAR prompts you reuse across units.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>The single biggest time-saver for generating differentiated reading passages and model texts at multiple CEFR levels for the same lesson.</div>
+    <div class="box"><h4>Student perspective</h4>Feels less intimidating than asking a teacher for help repeatedly - useful for shy students, as long as they know the rules for what they may and may not ask it to do.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="claude">
+  <h2>Claude (Anthropic) <span style="font-size:14px;color:var(--gy)">🟢 &middot; used in Chapter 5</span></h2>
+  <p><strong>Purpose:</strong> An AI assistant well-suited to longer-form feedback and nuanced explanation, often producing more measured, less generic prose than other chatbots.</p>
+  <div class="shot">[Screenshot placeholder: Claude (Anthropic) main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to claude.ai and create a free account.</li><li>Start a conversation and paste a full student paragraph or essay along with a clear feedback request (e.g., 'Give two strengths, two areas to improve, and one guiding question - do not rewrite the text').</li><li>Review the feedback for tone and accuracy before sharing it with the student.</li><li>For repeated use, save your preferred feedback-request wording so the format stays consistent across submissions.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Free tier message limits reset on a rolling basis - pace heavy classroom use across the day rather than all at once.</li><li>Overly long, dense replies - explicitly ask for a fixed number of points (e.g., 'no more than 150 words total').</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Use Claude for the AI-assisted feedback workflow in Chapter 19 and the AI Feedback Tool page: paste a paragraph, request structured feedback only, never a rewrite.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Always request feedback in a fixed format so it is easy to scan quickly across many students.</li><li>Ask explicitly for guiding questions rather than corrected text, to preserve student ownership of the revision.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Particularly useful for the multi-agent feedback system in Chapter 21, where longer, structured outputs are needed.</div>
+    <div class="box"><h4>Student perspective</h4>Tends to sound less like a robot than other tools, which some students find easier to actually read and act on.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="gemini">
+  <h2>Google Gemini <span style="font-size:14px;color:var(--gy)">🟢 &middot; used in Chapter 5</span></h2>
+  <p><strong>Purpose:</strong> Google's AI assistant, integrated directly into Google Docs, useful for in-document vocabulary help and quick research without leaving the writing environment.</p>
+  <div class="shot">[Screenshot placeholder: Google Gemini main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Open a Google Doc and look for the Gemini icon in the top-right toolbar (availability depends on your Google Workspace settings).</li><li>Highlight a sentence or paragraph and ask Gemini for a vocabulary upgrade or clarity check directly within the document.</li><li>For research tasks, open Gemini in a separate tab and ask for a short, cited summary of a topic before students begin an expository or argumentative draft.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Feature not visible → check with your school's Workspace administrator, since Gemini in Docs requires certain account settings to be enabled.</li><li>Inconsistent integration across personal vs. school accounts → have a fallback plan using the standalone Gemini app.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">During drafting, students highlight one sentence they're unsure about and ask Gemini for one alternative phrasing, then decide themselves whether to use it.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Use the in-document integration only for short, targeted checks - not whole-paragraph generation.</li><li>Treat its research summaries as a starting point for source evaluation, not a final citation.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Saves the back-and-forth of switching tabs for small in-draft vocabulary questions.</div>
+    <div class="box"><h4>Student perspective</h4>Feels like a natural extension of the writing tool itself rather than a separate 'AI moment,' which lowers the sense of novelty-as-distraction.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="grammarly">
+  <h2>Grammarly <span style="font-size:14px;color:var(--gy)">🟢 &middot; used in Chapter 6</span></h2>
+  <p><strong>Purpose:</strong> A grammar and style checker best used as a diagnostic tool that explains errors, not a crutch that silently fixes them.</p>
+  <div class="shot">[Screenshot placeholder: Grammarly main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to grammarly.com and create a free account, or install the browser extension.</li><li>Paste or write directly in the Grammarly editor; suggestions appear inline.</li><li>Click each suggestion individually to read the explanation before accepting or rejecting it - never use 'Accept All.'</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Students click Accept All without reading explanations → require the seven-step diagnostic protocol from Chapter 7 for any graded use.</li><li>Free tier flags fewer issues than Premium → supplement with LanguageTool for a second pass on style-level issues.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Run the Grammar Detective activity (Chapter 7): students must explain in their own words what error each suggestion fixes before deciding whether to accept it.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Never grade a draft that shows zero remaining Grammarly suggestions as automatically 'correct' - some suggestions are wrong.</li><li>Pair with the diagnostic protocol every time, not just occasionally.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Cuts down on repetitive correction of the same mechanical errors, freeing class feedback time for content and structure.</div>
+    <div class="box"><h4>Student perspective</h4>Can feel like 'getting in trouble' if used punitively - frame it explicitly as a practice tool, not a test.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="languagetool">
+  <h2>LanguageTool <span style="font-size:14px;color:var(--gy)">🟢 &middot; used in Chapter 7</span></h2>
+  <p><strong>Purpose:</strong> An open-source grammar and style checker, useful as a free alternative or second opinion alongside Grammarly.</p>
+  <div class="shot">[Screenshot placeholder: LanguageTool main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to languagetool.org and use the free web editor, or install the browser extension.</li><li>Paste student text and review flagged issues by category (grammar, style, punctuation).</li><li>Use alongside Grammarly to cross-check ambiguous suggestions.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Occasional false positives on informal register → teach students to ask 'does this rule apply in this context?' rather than accepting automatically.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Use as the second check in a two-tool diagnostic pass: Grammarly first, LanguageTool second, discrepancies discussed as a class.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Free and ad-supported - confirm your school's browser/extension policy before classroom-wide rollout.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>A genuinely free fallback when a class doesn't have Grammarly Premium access.</div>
+    <div class="box"><h4>Student perspective</h4>Functions almost identically to Grammarly from a student's point of view, so switching tools doesn't require re-teaching the protocol.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="padlet">
+  <h2>Padlet <span style="font-size:14px;color:var(--gy)">🟡 &middot; used in Chapters 4, 7</span></h2>
+  <p><strong>Purpose:</strong> A free digital noticeboard for posting sticky notes, images, or short texts - ideal for brainstorming and asynchronous idea-sharing.</p>
+  <div class="shot">[Screenshot placeholder: Padlet main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to padlet.com and create a free account.</li><li>Click '+ Make a Padlet' and choose a layout (Wall is the most flexible for brainstorming).</li><li>Share the link or QR code with students; enable anonymous posting for low-stakes brainstorming.</li><li>Students click the '+' button to add a post - text, image, or link.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Students posting in L1 by default → set a visible class rule and model one English post first; address this directly rather than deleting posts silently.</li><li>Free tier limits you to 3 active Padlets → archive completed boards regularly to stay within the limit, or reuse one board across units with clearly labelled sections.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Use a single shared Padlet wall for a whole-class brainstorm before a narrative or descriptive writing task, then have students select one idea from the board, not necessarily their own, to develop.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Set the language rule before the activity starts, not after the first L1 post appears.</li><li>Archive boards promptly to manage the free-tier limit.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>An easy way to see every student's initial idea at a glance, including from students who rarely speak up in class discussion.</div>
+    <div class="box"><h4>Student perspective</h4>Lower-stakes than speaking aloud in front of the class, which surfaces more ideas from quieter or more anxious students.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="skell">
+  <h2>SKELL <span style="font-size:14px;color:var(--gy)">🟡 &middot; used in Chapter 6</span></h2>
+  <p><strong>Purpose:</strong> A free corpus tool (Sketch Engine for Language Learning) that shows real collocations, example sentences, and word frequency from authentic text.</p>
+  <div class="shot">[Screenshot placeholder: SKELL main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to skell.sketchengine.eu (no account required).</li><li>Type a word into the search box and choose 'Word Sketch' to see its typical collocations by grammatical category.</li><li>Use 'Examples' to see the word in real, authentic sentences, and 'Similar Words' to find genuinely interchangeable alternatives.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Output can look dense or technical for lower-level students → pre-select 3–4 collocations from the results yourself rather than sending B1 students to browse unsupervised.</li><li>No login means no saved history - have students record useful collocations in their own vocabulary log.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Before a descriptive writing task, look up a key adjective as a class and identify which nouns it actually collocates with, modelling the lookup process before students try it independently.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Use Word Sketch, not just Examples, when the teaching goal is collocation rather than general usage.</li><li>Pair with Ozdic for younger or lower-level classes that find SKELL's interface dense.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Catches collocation errors invisible to grammar checkers, since 'exquisite teacher' is grammatically correct but simply not idiomatic.</div>
+    <div class="box"><h4>Student perspective</h4>Initially feels like 'more work' than a thesaurus, but students who use it consistently report fewer 'this sounds weird' comments on their writing.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="hypothesis">
+  <h2>Hypothesis <span style="font-size:14px;color:var(--gy)">🟡 &middot; used in Chapter 8</span></h2>
+  <p><strong>Purpose:</strong> A free collaborative annotation tool that lets a whole class mark up the same text together, useful for paragraph-level peer review.</p>
+  <div class="shot">[Screenshot placeholder: Hypothesis main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to hypothes.is and create a free account, or install the browser extension.</li><li>Open the shared text (a student paragraph published online, or a PDF) with the extension active.</li><li>Highlight a section of text and click the annotation icon to leave a comment visible to the whole group.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Students leaving vague comments ('good job') → provide a sentence-starter bank for annotation comments (e.g., 'This works because...', 'I'm not sure what this means because...').</li><li>Setup overhead for a first-time class → run one low-stakes practice annotation before using it for graded peer review.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">Use for the paragraph-unity highlighting activity (Chapter 8): students annotate a shared paragraph, marking which sentences support the topic sentence and which don't.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Always provide annotation sentence starters for the first few uses until habits form.</li><li>Reserve for paragraph- or sentence-level review; whole-essay annotation can become overwhelming.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Makes peer-review patterns visible across an entire class at once, rather than scattered across individual papers.</div>
+    <div class="box"><h4>Student perspective</h4>Seeing classmates' annotations on the same shared text normalises disagreement and multiple valid readings of the same paragraph.</div>
+  </div>
+</div>
+
+<div class="tool-card tool-anchor" id="quill">
+  <h2>Quill <span style="font-size:14px;color:var(--gy)">🟡 &middot; used in Chapter 7</span></h2>
+  <p><strong>Purpose:</strong> A free, research-backed platform offering automated sentence-level diagnostic exercises and feedback reports.</p>
+  <div class="shot">[Screenshot placeholder: Quill main interface - replace with your own annotated screenshot before publishing]</div>
+  <h3>Step-by-step setup</h3>
+  <ol class="steps"><li>Go to quill.org and create a free teacher account, then create a class and add students via class code.</li><li>Assign a diagnostic activity matched to the sentence-level error type currently being taught (e.g., fragments, run-ons).</li><li>Review the automatically generated student diagnostic reports to identify which error types need re-teaching.</li></ol>
+  <h3>Common problems and solutions</h3>
+  <ul class="steps"><li>Students working through activities without engaging meaningfully → spot-check by asking a student to explain why their answer was correct, not just whether it was.</li><li>Reports can be detailed - schedule 10 minutes weekly specifically to review them rather than letting them accumulate unread.</li></ul>
+  <h3>Classroom use example</h3>
+  <p style="font-size:15px">After teaching one sentence-error type (e.g., dangling modifiers, Chapter 7), assign a matched Quill activity as homework, then use the diagnostic report to form a small re-teaching group the following lesson.</p>
+  <h3>Best-practice recommendations</h3>
+  <ul class="steps"><li>Match activities tightly to the specific error type just taught, rather than assigning broad general practice.</li><li>Use diagnostic reports to group students for targeted re-teaching, not just as a completion record.</li></ul>
+  <div class="persp">
+    <div class="box"><h4>Teacher perspective</h4>Generates individualised diagnostic data without requiring the teacher to mark each sentence by hand.</div>
+    <div class="box"><h4>Student perspective</h4>Immediate feedback on each sentence matches the fast-feedback expectation described in Chapter 1, keeping engagement higher than delayed worksheet marking.</div>
+  </div>
+</div>
+
+<div class="tip"><strong>💡 Before adopting any new tool - the CLEAR Evaluation:</strong><br>
+C: What problem does this solve in my classroom?<br>
+L: Is it appropriate for my students' language level?<br>
+E: What does successful classroom use look like?<br>
+A: What will students actually produce with it?<br>
+R: What should this tool NOT be used for? Name the restriction before students encounter it.</div>
+
+</div>
+
+
+
+<div class="gw-footer-slim">
+  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
+  <strong>GenAlphaWrite Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+  <span class="sep">|</span>
+  <span>Last update: 10 July 2026</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="gw-nav">
+  <a href="templates.html">← Templates</a>
+  <a href="lesson-plans.html">Implementation →</a>
+</div>
+</body>
+</html>

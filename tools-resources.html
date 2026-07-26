@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WriteAlpha - Tools &amp; Resources</title>
+<style>
+/* WriteAlpha Shared Styles - included in every page */
+:root{
+  --bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;
+  --gy:#666666;--wh:#ffffff;--am:#F4A62A;--yw:#FFF8E7;
+  --gr:#2E7D32;--border:#D0E4F2;--bg:#F7FAFD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;
+     line-height:1.6;color:var(--dk);background:var(--bg)}
+h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
+h2{font-size:21px;font-weight:700;color:var(--bl);margin:28px 0 10px;
+   padding-bottom:6px;border-bottom:2px solid var(--border)}
+p{margin-bottom:10px;font-size:16px}
+.sub{font-size:16px;color:var(--gy);font-style:italic;margin-bottom:20px}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:16px 0}
+.card{background:var(--wh);border:1px solid var(--border);border-radius:8px;
+      padding:16px;border-left:4px solid var(--tl);text-decoration:none;display:block;color:inherit;transition:.15s}
+.card:hover{border-color:var(--tl);transform:translateY(-2px);box-shadow:0 4px 10px rgba(31,92,153,.08)}
+.card-title{font-weight:700;font-size:16px;color:var(--bl);margin-bottom:6px}
+.card p{font-size:15px;color:var(--gy);margin:0}
+
+.pullquote{background:var(--lt);border-left:5px solid var(--bl);
+           padding:14px 18px;margin:20px 0;border-radius:0 8px 8px 0;
+           font-style:italic;font-size:17px;color:var(--bl)}
+
+.hero{background:var(--bl);color:var(--wh);border-radius:10px;
+      padding:32px 28px;margin-bottom:24px}
+.hero h1{color:var(--wh);font-size:28px}
+.hero p{opacity:.88;font-size:16px;margin-top:8px;max-width:620px}
+
+@media(max-width:600px){
+  .card-grid{grid-template-columns:1fr}
+}
+
+.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
+  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
+  background:#fff;transition:.2s}
+.gw-nav a:hover{background:#1F5C99;color:#fff}
+.gw-nav .gw-spacer{flex:1}
+@media(max-width:600px){.gw-nav{justify-content:center}}
+
+.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  color:#cfe0f0;font-size:13px}
+.gw-footer-slim .sep{color:#3d5a7a}
+.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+.gw-footer-slim strong{color:#fff;font-weight:700}
+@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+
+.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  border-top:1px solid rgba(255,255,255,.12)}
+.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+
+.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+</style>
+</head>
+<body>
+<a id="gw-top"></a>
+<div class="wrap"><div class="gw-topnav">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools &amp; Resources</a>
+  <a href="contact.html">Contact</a>
+</div></div>
+
+<div class="wrap">
+
+<div class="hero">
+  <h1>🛠️ Tools &amp; Resources</h1>
+  <p>Everything you need to put the book into practice: tool setup guides, downloadable templates, ready-to-teach lesson plans, the CLEAR prompt library and generator, the multi-agent AI feedback system, professional development materials, and current tool/policy tables.</p>
+</div>
+
+<h2>Browse by resource</h2>
+<div class="card-grid">
+  <a class="card" href="tool-setup-guides.html">
+    <div class="card-title">🛠️ Tool Setup Guides</div>
+    <p>Step-by-step setup, troubleshooting, and classroom use for every tool named in the book (Google Docs, ChatGPT, Claude, Gemini, Grammarly, LanguageTool, Padlet, SKELL, Hypothesis, Quill).</p>
+  </a>
+  <a class="card" href="templates.html">
+    <div class="card-title">📄 Templates</div>
+    <p>Downloadable essay planning templates, the AI Collaboration Log, peer review sheets, and rubric templates.</p>
+  </a>
+  <a class="card" href="lesson-plans.html">
+    <div class="card-title">📝 Sample Lessons</div>
+    <p>Complete lesson plans for selected chapters with timing, materials, and AI integration notes. Implementation-ready.</p>
+  </a>
+  <a class="card" href="prompt-library.html">
+    <div class="card-title">💬 CLEAR Prompt Library</div>
+    <p>Searchable library of CLEAR prompts organised by essay type, CEFR level, and writing stage. Copy-and-use format.</p>
+  </a>
+  <a class="card" href="prompt-generator.html">
+    <div class="card-title">⚡ CLEAR Prompt Generator</div>
+    <p>Interactive tool - students fill in five fields (C, L, E, A, R) and the generator assembles a ready-to-use AI prompt.</p>
+  </a>
+  <a class="card" href="ai-feedback-tool.html">
+    <div class="card-title">🤖 Multi-Agent Feedback System</div>
+    <p>Teacher guide to deploying the five-agent automated feedback system (Ch 21): setup, anonymisation, grade recording.</p>
+  </a>
+  <a class="card" href="professional-development.html">
+    <div class="card-title">🎓 Professional Development</div>
+    <p>Four-horizon PD framework, PLN-building activity, CLEAR tool evaluation protocol for teacher learning.</p>
+  </a>
+  <a class="card" href="policy-updates.html">
+    <div class="card-title">🔔 Policy Updates</div>
+    <p>AI policy updates, tool changes, TOEFL/IELTS scale changes, and Saudi PDPL guidance - kept current post-publication.</p>
+  </a>
+  <a class="card" href="tools-tables.html">
+    <div class="card-title">📊 Tools Tables</div>
+    <p>Reference tables mapping tools to stuck points, writing stages, CEFR levels, and essay types. Filterable by category.</p>
+  </a>
+</div>
+
+<div class="pullquote">Nothing essential to using this book depends on this website. These pages supply convenience copies, printable formats, and up-to-date tool/policy information alongside the printed chapters.</div>
+
+</div>
+
+<div class="gw-footer-slim">
+  <strong>WriteAlpha Companion Website</strong>
+  <span class="sep">|</span>
+  <a href="index.html">writealpha.com</a>
+  <span class="sep">|</span>
+  <span>&copy; Dr. Saad Torki</span>
+</div>
+<div class="gw-sitemap">
+  <a href="index.html">Home</a>
+  <a href="about-the-book.html">About the Book</a>
+  <a href="about-the-author.html">About the Author</a>
+  <a href="chapters.html">Chapters</a>
+  <a href="activity-library.html">Activity Library</a>
+  <a href="answer-keys.html">Answer Keys</a>
+  <a href="appendices.html">Appendices</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="whats-new.html">What's New</a>
+  <a href="tools-resources.html">Tools &amp; Resources</a>
+  <a href="contact.html">Contact</a>
+</div>
+</body>
+</html>

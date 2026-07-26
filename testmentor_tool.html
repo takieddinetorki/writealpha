@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<!-- saved from url=(0096)file:///C:/Users/we/Desktop/TestMentor%20%E2%80%94%20IELTS%20&%20TOEFL%20Writing%20Practice.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>TestMentor — IELTS &amp; TOEFL Writing Practice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./TestMentor — IELTS &amp; TOEFL Writing Practice upload it to TesMentor page_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEE6D3;
+    --paper-edge:#E2D7BE;
+    --ink:#1C2541;
+    --ink-soft:#4A5570;
+    --ink-faint:#8A93A8;
+    --gold:#A9782E;
+    --gold-deep:#8A5F1F;
+
+    --gram:#B23A48; --gram-bg:#F7E7E8;
+    --voc:#6B4E9E; --voc-bg:#EFE8F6;
+    --struct:#1F7A5C; --struct-bg:#E3F2EC;
+    --word:#C1752B; --word-bg:#FBEAD9;
+    --prep:#2E6E8E; --prep-bg:#E3EEF3;
+    --punct:#9C4F6E; --punct-bg:#F5E6ED;
+    --cap:#8B5E34; --cap-bg:#F3E6D8;
+    --other:#5C5548; --other-bg:#EDEAE2;
+
+    --radius:14px;
+    --shadow: 0 1px 2px rgba(28,37,65,0.06), 0 8px 24px rgba(28,37,65,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#DCD2B8;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.25), transparent 60%),
+      linear-gradient(180deg, #DED4BA 0%, #D6CAAC 100%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:40px 20px 80px;
+  }
+  .wrap{max-width:900px; margin:0 auto;}
+
+  header{ margin-bottom:26px; }
+  .welcome-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:16px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--gold-deep); margin:0 0 2px;
+  }
+  h1{
+    font-family:'Spectral', serif;
+    font-weight:600;
+    font-size:clamp(34px,5vw,50px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{ font-style:italic; color:var(--gold-deep); }
+  .welcome-for{
+    font-family:'Spectral', serif; font-style:italic;
+    font-size:20px; color:var(--ink-soft); margin:0 0 14px;
+  }
+  .subtag{ font-size:15px; color:var(--ink-faint); max-width:680px; line-height:1.6; }
+
+  .disclaimer{
+    margin-top:16px;
+    padding:12px 16px;
+    background:var(--word-bg);
+    border-left:3px solid var(--word);
+    border-radius:8px;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  .page{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+    position:relative;
+    border:1px solid var(--paper-edge);
+    margin-bottom:20px;
+  }
+  .page::before{
+    content:"";
+    position:absolute; left:0; top:0; bottom:0; width:3px;
+    border-radius:var(--radius) 0 0 var(--radius);
+    background:linear-gradient(180deg, var(--gold), var(--struct) 33%, var(--gram) 66%, var(--prep));
+    opacity:0.55;
+  }
+
+  /* --- Selector screen --- */
+  .select-title{
+    font-family:'Spectral', serif; font-weight:600; font-size:19px;
+    margin:0 0 14px;
+  }
+  .choice-row{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .choice-btn{
+    flex:1 1 160px;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:15px;
+    padding:14px 16px;
+    border:1.5px solid var(--paper-edge);
+    background:#fff;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:left;
+    color:var(--ink-soft);
+    transition: all .15s ease;
+  }
+  .choice-btn .sub{ display:block; font-weight:400; font-size:12.5px; color:var(--ink-faint); margin-top:3px; }
+  .choice-btn:hover{ border-color:var(--gold); }
+  .choice-btn.active{
+    border-color:var(--gold-deep);
+    background:#fff;
+    box-shadow: 0 0 0 2px rgba(169,120,46,0.25);
+    color:var(--ink);
+  }
+  .choice-group{ margin-bottom:20px; }
+  .choice-group.hidden{ display:none; }
+
+  .btn-primary{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:15px;
+    background:var(--ink); color:#F3EEE1;
+    border:none; border-radius:999px; padding:13px 26px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    box-shadow: 0 1px 2px rgba(28,37,65,0.2);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn-primary:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(28,37,65,0.25); }
+  .btn-primary:disabled{ opacity:0.5; cursor:default; transform:none; box-shadow:none; }
+  .btn-ghost{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    background:transparent; color:var(--ink-soft);
+    border:1px solid var(--paper-edge); border-radius:999px; padding:11px 20px;
+    cursor:pointer;
+  }
+  .btn-ghost:hover{ border-color:var(--ink-faint); color:var(--ink); }
+  .seal{ width:8px; height:8px; border-radius:50%; background:var(--gold); display:inline-block; }
+  .spinner{
+    width:14px; height:14px; border-radius:50%;
+    border:2px solid var(--paper-edge); border-top-color:var(--gold-deep);
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* --- Task info bar --- */
+  .task-bar{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:12px;
+    margin-bottom:18px;
+  }
+  .task-title{ font-family:'Spectral', serif; font-style:italic; font-size:17px; color:var(--ink-soft); }
+  .task-meta{ display:flex; gap:16px; flex-wrap:wrap; }
+  .task-meta-item{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-faint); }
+  .task-meta-item b{ color:var(--ink); font-family:'Spectral', serif; font-size:14px; }
+
+  .timer-row{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:12px 16px; background:#fff; border:1px solid var(--paper-edge);
+    border-radius:10px; margin-bottom:18px;
+  }
+  .timer-toggle{ display:flex; background:var(--paper); border:1px solid var(--paper-edge); border-radius:999px; padding:3px; gap:2px; }
+  .timer-toggle button{
+    padding:7px 14px; border-radius:999px; background:transparent; border:none;
+    color:var(--ink-faint); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .timer-toggle button.active{ background:var(--ink); color:#F3EEE1; }
+  .timer-display{
+    font-family:'JetBrains Mono', monospace; font-size:22px; font-weight:500; color:var(--ink);
+    min-width:70px;
+  }
+  .timer-display.warn{ color:var(--gram); }
+  .timer-controls{ display:flex; gap:8px; }
+  .timer-note{ font-size:12.5px; color:var(--ink-faint); font-style:italic; }
+
+  label.field-label{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:12px;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:8px;
+  }
+  textarea{
+    width:100%; border:1px solid var(--paper-edge); border-radius:10px;
+    background:#fff; font-family:'Spectral', serif; font-size:17px; line-height:1.65;
+    color:var(--ink); outline:none; padding:14px; resize:vertical;
+  }
+  textarea:focus{ border-color:var(--gold); }
+  textarea::placeholder{ color:var(--ink-faint); font-style:italic; }
+  #promptInput{ min-height:90px; margin-bottom:20px; }
+  #responseInput{ min-height:240px; }
+
+  .toolbar{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:14px; gap:12px; flex-wrap:wrap;
+  }
+  .count{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--ink-faint); }
+  .count.below-min{ color:var(--gram); }
+  .count.ok{ color:var(--struct); }
+
+  /* --- Scorecard --- */
+  .scorecard-title{ font-family:'Spectral', serif; font-weight:600; font-size:19px; margin:0 0 4px; }
+  .scorecard-sub{ font-size:13px; color:var(--ink-faint); margin:0 0 18px; }
+  .overall-band{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:20px;
+    padding:16px 20px; background:#fff; border:1px solid var(--paper-edge); border-radius:12px;
+  }
+  .overall-band .num{ font-family:'Spectral', serif; font-weight:700; font-size:42px; color:var(--gold-deep); }
+  .overall-band .meta{ font-size:13px; color:var(--ink-soft); line-height:1.5; }
+  .criteria-grid{ display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:20px; }
+  .criterion{
+    background:#fff; border:1px solid var(--paper-edge); border-radius:10px; padding:14px 16px;
+  }
+  .criterion-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .criterion-name{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; color:var(--ink); }
+  .criterion-score{ font-family:'Spectral', serif; font-weight:700; font-size:20px; color:var(--gold-deep); }
+  .criterion-comment{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+  .template-flag{
+    margin-bottom:18px; padding:12px 16px; background:var(--gram-bg); border-left:3px solid var(--gram);
+    border-radius:8px; font-size:13.5px; color:var(--ink-soft); line-height:1.5;
+  }
+
+  .result-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
+  .result-title{ font-family:'Spectral', serif; font-style:italic; font-size:16px; color:var(--ink-soft); }
+  .view-toggle{ display:flex; background:#fff; border:1px solid var(--paper-edge); border-radius:999px; padding:3px; gap:2px; }
+  .view-toggle button{ padding:7px 14px; border-radius:999px; background:transparent; border:none; color:var(--ink-faint); font-size:12.5px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; }
+  .view-toggle button.active{ background:var(--ink); color:#F3EEE1; }
+
+  .annotated, .corrected{ font-family:'Spectral', serif; font-size:17px; line-height:2.0; white-space:pre-wrap; }
+  .corrected{ color:var(--ink-soft); display:none; }
+  .corrected.show{ display:block; }
+  .annotated.hide{ display:none; }
+
+  mark{ background:transparent; color:inherit; padding:0 1px; border-bottom:2.5px solid; cursor:help; position:relative; text-decoration:none; }
+  mark.gram{ border-color:var(--gram); } mark.voc{ border-color:var(--voc); } mark.struct{ border-color:var(--struct); }
+  mark.word{ border-color:var(--word); } mark.prep{ border-color:var(--prep); } mark.punct{ border-color:var(--punct); }
+  mark.cap{ border-color:var(--cap); } mark.other{ border-color:var(--other); }
+
+  .tooltip{
+    position:absolute; z-index:20; max-width:300px; background:var(--ink); color:#F3EEE1;
+    font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; padding:12px 14px; border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25); pointer-events:none; opacity:0; transform:translateY(4px);
+    transition:opacity .12s ease, transform .12s ease;
+  }
+  .tooltip.show{ opacity:1; transform:translateY(0); }
+  .tooltip .cat{ font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.7; margin-bottom:5px; display:block; }
+  .tooltip .fix{ color:#fff; font-weight:600; }
+  .tooltip .fix::before{ content:"→ "; opacity:0.6; }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 0; }
+  .chip{ font-family:'JetBrains Mono', monospace; font-size:11.5px; padding:6px 11px 6px 9px; border-radius:999px; display:flex; align-items:center; gap:6px; color:var(--ink); background:#fff; border:1px solid var(--paper-edge); }
+  .chip .dot{ width:8px; height:8px; border-radius:50%; }
+
+  .empty-note, .loading, .error-note{ font-family:'Inter',sans-serif; font-size:14px; color:var(--ink-faint); margin-top:8px; }
+  .error-note{ color:var(--gram); }
+  .loading{ display:flex; align-items:center; gap:10px; }
+
+  footer{ text-align:center; margin-top:20px; font-size:12px; color:var(--ink-faint); font-family:'JetBrains Mono', monospace; }
+
+  /* --- Promo / marketing section --- */
+  .promo-title{ font-family:'Spectral', serif; font-weight:600; font-size:19px; margin:0 0 14px; }
+  .features-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; margin-bottom:6px; }
+  .feature{ background:#fff; border:1px solid var(--paper-edge); border-radius:10px; padding:14px 16px; }
+  .feature-title{ font-family:'Inter',sans-serif; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:4px; }
+  .feature-desc{ font-size:13px; color:var(--ink-soft); line-height:1.5; }
+
+  .sample-label{ font-family:'JetBrains Mono', monospace; font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:10px; }
+  .sample-wrap{ opacity:0.97; }
+  .sample-wrap .annotated{ font-size:15.5px; }
+
+  .video-box{
+    background:#fff; border:2px dashed var(--paper-edge); border-radius:12px;
+    padding:40px 20px; text-align:center; color:var(--ink-faint);
+    font-size:14px; margin-bottom:6px;
+  }
+  .video-box .play-icon{
+    width:52px; height:52px; border-radius:50%; background:var(--paper);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 12px;
+    border:1px solid var(--paper-edge);
+  }
+
+  /* --- Our Team --- */
+  .team-lead{ display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:26px; }
+  .team-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+  .team-card{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .avatar{
+    width:96px; height:96px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--paper-edge);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:10px; color:var(--ink-faint);
+  }
+  .team-lead .avatar{ width:130px; height:130px; }
+  .avatar svg{ width:44%; height:44%; opacity:0.5; }
+  .team-name{ font-family:'Spectral', serif; font-weight:600; font-size:15px; color:var(--ink); margin-bottom:2px; }
+  .team-lead .team-name{ font-size:18px; }
+  .team-role{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.04em; color:var(--gold-deep); text-transform:uppercase; margin-bottom:6px; }
+  .team-bio{ font-size:12.5px; color:var(--ink-faint); line-height:1.5; max-width:220px; }
+
+  @media (max-width:600px){
+    .team-grid{ grid-template-columns:repeat(1, 1fr); }
+  }
+
+  /* --- Access gate --- */
+  .gate-title{ font-family:'Spectral', serif; font-weight:600; font-size:20px; margin:0 0 6px; }
+  .gate-sub{ font-size:14px; color:var(--ink-faint); margin:0 0 18px; }
+  .gate-row{ display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
+  .gate-field{ display:flex; flex-direction:column; gap:6px; }
+  .gate-field label{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--gold-deep);
+  }
+  #studentIdInput, #studentPinInput{
+    font-family:'JetBrains Mono', monospace; font-size:17px;
+    padding:12px 14px; border:1px solid var(--paper-edge); border-radius:8px; outline:none;
+    background:#fff; color:var(--ink); width:200px;
+  }
+  #studentIdInput:focus, #studentPinInput:focus{ border-color:var(--gold); }
+  #studentIdInput.invalid, #studentPinInput.invalid{ border-color:var(--gram); }
+  .gate-hint{ font-size:12.5px; color:var(--ink-faint); margin-top:10px; }
+
+  @media (max-width:600px){
+    .page{ padding:20px; }
+    textarea{ font-size:16px; }
+    .annotated, .corrected{ font-size:16px; }
+    .choice-btn{ flex:1 1 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="welcome-eyebrow">Welcome to</p>
+    <h1>Test<em>Mentor</em></h1>
+    <p class="welcome-for">IELTS &amp; TOEFL writing practice</p>
+    <p class="subtag">Paste your own practice prompt (from a book, past paper, or official sample) and your response. TestMentor gives you an estimated band/score using the real official criteria, plus color-coded language feedback — grammar, vocabulary, sentence structure, word order, prepositions, punctuation, capital letters.</p>
+    <div class="disclaimer"><b>Important:</b> scores shown are AI-estimated practice predictions only — not official IELTS or TOEFL results, and not guaranteed to match your actual test outcome. Use them to guide your practice, not as a certified score.</div>
+  </header>
+
+  <!-- STEP 1: Test/task selection -->
+  <!-- ===== PROMO / MARKETING SECTION (always visible) ===== -->
+  <div class="page">
+    <div class="promo-title">What you get</div>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-title">Real official criteria</div>
+        <div class="feature-desc">Scored against the actual published IELTS band descriptors and TOEFL task rubrics — not a generic AI guess.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Practice with your own material</div>
+        <div class="feature-desc">Paste any prompt from your prep book, a past paper, or an official sample — not limited to canned questions.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Timed or untimed</div>
+        <div class="feature-desc">Practice at your own pace, or switch on a countdown matching the real official time limit for your task.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Line-by-line language feedback</div>
+        <div class="feature-desc">Every grammar, vocabulary, structure, and punctuation issue underlined and explained, with the correction shown.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="sample-label">See a sample result</div>
+    <div class="sample-wrap">
+      <div class="overall-band">
+        <span class="num">6.5</span>
+        <span class="meta">IELTS Band<br>A generally well-organized response with a clear position, though development of ideas could go further in places.</span>
+      </div>
+      <div class="criteria-grid">
+        <div class="criterion"><div class="criterion-head"><span class="criterion-name">Task Response</span><span class="criterion-score">6.5</span></div><div class="criterion-comment">Addresses all parts of the prompt with a clear position, though some supporting points remain underdeveloped.</div></div>
+        <div class="criterion"><div class="criterion-head"><span class="criterion-name">Coherence and Cohesion</span><span class="criterion-score">7.0</span></div><div class="criterion-comment">Clear paragraphing and logical progression, with generally effective use of linking words.</div></div>
+        <div class="criterion"><div class="criterion-head"><span class="criterion-name">Lexical Resource</span><span class="criterion-score">6.0</span></div><div class="criterion-comment">Adequate range of vocabulary with some repetition; a few word-choice errors affect precision.</div></div>
+        <div class="criterion"><div class="criterion-head"><span class="criterion-name">Grammatical Range and Accuracy</span><span class="criterion-score">6.5</span></div><div class="criterion-comment">A mix of simple and complex sentences, generally accurate, with occasional tense errors.</div></div>
+      </div>
+      <div class="annotated" id="sampleAnnotated">Many people <mark class="gram" data-cat="gram" data-fix="believe" data-explain="This verb form doesn&#39;t match the subject.">believes</mark> that social media <mark class="voc" data-cat="voc" data-fix="has a significant impact on" data-explain="This phrase doesn&#39;t quite fit the intended meaning here.">makes a big change to</mark> how young people communicate<mark class="punct" data-cat="punct" data-fix="." data-explain="A sentence boundary is missing here."></mark> This essay will discuss both the advantages and disadvantages of this trend.</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="sample-label">Video walkthrough</div>
+    <div class="video-box">
+      <div class="play-icon">▶</div>
+      Video walkthrough coming soon
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="promo-title">Our Team</div>
+    <div class="team-lead">
+      <div class="avatar">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg>
+      </div>
+      <div class="team-name">Head of Team — Name Placeholder</div>
+      <div class="team-role">Founder &amp; Lead Examiner</div>
+      <div class="team-bio">Short bio placeholder — background, credentials, and experience go here.</div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card"><div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg></div><div class="team-name">Name Placeholder</div><div class="team-role">Role Placeholder</div><div class="team-bio">Short bio placeholder text goes here.</div></div>
+      <div class="team-card"><div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg></div><div class="team-name">Name Placeholder</div><div class="team-role">Role Placeholder</div><div class="team-bio">Short bio placeholder text goes here.</div></div>
+      <div class="team-card"><div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg></div><div class="team-name">Name Placeholder</div><div class="team-role">Role Placeholder</div><div class="team-bio">Short bio placeholder text goes here.</div></div>
+      <div class="team-card"><div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg></div><div class="team-name">Name Placeholder</div><div class="team-role">Role Placeholder</div><div class="team-bio">Short bio placeholder text goes here.</div></div>
+      <div class="team-card"><div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg></div><div class="team-name">Name Placeholder</div><div class="team-role">Role Placeholder</div><div class="team-bio">Short bio placeholder text goes here.</div></div>
+      <div class="team-card"><div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"></path></svg></div><div class="team-name">Name Placeholder</div><div class="team-role">Role Placeholder</div><div class="team-bio">Short bio placeholder text goes here.</div></div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="promo-title">Need more?</div>
+    <p class="subtag" style="margin-bottom:14px;">
+      Want your writing assessed by a real person? A native-speaker teacher experienced in checking IELTS writing can review your response directly.
+    </p>
+    <p class="subtag" style="margin-bottom:16px;">
+      Don't have your Student ID and PIN yet? Request access below, or ask for both at once.
+    </p>
+    <a class="btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfFDjpO0MaAzPUlQjZq8VoXPkST398hjWx6QAuLgUv-ZBB2eQ/viewform" target="_blank" rel="noopener" style="text-decoration:none; display:inline-flex;"><span class="seal"></span> Request access or a human review</a>
+  </div>
+
+  <!-- ===== ACCESS GATE ===== -->
+  <div class="page" id="gateCard">
+    <div class="gate-title">Ready to practice?</div>
+    <p class="gate-sub">TestMentor access is limited to people who've been given a Student ID and PIN. Enter yours below to unlock the tool.</p>
+    <div class="gate-row">
+      <div class="gate-field">
+        <label for="studentIdInput">Student ID</label>
+        <input type="text" id="studentIdInput" placeholder="Your ID" autocomplete="off">
+      </div>
+      <div class="gate-field">
+        <label for="studentPinInput">PIN</label>
+        <input type="text" id="studentPinInput" placeholder="4-digit PIN" autocomplete="off" inputmode="numeric" maxlength="4">
+      </div>
+      <button class="btn-primary" id="unlockBtn"><span class="seal"></span> Unlock TestMentor</button>
+    </div>
+    <div id="gateStatus"></div>
+  </div>
+
+  <!-- ===== THE ACTUAL TOOL (hidden until unlocked) ===== -->
+  <div id="toolArea" style="display:none;">
+
+  <div class="page" id="selectPage">
+    <div class="select-title">Step 1 — Choose your test</div>
+    <div class="choice-row" id="testChoiceRow">
+      <button class="choice-btn" data-test="ielts">IELTS<span class="sub">Task 1 + Task 2, 4-criteria bands</span></button>
+      <button class="choice-btn" data-test="toefl">TOEFL iBT<span class="sub">Write an Email / Academic Discussion</span></button>
+    </div>
+
+    <div class="choice-group hidden" id="ieltsTaskGroup">
+      <div class="select-title">Step 2 — Choose your task</div>
+      <div class="choice-row">
+        <button class="choice-btn" data-ielts-task="task1">Task 1<span class="sub">150 words · 20 minutes</span></button>
+        <button class="choice-btn" data-ielts-task="task2">Task 2<span class="sub">250 words · 40 minutes</span></button>
+      </div>
+    </div>
+
+    <div class="choice-group hidden" id="ieltsModuleGroup">
+      <div class="select-title">Step 3 — Academic or General Training?</div>
+      <div class="choice-row">
+        <button class="choice-btn" data-ielts-module="academic">Academic<span class="sub">Describe a chart, graph, table, process, or map</span></button>
+        <button class="choice-btn" data-ielts-module="general">General Training<span class="sub">Write a formal, semi-formal, or informal letter</span></button>
+      </div>
+    </div>
+
+    <div class="choice-group hidden" id="toeflTaskGroup">
+      <div class="select-title">Step 2 — Choose your task</div>
+      <div class="choice-row">
+        <button class="choice-btn" data-toefl-task="email">Write an Email<span class="sub">130–140 words · 7 minutes</span></button>
+        <button class="choice-btn" data-toefl-task="discussion">Academic Discussion<span class="sub">100–150 words · 10 minutes</span></button>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="startBtn" disabled=""><span class="seal"></span> Start practicing</button>
+  </div>
+
+  <!-- STEP 2: Writing area -->
+  <div class="page" id="writePage" style="display:none;">
+    <div class="task-bar">
+      <span class="task-title" id="taskTitle"></span>
+      <div class="task-meta">
+        <span class="task-meta-item">MIN WORDS<br><b id="taskMinWords">—</b></span>
+        <span class="task-meta-item">OFFICIAL TIME<br><b id="taskTimeLimit">—</b></span>
+      </div>
+    </div>
+
+    <div class="timer-row">
+      <div class="timer-toggle" id="timerModeToggle">
+        <button class="active" data-mode="untimed">Untimed practice</button>
+        <button data-mode="timed">Timed practice</button>
+      </div>
+      <span class="timer-display" id="timerDisplay" style="display:none;">--:--</span>
+      <div class="timer-controls" id="timerControls" style="display:none;">
+        <button class="btn-ghost" id="timerStartBtn">Start timer</button>
+        <button class="btn-ghost" id="timerResetBtn">Reset</button>
+      </div>
+      <span class="timer-note" id="timerNote"></span>
+    </div>
+
+    <label class="field-label" for="promptInput">Your prompt (paste it from your prep material)</label>
+    <textarea id="promptInput" placeholder="Paste the exact task prompt you&#39;re responding to..."></textarea>
+
+    <label class="field-label" for="responseInput">Your response</label>
+    <textarea id="responseInput" placeholder="Write or paste your response here..."></textarea>
+
+    <div class="toolbar">
+      <span class="count" id="wordCount">0 words</span>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-ghost" id="changeTaskBtn">Change test/task</button>
+        <button class="btn-primary" id="checkBtn"><span class="seal"></span> Check my writing</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend" id="legend" style="display:none;">
+    <span class="chip"><span class="dot" style="background:var(--gram)"></span>Grammar</span>
+    <span class="chip"><span class="dot" style="background:var(--voc)"></span>Vocabulary</span>
+    <span class="chip"><span class="dot" style="background:var(--struct)"></span>Sentence structure</span>
+    <span class="chip"><span class="dot" style="background:var(--word)"></span>Word order</span>
+    <span class="chip"><span class="dot" style="background:var(--prep)"></span>Prepositions</span>
+    <span class="chip"><span class="dot" style="background:var(--punct)"></span>Punctuation</span>
+    <span class="chip"><span class="dot" style="background:var(--cap)"></span>Capital letters</span>
+  </div>
+
+  <!-- STEP 3: Results -->
+  <div class="page" id="resultsPage" style="display:none;">
+    <div class="scorecard-title">Your estimated score</div>
+    <p class="scorecard-sub">Based on the official published criteria — an AI estimate, not an official result.</p>
+    <div id="templateFlag"></div>
+    <div class="overall-band" id="overallBand"></div>
+    <div class="criteria-grid" id="criteriaGrid"></div>
+
+    <div class="result-head">
+      <span class="result-title">Language feedback</span>
+      <div class="view-toggle">
+        <button class="active" id="viewMarked">Marked up</button>
+        <button id="viewCorrected">Corrected</button>
+      </div>
+    </div>
+    <div class="annotated" id="annotated"></div>
+    <div class="corrected" id="corrected"></div>
+  </div>
+
+  <div id="statusArea"></div>
+
+  </div><!-- /toolArea -->
+
+  <footer>practice scores are estimates — always confirm your progress with an official test or certified rater</footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEvYkYIPI81gGc5ULVHOeEtPkya3_gVho2xh4dhux8waSdGs80l-BS8xMc5sDerFIF/exec";
+// ────────────────────────────────────────────────────────────────────────
+
+const CATS = {
+  gram: {label:'Grammar'}, voc: {label:'Vocabulary'}, struct: {label:'Sentence structure'},
+  word: {label:'Word order'}, prep: {label:'Prepositions'}, punct: {label:'Punctuation'},
+  cap: {label:'Capital letters'}, other: {label:'Other'}
+};
+
+// Task definitions: word minimums, official time limits (seconds), labels
+const TASKS = {
+  ielts_task1_academic: { label:'IELTS Task 1 (Academic)', minWords:150, timeSec:20*60, timeLabel:'20 min' },
+  ielts_task1_general:  { label:'IELTS Task 1 (General Training)', minWords:150, timeSec:20*60, timeLabel:'20 min' },
+  ielts_task2:          { label:'IELTS Task 2', minWords:250, timeSec:40*60, timeLabel:'40 min' },
+  toefl_email:          { label:'TOEFL — Write an Email', minWords:130, timeSec:7*60, timeLabel:'7 min' },
+  toefl_discussion:     { label:'TOEFL — Write for an Academic Discussion', minWords:100, timeSec:10*60, timeLabel:'10 min' }
+};
+
+let verifiedStudentId = null; // set once the gate is unlocked; sent with every scoring request
+let verifiedPin = null;
+let verifiedName = null;
+let verifiedPhone = null;
+
+let selectedTest = null;      // 'ielts' | 'toefl'
+let selectedIeltsTask = null; // 'task1' | 'task2'
+let selectedIeltsModule = null; // 'academic' | 'general'
+let selectedToeflTask = null; // 'email' | 'discussion'
+let currentTaskKey = null;    // key into TASKS
+
+let timerMode = 'untimed';
+let timerInterval = null;
+let timerRemaining = 0;
+
+// ---------- Selection screen ----------
+const testChoiceRow = document.getElementById('testChoiceRow');
+const ieltsTaskGroup = document.getElementById('ieltsTaskGroup');
+const ieltsModuleGroup = document.getElementById('ieltsModuleGroup');
+const toeflTaskGroup = document.getElementById('toeflTaskGroup');
+const startBtn = document.getElementById('startBtn');
+
+testChoiceRow.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    testChoiceRow.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedTest = btn.dataset.test;
+    selectedIeltsTask = null; selectedIeltsModule = null; selectedToeflTask = null;
+    ieltsTaskGroup.classList.toggle('hidden', selectedTest !== 'ielts');
+    ieltsModuleGroup.classList.add('hidden');
+    toeflTaskGroup.classList.toggle('hidden', selectedTest !== 'toefl');
+    ieltsTaskGroup.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    toeflTaskGroup.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    updateStartButton();
+  });
+});
+
+ieltsTaskGroup.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ieltsTaskGroup.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedIeltsTask = btn.dataset.ieltsTask;
+    ieltsModuleGroup.classList.toggle('hidden', selectedIeltsTask !== 'task1');
+    if(selectedIeltsTask !== 'task1'){ selectedIeltsModule = null; }
+    ieltsModuleGroup.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    updateStartButton();
+  });
+});
+
+ieltsModuleGroup.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ieltsModuleGroup.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedIeltsModule = btn.dataset.ieltsModule;
+    updateStartButton();
+  });
+});
+
+toeflTaskGroup.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    toeflTaskGroup.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedToeflTask = btn.dataset.toeflTask;
+    updateStartButton();
+  });
+});
+
+function updateStartButton(){
+  let ready = false;
+  if(selectedTest === 'ielts'){
+    if(selectedIeltsTask === 'task2') ready = true;
+    if(selectedIeltsTask === 'task1' && selectedIeltsModule) ready = true;
+  } else if(selectedTest === 'toefl'){
+    if(selectedToeflTask) ready = true;
+  }
+  startBtn.disabled = !ready;
+}
+
+function computeTaskKey(){
+  if(selectedTest === 'ielts'){
+    if(selectedIeltsTask === 'task2') return 'ielts_task2';
+    if(selectedIeltsModule === 'academic') return 'ielts_task1_academic';
+    if(selectedIeltsModule === 'general') return 'ielts_task1_general';
+  } else if(selectedTest === 'toefl'){
+    if(selectedToeflTask === 'email') return 'toefl_email';
+    if(selectedToeflTask === 'discussion') return 'toefl_discussion';
+  }
+  return null;
+}
+
+startBtn.addEventListener('click', () => {
+  currentTaskKey = computeTaskKey();
+  if(!currentTaskKey) return;
+  const task = TASKS[currentTaskKey];
+  document.getElementById('taskTitle').textContent = task.label;
+  document.getElementById('taskMinWords').textContent = task.minWords + '+';
+  document.getElementById('taskTimeLimit').textContent = task.timeLabel;
+  resetTimerUI();
+  document.getElementById('selectPage').style.display = 'none';
+  document.getElementById('writePage').style.display = 'block';
+  document.getElementById('resultsPage').style.display = 'none';
+  document.getElementById('legend').style.display = 'none';
+  updateWordCount();
+});
+
+document.getElementById('changeTaskBtn').addEventListener('click', () => {
+  stopTimer();
+  document.getElementById('writePage').style.display = 'none';
+  document.getElementById('selectPage').style.display = 'block';
+});
+
+// ---------- Timer ----------
+const timerModeToggle = document.getElementById('timerModeToggle');
+const timerDisplay = document.getElementById('timerDisplay');
+const timerControls = document.getElementById('timerControls');
+const timerNote = document.getElementById('timerNote');
+
+timerModeToggle.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    timerModeToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    timerMode = btn.dataset.mode;
+    resetTimerUI();
+  });
+});
+
+function resetTimerUI(){
+  stopTimer();
+  const task = TASKS[currentTaskKey];
+  if(timerMode === 'timed' && task){
+    timerRemaining = task.timeSec;
+    timerDisplay.style.display = 'inline-block';
+    timerControls.style.display = 'flex';
+    timerNote.textContent = 'Official time limit for this task: ' + task.timeLabel + '.';
+    renderTimer();
+  } else {
+    timerDisplay.style.display = 'none';
+    timerControls.style.display = 'none';
+    timerNote.textContent = 'Practice at your own pace — no time limit.';
+  }
+}
+
+function renderTimer(){
+  const m = Math.floor(timerRemaining / 60);
+  const s = timerRemaining % 60;
+  timerDisplay.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  timerDisplay.classList.toggle('warn', timerRemaining <= 60);
+}
+
+document.getElementById('timerStartBtn').addEventListener('click', () => {
+  if(timerInterval) return;
+  timerInterval = setInterval(() => {
+    timerRemaining -= 1;
+    renderTimer();
+    if(timerRemaining <= 0){
+      stopTimer();
+      setStatus('<p class="error-note">Time is up! In the real test your response would end here — feel free to finish your thought, then check your writing.</p>');
+    }
+  }, 1000);
+});
+document.getElementById('timerResetBtn').addEventListener('click', () => { resetTimerUI(); });
+
+function stopTimer(){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+}
+
+// ---------- Word count ----------
+const promptInput = document.getElementById('promptInput');
+const responseInput = document.getElementById('responseInput');
+const wordCountEl = document.getElementById('wordCount');
+
+function updateWordCount(){
+  const words = responseInput.value.trim().length ? responseInput.value.trim().split(/\s+/).length : 0;
+  const task = TASKS[currentTaskKey];
+  const min = task ? task.minWords : 0;
+  wordCountEl.textContent = words + (words === 1 ? ' word' : ' words') + (min ? ' (minimum ' + min + ')' : '');
+  wordCountEl.classList.remove('below-min','ok');
+  if(min){ wordCountEl.classList.add(words >= min ? 'ok' : 'below-min'); }
+}
+responseInput.addEventListener('input', updateWordCount);
+
+// ---------- Check my writing ----------
+const checkBtn = document.getElementById('checkBtn');
+const statusArea = document.getElementById('statusArea');
+const resultsPage = document.getElementById('resultsPage');
+const annotatedEl = document.getElementById('annotated');
+const correctedEl = document.getElementById('corrected');
+const viewMarked = document.getElementById('viewMarked');
+const viewCorrected = document.getElementById('viewCorrected');
+const tooltip = document.getElementById('tooltip');
+
+function setStatus(html){ statusArea.innerHTML = html; }
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function setView(mode){
+  if(mode === 'marked'){
+    annotatedEl.classList.remove('hide'); correctedEl.classList.remove('show');
+    viewMarked.classList.add('active'); viewCorrected.classList.remove('active');
+  } else {
+    annotatedEl.classList.add('hide'); correctedEl.classList.add('show');
+    viewCorrected.classList.add('active'); viewMarked.classList.remove('active');
+  }
+}
+viewMarked.addEventListener('click', () => setView('marked'));
+viewCorrected.addEventListener('click', () => setView('corrected'));
+
+checkBtn.addEventListener('click', checkWriting);
+
+async function checkWriting(){
+  const prompt = promptInput.value.trim();
+  const response = responseInput.value.trim();
+
+  if(!response){
+    setStatus('<p class="error-note">Write or paste your response first — there is nothing to check yet.</p>');
+    return;
+  }
+  if(APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === 0){
+    setStatus('<p class="error-note">TestMentor is not connected to a backend yet. Deploy Code_TestMentor.gs as a Web App and paste the URL into APPS_SCRIPT_URL at the top of the script.</p>');
+    return;
+  }
+
+  checkBtn.disabled = true;
+  checkBtn.innerHTML = '<span class="spinner"></span> Scoring…';
+  setStatus('<p class="loading"><span class="spinner"></span> Reading your response against the official criteria…</p>');
+  resultsPage.style.display = 'none';
+
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ taskKey: currentTaskKey, prompt: prompt, response: response, studentId: verifiedStudentId, pin: verifiedPin })
+    });
+
+    const data = await res.json();
+    if(data.error){ throw new Error(data.error); }
+
+    const clean = (data.raw || '').replace(/```json/g,'').replace(/```/g,'').trim();
+    let parsed;
+    try{ parsed = JSON.parse(clean); }
+    catch(parseErr){
+      console.error('Malformed response:', parseErr, clean);
+      throw new Error('The AI response got garbled this time — this happens occasionally. Please click "Check my writing" again.');
+    }
+
+    renderResults(parsed);
+    setStatus('');
+  } catch(err){
+    console.error(err);
+    setStatus('<p class="error-note">Something went wrong: ' + escapeHtml(String(err.message || err)) + '</p>');
+  } finally {
+    checkBtn.disabled = false;
+    checkBtn.innerHTML = '<span class="seal"></span> Check my writing';
+  }
+}
+
+function renderResults(parsed){
+  // Template-penalty flag (IELTS Task Response cap rule)
+  const flagEl = document.getElementById('templateFlag');
+  if(parsed.templateFlag){
+    flagEl.innerHTML = '<div class="template-flag">⚠ This response reads as memorized/template-based. Under the real 2026 IELTS rule, Task Response would be capped at Band 4.0 regardless of other strengths. Try writing a fresh response specific to this exact prompt.</div>';
+  } else {
+    flagEl.innerHTML = '';
+  }
+
+  // Overall band/score
+  const overall = parsed.overall || {};
+  document.getElementById('overallBand').innerHTML =
+    '<span class="num">' + (overall.score != null ? overall.score : '—') + '</span>' +
+    '<span class="meta">' + escapeHtml(overall.label || '') + (overall.comment ? '<br/>' + escapeHtml(overall.comment) : '') + '</span>';
+
+  // Per-criterion breakdown (IELTS: 4 rows; TOEFL: may be empty/single)
+  const grid = document.getElementById('criteriaGrid');
+  grid.innerHTML = '';
+  (parsed.criteria || []).forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'criterion';
+    div.innerHTML =
+      '<div class="criterion-head"><span class="criterion-name">' + escapeHtml(c.label || '') + '</span>' +
+      '<span class="criterion-score">' + (c.score != null ? c.score : '—') + '</span></div>' +
+      '<div class="criterion-comment">' + escapeHtml(c.comment || '') + '</div>';
+    grid.appendChild(div);
+  });
+
+  // Language-level marked-up feedback (same mechanism as WriteMentor, answers always visible)
+  let annotatedHtml = '';
+  let correctedText = '';
+  (parsed.segments || []).forEach((seg, i) => {
+    if(seg.t === 'text'){
+      annotatedHtml += escapeHtml(seg.c || '');
+      correctedText += (seg.c || '');
+    } else if(seg.t === 'err'){
+      const cat = CATS[seg.cat] ? seg.cat : 'other';
+      annotatedHtml += `<mark class="${cat}" data-cat="${cat}" data-fix="${escapeHtml(seg.x || '')}" data-explain="${escapeHtml(seg.e || '')}">${escapeHtml(seg.o || '')}</mark>`;
+      correctedText += (seg.x || '');
+    }
+  });
+  annotatedEl.innerHTML = annotatedHtml;
+  correctedEl.textContent = correctedText;
+  setView('marked');
+
+  document.getElementById('legend').style.display = 'flex';
+  resultsPage.style.display = 'block';
+  attachTooltips();
+}
+
+function attachTooltips(){
+  annotatedEl.querySelectorAll('mark').forEach(m => {
+    m.addEventListener('mouseenter', showTooltip);
+    m.addEventListener('mouseleave', hideTooltip);
+    m.addEventListener('click', (e) => { e.stopPropagation(); showTooltip.call(m, e); });
+  });
+  document.addEventListener('click', hideTooltip);
+}
+
+function showTooltip(){
+  const cat = this.dataset.cat, fix = this.dataset.fix, explain = this.dataset.explain;
+  const label = CATS[cat] ? CATS[cat].label : 'Other';
+  tooltip.innerHTML = `<span class="cat">${label}</span>${explain}<div class="fix">${fix}</div>`;
+  const rect = this.getBoundingClientRect();
+  tooltip.style.top = (rect.top + window.scrollY - 8) + 'px';
+  tooltip.style.left = rect.left + window.scrollX + 'px';
+  tooltip.classList.add('show');
+  requestAnimationFrame(() => {
+    const th = tooltip.offsetHeight;
+    tooltip.style.top = (rect.top + window.scrollY - th - 10) + 'px';
+    const tw = tooltip.offsetWidth;
+    let left = rect.left + window.scrollX;
+    if(left + tw > window.innerWidth - 20){ left = window.innerWidth - tw - 20; tooltip.style.left = left + 'px'; }
+  });
+}
+function hideTooltip(e){
+  if(e && e.target && e.target.tagName === 'MARK') return;
+  tooltip.classList.remove('show');
+}
+
+// ---------- Sample scorecard: hook up tooltips on the static example too ----------
+document.getElementById('sampleAnnotated').querySelectorAll('mark').forEach(m => {
+  m.addEventListener('mouseenter', showTooltip);
+  m.addEventListener('mouseleave', hideTooltip);
+  m.addEventListener('click', (e) => { e.stopPropagation(); showTooltip.call(m, e); });
+});
+
+// ---------- Access gate ----------
+const gateCard = document.getElementById('gateCard');
+const toolArea = document.getElementById('toolArea');
+const studentIdInput = document.getElementById('studentIdInput');
+const studentPinInput = document.getElementById('studentPinInput');
+const unlockBtn = document.getElementById('unlockBtn');
+const gateStatus = document.getElementById('gateStatus');
+
+function setGateStatus(html){ gateStatus.innerHTML = html; }
+
+async function attemptUnlock(){
+  const id = studentIdInput.value.trim();
+  const pin = studentPinInput.value.trim();
+  studentIdInput.classList.remove('invalid');
+  studentPinInput.classList.remove('invalid');
+
+  if(!id || !pin){
+    if(!id) studentIdInput.classList.add('invalid');
+    if(!pin) studentPinInput.classList.add('invalid');
+    setGateStatus('<p class="error-note">Please enter both your Student ID and PIN.</p>');
+    return;
+  }
+  if(APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === 0){
+    setGateStatus('<p class="error-note">TestMentor is not connected to a backend yet.</p>');
+    return;
+  }
+
+  unlockBtn.disabled = true;
+  unlockBtn.innerHTML = '<span class="spinner"></span> Checking…';
+  setGateStatus('');
+
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: 'verify_access', studentId: id, pin: pin })
+    });
+    const data = await res.json();
+
+    if(data.valid){
+      verifiedStudentId = id;
+      verifiedPin = pin;
+      verifiedName = data.name || '';
+      verifiedPhone = data.phone || '';
+      gateCard.style.display = 'none';
+      toolArea.style.display = 'block';
+      toolArea.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      studentIdInput.classList.add('invalid');
+      studentPinInput.classList.add('invalid');
+      setGateStatus('<p class="error-note">That Student ID and PIN do not match. Please check with whoever shared TestMentor with you.</p>');
+    }
+  } catch(err){
+    console.error(err);
+    setGateStatus('<p class="error-note">Something went wrong checking your details: ' + escapeHtml(String(err.message || err)) + '</p>');
+  } finally {
+    unlockBtn.disabled = false;
+    unlockBtn.innerHTML = '<span class="seal"></span> Unlock TestMentor';
+  }
+}
+
+unlockBtn.addEventListener('click', attemptUnlock);
+[studentIdInput, studentPinInput].forEach(el => el.addEventListener('keydown', (e) => { if(e.key === 'Enter') attemptUnlock(); }));
+</script>
+
+
+</body></html>
