@@ -551,6 +551,8 @@
 <body>
 <div class="wrap">
 
+  <p style="margin:0 0 14px"><a href="index.html" style="color:var(--ink-soft);font-size:13px;text-decoration:none;font-weight:600">&larr; Back to WriteAlpha</a></p>
+
   <header>
     <p class="welcome-eyebrow">Welcome to</p>
     <h1>Write<em>Mentor</em></h1>
@@ -560,7 +562,7 @@
 
   <div class="name-card">
     <span class="name-label">Your name or ID (optional)</span>
-    <input type="text" class="name-input" id="studentName" placeholder="e.g. Sara K.">
+    <input type="text" class="name-input" id="studentName" placeholder="e.g. Saad TORKI">
     <p class="name-hint">This is just so your teacher can tell sessions apart. It isn't verified, so use whatever name you like.</p>
   </div>
 
@@ -650,7 +652,7 @@
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────
 // Paste your deployed Apps Script Web App URL below (it ends in /exec).
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw92E9pPFZ5IYpiRec72TAzJZlMubdgjode6OhnDbD1IpVQRLR1KU11uZ3giHrk1iK1hQ/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2y7avcfR7HUUTTZICuk5XJo3bj7ai9Gv34FWu62-0FF9hOr3AD3LKwbx1vh-qKPQ/exec";
 // ────────────────────────────────────────────────────────────────────────
 
 const CATS = {
@@ -927,12 +929,17 @@ async function saveSession(modelAnswerText, totalErrors){
     tally: lastCounts
   };
   try{
-    await fetch(APPS_SCRIPT_URL, {
+    const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
     });
-    setStatus('<p class="save-note">✓ Saved to your teacher\'s records.</p>');
+    const data = await res.json();
+    if(data && data.saved){
+      setStatus('<p class="save-note">✓ Saved to your teacher\'s records.</p>');
+    } else {
+      throw new Error((data && data.error) || 'Save did not complete.');
+    }
   } catch(err){
     console.error('Save failed:', err);
     setStatus('<p class="error-note">Could not save this session automatically. Your feedback above is still here to copy or screenshot.</p>');

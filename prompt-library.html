@@ -1,74 +1,464 @@
 <!DOCTYPE html>
+<!--
+  WriteAlpha Companion Site — Writing Prompts Library
+  ====================================================
+  ENGINEER NOTES:
+  - This is a self-contained page: all CSS and JS are inline, no external
+    dependencies. Drop the <body> contents into the existing
+    "Writing Prompts" page shell, or embed the whole document as-is
+    (e.g. behind writealpha.com/prompt-library.html).
+  - Filtering is plain vanilla JS (no framework). Each prompt card carries
+    data-type and data-level attributes; clicking a filter pill toggles a
+    CSS class that shows/hides matching cards. Both filters (Type + Level)
+    apply together (AND logic).
+  - Content status, updated after reading the full manuscript
+    ("Teaching Writing to Generation Alpha", Dr. Saad Torki):
+      * Narrative (Ch.9 / Appendix H) and Expository (Ch.11 / Appendix J)
+        — prompts are pulled from the appendix text, near-verbatim.
+      * Argumentative (Ch.12 / Appendix K) — B2 prompts are built from the
+        real counterargument topics in Appendix K. Two A2/B1 debate
+        prompts ("homework every night", "ban social media for
+        teenagers") are lifted directly from the Chapter 12 classroom
+        activity text.
+      * Descriptive (Ch.10), Cause & Effect (Ch.13), Compare & Contrast
+        (Ch.14), Definition (Ch.15), Problem-Solution (Ch.16), Opinion
+        (Ch.17), Classification (Ch.18) — these chapters have no
+        dedicated prompt-bank appendix (only Appendices A–K + L–Q exist;
+        there is no appendix for Chapters 13–18). Every prompt in these
+        sections is newly written for this page, but grounded in the
+        chapter's own worked examples, named personas (Yusuf/cause-effect,
+        Tariq/compare-contrast, Fatima/definition, Yasser/problem-solution,
+        Rania/classification), and CEFR floor as stated in the chapter
+        objectives — e.g. Definition and Problem-Solution are B2-only per
+        the manuscript, so no A2/B1 cards exist for those two types.
+      * Paragraph (Ch.8) uses the book's PEEL/PIE models; prompts are new.
+  - Every non-verbatim prompt still carries data-drafted="true" in the
+    LIBRARY data below (see the field comment above it) so the sourced vs.
+    newly-written distinction isn't lost — it's just no longer rendered
+    as a visible badge on the card. Filter on that attribute in the data
+    if you want to re-surface it later (e.g. for an internal QA pass).
+  - RECOMMENDATION: since Chapters 13-18 genuinely have no prompt-bank
+    appendix yet, consider writing Appendices for them (matching the
+    H/J/K format) as the long-term fix — this page can be regenerated
+    from that verified text in minutes once it exists.
+  - GUIDE POP-UP (new): each card has a "Guide" button opening a modal
+    with (1) a structure checklist for that essay type, (2) a
+    level-adapted sentence starter, (3) the book's own top common error
+    for that genre, pulled verbatim from the "Common ... Errors" tables
+    in Chapters 8–18 (e.g. Table 13.7, Table 16.6). Deliberately NOT a
+    model answer/finished paragraph — the book's own pedagogy (Not-My-
+    Voice checklist, Ask-Don't-Tell protocol) treats a ready-made answer
+    sitting next to the prompt as something that invites paraphrasing
+    instead of original writing, so the modal stops at scaffolding. All
+    modal content lives in the GUIDES object in the script below —
+    edit there, not in the render functions.
+  - MENTOR CALLOUT (updated again): a banner under the page header, plus
+    a line in every Guide pop-up, points to WriteMentor and TestMentor.
+    These do NOT live on writealpha.com (confirmed by checking
+    writealpha.com's own navigation — neither page is listed there).
+    Two earlier guesses were tried and replaced: writealpha.com/*.html
+    (wrong — pages don't exist there) and the standalone Sites
+    /view/writementor + /view/testmentor-ielts-toefl (also wrong). The
+    URLs below are what the user confirmed directly as correct:
+    https://sites.google.com/view/writealpha-companion/writementor-with-audio
+    and
+    https://sites.google.com/view/writealpha-companion/testmentor
+    — i.e. WriteMentor and TestMentor live as pages inside the
+    writealpha-companion Google Site itself, not as separate sites.
+    Both links open in a new tab (target="_blank") so students don't
+    lose their place in the prompt library. Search "mentor-link" /
+    "mentor-callout" / "modal-mentor-line" to find and edit every
+    instance if these URLs ever move again. Both the banner and the
+    pop-up now
+    also remind students to log AI-assisted drafts in their AI
+    Collaboration Log, tying the tool back to the book's own AI-use
+    policy instead of implying unlogged AI help is fine.
+  - LENGTH GUIDANCE (new): each Guide pop-up shows a suggested word
+    count and time per level. See the LENGTH_GUIDE comment in the script
+    — these bands are generalised from the specific word counts in the
+    book's own sample lesson plans (not one canonical table), so please
+    have the author sign off before publishing.
+  - COPY BUTTON (new): each card has a "Copy" button that copies the
+    prompt text to the clipboard (with an execCommand fallback for older
+    browsers), for pasting into an assignment sheet or a student's doc.
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WriteAlpha - Writing Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing Prompts for Generation Alpha | WriteAlpha</title>
 <style>
-:root{--bl:#1F5C99;--tl:#2E86AB;--lt:#EBF4FA;--dk:#1A1A2E;--gy:#666;--wh:#fff;--am:#F4A62A;--yw:#FFF8E7;--border:#D0E4F2;--bg:#F7FAFD}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--dk);background:var(--bg)}
-.wrap{max-width:900px;margin:0 auto;padding:24px 20px}
-h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
-.sub{font-size:16px;color:var(--gy);font-style:italic;margin-bottom:20px}
-.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;align-items:center}
-.filter-label{font-size:14px;font-weight:700;color:var(--gy);margin-right:4px;text-transform:uppercase;letter-spacing:.04em}
-.pill{border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:14px;font-weight:700;cursor:pointer;background:var(--wh);color:var(--gy);transition:.2s}
-.pill:hover,.pill.on{background:var(--bl);color:var(--wh);border-color:var(--bl)}
-.pill.level.on{background:var(--tl);border-color:var(--tl)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.pcard{background:var(--wh);border:1px solid var(--border);border-radius:8px;padding:14px;border-left:4px solid var(--tl)}
-.pcard[data-type="narrative"]{border-left-color:#8B3DB5}
-.pcard[data-type="descriptive"]{border-left-color:#2E7D32}
-.pcard[data-type="expository"]{border-left-color:#E65100}
-.pcard[data-type="argumentative"]{border-left-color:#C62828}
-.pcard[data-type="paragraph"]{border-left-color:var(--tl)}
-.pcard[data-type="sentence"]{border-left-color:#888}
-.type-tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:4px;margin-bottom:8px}
-.lvl-tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f0f0f0;color:#555;margin-bottom:8px}
-.prompt-text{font-size:15px;color:var(--dk);margin-bottom:8px;line-height:1.5;font-weight:600}
-.hook{font-size:13px;font-style:italic;color:var(--tl);line-height:1.4;border-top:1px solid var(--border);padding-top:6px;margin-top:6px}
-.none{color:var(--gy);font-style:italic;padding:24px 0;font-size:16px}
-.count{font-size:14px;color:var(--gy);margin-bottom:12px}
+  :root {
+    --ink: #1c2530;
+    --ink-soft: #4b5563;
+    --paper: #fbfaf8;
+    --card: #ffffff;
+    --line: #e4e0d8;
+    --brand: #2f6f5e;
+    --brand-dark: #234f43;
+    --brand-tint: #e8f2ee;
+    --accent: #c76b3d;
+    --draft: #b45309;
+    --draft-tint: #fef3e2;
+    --radius: 10px;
+    --shadow: 0 1px 2px rgba(28,37,48,.06), 0 4px 14px rgba(28,37,48,.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
 
-.gw-nav{max-width:900px;margin:30px auto 10px;padding:0 20px;display:flex;
-  justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.gw-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
-  border:1px solid #1F5C99;border-radius:6px;color:#1F5C99;text-decoration:none;
-  font-size:15px;font-weight:700;font-family:'Segoe UI',system-ui,sans-serif;
-  background:#fff;transition:.2s}
-.gw-nav a:hover{background:#1F5C99;color:#fff}
-.gw-nav .gw-spacer{flex:1}
-@media(max-width:600px){.gw-nav{justify-content:center}}
+  header.hero {
+    text-align: left;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  header.hero h1 {
+    font-size: 1.9rem;
+    margin: 0 0 8px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  header.hero p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    max-width: 640px;
+  }
 
+  .filters {
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    padding: 18px 0 14px;
+    z-index: 5;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+  .filter-group { margin-bottom: 10px; }
+  .filter-group:last-child { margin-bottom: 0; }
+  .filter-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-right: 10px;
+    display: inline-block;
+    min-width: 52px;
+  }
+  .pills { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    padding: 6px 13px;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: all .15s ease;
+    line-height: 1.3;
+  }
+  .pill:hover { border-color: var(--brand); color: var(--brand-dark); }
+  .pill.active {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+  }
+  .pill[data-value="all"].active { background: var(--ink); border-color: var(--ink); }
 
-.gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
-  padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
-  color:#cfe0f0;font-size:13px}
-.gw-footer-slim img{height:26px;flex-shrink:0}
-.gw-footer-slim .sep{color:#3d5a7a}
-.gw-footer-slim a{color:#cfe0f0;text-decoration:none}
-.gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
-.gw-footer-slim strong{color:#fff;font-weight:700}
-@media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+  .count-line {
+    margin: 4px 0 22px;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .count-line strong { color: var(--ink); }
 
+  .type-section { margin-bottom: 34px; }
+  .type-section h2 {
+    font-size: 1.15rem;
+    margin: 0 0 4px;
+    color: var(--brand-dark);
+  }
+  .type-hint {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+    max-width: 700px;
+  }
 
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 16px 14px;
+    box-shadow: var(--shadow);
+  }
+  .card p.prompt-text {
+    margin: 0 0 12px;
+    font-size: 0.94rem;
+    color: var(--ink);
+  }
+  .card .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .level-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--brand-tint);
+    color: var(--brand-dark);
+  }
+  .draft-tag {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--draft);
+    background: var(--draft-tint);
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
 
-.gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
-  padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
-  border-top:1px solid rgba(255,255,255,.12)}
-.gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
-.gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
+  .hidden { display: none !important; }
 
-.gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
-  padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
-.gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
-.gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+  .empty-state {
+    text-align: center;
+    color: var(--ink-soft);
+    padding: 50px 20px;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    display: none;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  /* --- Guide button on cards --- */
+  .guide-btn {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--brand-dark);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .guide-btn:hover { background: var(--brand-tint); border-color: var(--brand); }
+  .card .meta { gap: 8px; flex-wrap: wrap; }
+  .card .meta-left { display: flex; gap: 6px; align-items: center; }
+  .card .meta-right { display: flex; gap: 6px; align-items: center; }
+  .copy-btn {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .copy-btn:hover { background: var(--brand-tint); border-color: var(--brand); color: var(--brand-dark); }
+  .copy-btn.copied { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+  .length-box {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .length-box strong { color: var(--ink); }
+
+  /* --- Guide modal --- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,37,48,.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 5vh 16px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--card);
+    border-radius: var(--radius);
+    max-width: 620px;
+    width: 100%;
+    padding: 26px 26px 22px;
+    box-shadow: 0 12px 40px rgba(28,37,48,.25);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink-soft);
+    padding: 4px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brand-dark);
+    margin: 0 0 6px;
+  }
+  .modal-prompt {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-right: 20px;
+    color: var(--ink);
+  }
+  .modal-section { margin-bottom: 18px; }
+  .modal-section:last-child { margin-bottom: 0; }
+  .modal-section h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .modal-section ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .modal-section ol li { margin-bottom: 5px; font-size: 0.93rem; }
+  .starter-box {
+    background: var(--brand-tint);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.93rem;
+    font-style: italic;
+    color: var(--brand-dark);
+  }
+  .error-box {
+    background: var(--draft-tint);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+  .error-box .error-name { font-weight: 700; color: var(--draft); display: block; margin-bottom: 4px; }
+  .error-box .error-example { font-style: italic; margin: 4px 0; }
+  .modal-source {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+  }
+  .modal-mentor-line {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+  .modal-mentor-line a { color: var(--brand-dark); font-weight: 600; }
+
+  /* --- Mentor tools callout --- */
+  .mentor-callout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: var(--brand-tint);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+  }
+  .mentor-callout p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink);
+    max-width: 560px;
+  }
+  .mentor-callout .mentor-links {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .mentor-link {
+    display: inline-block;
+    background: var(--brand);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 7px;
+    transition: background .15s ease;
+  }
+  .mentor-link:hover { background: var(--brand-dark); }
+  .mentor-link.secondary {
+    background: #fff;
+    color: var(--brand-dark);
+    border: 1px solid var(--brand);
+  }
+  .mentor-link.secondary:hover { background: var(--brand-tint); }
+  .mentor-callout-inner { display: flex; flex-direction: column; gap: 4px; max-width: 560px; }
+  .mentor-callout-note {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  .gw-topnav{max-width:900px;margin:0 auto 18px;background:#0d2a4d;border-radius:10px;
+    padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
+  .gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+  .gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+  .gw-footer-slim{margin:40px auto 0;max-width:900px;background:#0d2a4d;border-radius:10px;
+    padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    color:#cfe0f0;font-size:13px}
+  .gw-footer-slim .sep{color:#3d5a7a}
+  .gw-footer-slim a{color:#cfe0f0;text-decoration:none}
+  .gw-footer-slim a:hover{color:#F4A62A;text-decoration:underline}
+  .gw-footer-slim strong{color:#fff;font-weight:700}
+  @media(max-width:700px){.gw-footer-slim{justify-content:center;text-align:center}}
+  .gw-sitemap{margin:8px auto 0;max-width:900px;background:#0d2a4d;border-radius:0 0 10px 10px;
+    padding:10px 24px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;
+    border-top:1px solid rgba(255,255,255,.12)}
+  .gw-sitemap a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
+  .gw-sitemap a:hover{color:#F4A62A;text-decoration:underline}
 </style>
 </head>
 <body>
-<a id="gw-top"></a>
-<div class="wrap"><div class="gw-topnav">
+<div style="max-width:900px;margin:16px auto 0" class="gw-topnav">
   <a href="index.html">Home</a>
   <a href="about-the-book.html">About the Book</a>
   <a href="about-the-author.html">About the Author</a>
@@ -78,151 +468,718 @@ h1{font-size:28px;font-weight:700;color:var(--bl);margin-bottom:6px}
   <a href="appendices.html">Appendices</a>
   <a href="glossary.html">Glossary</a>
   <a href="whats-new.html">What's New</a>
-  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="tools-resources.html">Tools &amp; Resources</a>
   <a href="contact.html">Contact</a>
-</div></div>
-
+</div>
 <div class="wrap">
-<h1>Writing Prompts for Generation Alpha</h1>
-<p class="sub">Short, engaging, digital-friendly - rooted in students' real lives. Filter by writing type or CEFR level.</p>
 
-<div class="filters">
-  <span class="filter-label">Type:</span>
-  <button class="pill on" onclick="filter('type','all',this)">All types</button>
-  <button class="pill" onclick="filter('type','narrative',this)">Narrative</button>
-  <button class="pill" onclick="filter('type','descriptive',this)">Descriptive</button>
-  <button class="pill" onclick="filter('type','expository',this)">Expository</button>
-  <button class="pill" onclick="filter('type','argumentative',this)">Argumentative</button>
-  <button class="pill" onclick="filter('type','cause-effect',this)">Cause &amp; Effect</button>
-  <button class="pill" onclick="filter('type','compare-contrast',this)">Compare &amp; Contrast</button>
-  <button class="pill" onclick="filter('type','definition',this)">Definition</button>
-  <button class="pill" onclick="filter('type','problem-solution',this)">Problem-Solution</button>
-  <button class="pill" onclick="filter('type','opinion',this)">Opinion</button>
-  <button class="pill" onclick="filter('type','classification',this)">Classification</button>
-  <button class="pill" onclick="filter('type','paragraph',this)">Paragraph</button>
-</div>
-<div class="filters">
-  <span class="filter-label">Level:</span>
-  <button class="pill level on" onclick="filter('level','all',this)">All levels</button>
-  <button class="pill level" onclick="filter('level','A2',this)">A2</button>
-  <button class="pill level" onclick="filter('level','B1',this)">B1</button>
-  <button class="pill level" onclick="filter('level','B2',this)">B2</button>
+  <header class="hero">
+    <h1>Writing Prompts for Generation Alpha</h1>
+    <p>Short, engaging, digital-friendly — rooted in students' real lives. Filter by writing type or CEFR level.</p>
+  </header>
+
+  <div class="mentor-callout">
+    <div class="mentor-callout-inner">
+      <p>Want feedback on a full draft, or exam-style practice? <strong>WriteMentor</strong> gives AI-assisted feedback on your writing, and <strong>TestMentor</strong> offers IELTS/TOEFL-style practice.</p>
+      <p class="mentor-callout-note">Using WriteMentor (or any AI tool) on a draft? Log it in your AI Collaboration Log — what you asked, what it gave you, what you kept or changed, and why.</p>
+    </div>
+    <div class="mentor-links">
+      <a class="mentor-link" href="writementor_tool.html" target="_blank" rel="noopener">Try WriteMentor</a>
+      <a class="mentor-link secondary" href="testmentor_tool.html" target="_blank" rel="noopener">Try TestMentor</a>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">Type</span>
+      <div class="pills" id="type-pills">
+        <button class="pill active" data-value="all">All types</button>
+        <button class="pill" data-value="narrative">Narrative</button>
+        <button class="pill" data-value="descriptive">Descriptive</button>
+        <button class="pill" data-value="expository">Expository</button>
+        <button class="pill" data-value="argumentative">Argumentative</button>
+        <button class="pill" data-value="cause-effect">Cause &amp; Effect</button>
+        <button class="pill" data-value="compare-contrast">Compare &amp; Contrast</button>
+        <button class="pill" data-value="definition">Definition</button>
+        <button class="pill" data-value="problem-solution">Problem-Solution</button>
+        <button class="pill" data-value="opinion">Opinion</button>
+        <button class="pill" data-value="classification">Classification</button>
+        <button class="pill" data-value="paragraph">Paragraph</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Level</span>
+      <div class="pills" id="level-pills">
+        <button class="pill active" data-value="all">All levels</button>
+        <button class="pill" data-value="A2">A2</button>
+        <button class="pill" data-value="B1">B1</button>
+        <button class="pill" data-value="B2">B2</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="count-line"><strong id="result-count">0</strong> prompts shown</p>
+
+  <div id="library"></div>
+  <div class="empty-state" id="empty-state">No prompts match this filter combination yet.</div>
+
+  <footer>WriteAlpha Companion Website · Writing Prompts Library</footer>
 </div>
 
-<div class="count" id="count"></div>
-<div class="grid" id="grid"></div>
+<div class="modal-overlay" id="guide-modal">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-prompt-text">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close">&times;</button>
+    <p class="modal-eyebrow" id="modal-eyebrow"></p>
+    <p class="modal-prompt" id="modal-prompt-text"></p>
+
+    <div class="modal-section">
+      <h3>How to structure it</h3>
+      <ol id="modal-structure"></ol>
+    </div>
+
+    <div class="modal-section">
+      <h3>Sentence starter</h3>
+      <p class="starter-box" id="modal-starter"></p>
+    </div>
+
+    <div class="modal-section">
+      <h3>Suggested length &amp; time</h3>
+      <p class="length-box" id="modal-length"></p>
+    </div>
+
+    <div class="modal-section">
+      <h3>Watch out for</h3>
+      <div class="error-box">
+        <span class="error-name" id="modal-error-name"></span>
+        <p class="error-example" id="modal-error-example"></p>
+        <p id="modal-error-fix"></p>
+      </div>
+    </div>
+
+    <p class="modal-source" id="modal-source"></p>
+    <p class="modal-mentor-line">Finished a draft? Get feedback from <a href="writementor_tool.html" target="_blank" rel="noopener">WriteMentor</a>, or practise exam-style with <a href="testmentor_tool.html" target="_blank" rel="noopener">TestMentor</a>. If AI helped with this draft, log it in your AI Collaboration Log.</p>
+  </div>
 </div>
 
 <script>
-const TC={'narrative':'#8B3DB5','descriptive':'#2E7D32','expository':'#E65100','argumentative':'#C62828','cause-effect':'#6D4C41','compare-contrast':'#00838F','definition':'#5E35B1','problem-solution':'#AD1457','opinion':'#1565C0','classification':'#558B2F','paragraph':'#2E86AB','sentence':'#888'};
-
-const PROMPTS=[
-  {type:'narrative',level:'A2',text:'Write about a time you were late for something important. What happened? How did you feel?',hook:'Start with the moment you realised you were late - not before. Gen Alpha storytellers know how to hook an audience.'},
-  {type:'narrative',level:'A2',text:'Write about your favourite place at home. What do you do there? Why do you like it?',hook:'Personal and concrete. Every student has a corner, a room, a roof. The challenge is English - not the memory.'},
-  {type:'narrative',level:'A2',text:'Write about something funny that happened with your family recently.',hook:'Low pressure, high engagement. Shared family moments are universal and emotionally rich.'},
-  {type:'narrative',level:'B1',text:'Write about a moment when technology helped you - or failed you - at the worst possible time.',hook:'This is their world. Every student has a story. The challenge is getting it from Arabic memory into English prose.'},
-  {type:'narrative',level:'B1',text:'You sent a message to the wrong person. Write what happened next.',hook:'Every Gen Alpha student has done this. Instant emotional investment before they write a word.'},
-  {type:'narrative',level:'B1',text:'Write about a food you hated as a child that you now love - or a food you loved that you now cannot stand.',hook:'Food is cultural, personal, and sensory. Rich ground for descriptive vocabulary within a narrative structure.'},
-  {type:'narrative',level:'B1',text:'Write about a moment when you solved a problem completely by yourself - no help from anyone.',hook:'Builds confidence and personal voice. Ask AI for vocabulary support only - the story must be real.'},
-  {type:'narrative',level:'B2',text:'Write about a moment when you changed your mind about something you were absolutely certain of.',hook:'Connects to argumentative thinking - showing, not just stating. Requires genuine reflection.'},
-  {type:'narrative',level:'B2',text:'Write about a moment when being online made a real-world situation better - or significantly worse.',hook:'High stakes and personally relevant. Forces them to think about the relationship between digital and physical life.'},
-
-  {type:'descriptive',level:'A2',text:'Describe your school canteen at the busiest moment of the day. What do you see, hear, and smell?',hook:'Known space, real sensory details - not imagined. The colour-coding technique works well as preparation here.'},
-  {type:'descriptive',level:'A2',text:'Describe your bedroom. Where is everything? What does it feel like to be there?',hook:'Spatial organisation practice. Near, far, above, below. Every student has a room - the English is the challenge.'},
-  {type:'descriptive',level:'A2',text:'Describe the last meal you really enjoyed. Do not use the words good, nice, or delicious.',hook:'The Lina activity. Directly attacks the flat-adjective problem. Use Sensory Word Banks before writing.'},
-  {type:'descriptive',level:'B1',text:'Describe a street or market in your city. Help someone who has never been there to imagine it completely.',hook:'Teaching the core descriptive skill: translating visual memory into language. Use sensory word bank first.'},
-  {type:'descriptive',level:'B1',text:'Describe the smell of a kitchen when someone is cooking your favourite food.',hook:'Single-sense constraint forces precision. The restriction is the scaffold - easier than "describe everything."'},
-  {type:'descriptive',level:'B1',text:'Describe a person without mentioning anything about their appearance. Only describe what they do, how they move, how they speak.',hook:'Forces precision and observation. Excellent for productive vocabulary development at B1+.'},
-  {type:'descriptive',level:'B2',text:'Describe a place at two different times of day. Show how the same place feels completely different.',hook:'Structural challenge built in. Comparison of atmosphere, not just description of one moment.'},
-  {type:'descriptive',level:'B2',text:'Describe a feeling using only physical sensations - no emotion words allowed.',hook:'The highest-level descriptive challenge: "my heart was loud" not "I was scared." Pushes B2 students toward literary language.'},
-
-  {type:'expository',level:'A2',text:'Explain how to do something you know how to do that most adults probably do not (for example: use an app, set up a feature on a phone).',hook:'Expert knowledge. They know something. The challenge is explaining it clearly in English - not finding the content.'},
-  {type:'expository',level:'A2',text:'Explain three things students can do to make studying less stressful.',hook:'Process essay structure in a personally relevant frame. Concrete, manageable, no research needed.'},
-  {type:'expository',level:'B1',text:'Explain why teenagers use TikTok or Snapchat differently from adults.',hook:'They are the experts. Builds on knowledge they already have. The task is organising and explaining it.'},
-  {type:'expository',level:'B1',text:'Explain what makes a good teacher - based only on your own experience in school.',hook:'Real context, real audience (potentially the teacher reading it). Connects personal experience to analytical writing.'},
-  {type:'expository',level:'B1',text:'Explain how to save money when you have very little. Give at least three specific steps.',hook:'Process essay with a real-world problem teenagers actually face. Forces specificity - "save money" is not a step.'},
-  {type:'expository',level:'B2',text:'Explain how AI is changing one specific area of daily life. Use one concrete example and fact-check every claim.',hook:'Critical AI literacy built into the task structure. Connects to Chapter 11 fact-checking activity.'},
-  {type:'expository',level:'B2',text:'Explain the difference between studying hard and studying smart. Use specific examples from your own experience.',hook:'Familiar concept, analytical structure. Requires comparison - not just description - of two approaches.'},
-
-  {type:'argumentative',level:'B1',text:'Should students be allowed to use their phones in class? Argue one side clearly. Then find the strongest argument against your position.',hook:'High engagement topic. The second instruction is the key - they must genuinely engage with the counterargument.'},
-  {type:'argumentative',level:'B1',text:'Is it better to learn from a teacher or from YouTube? Make a clear argument with at least two pieces of evidence.',hook:'Directly relevant. They already do both. The comparison is real and the positions are genuinely arguable.'},
-  {type:'argumentative',level:'B1',text:'Is it fair for teachers to give the same mark to a student who used AI and one who did not?',hook:'Real and immediate. They have strong feelings about this. Make them argue it with evidence, not just emotion.'},
-  {type:'argumentative',level:'B2',text:'Should AI-generated content always be labelled? Argue your position with evidence and a genuine engagement with the opposing view.',hook:'High stakes and personally relevant. Connects directly to Chapter 5 and the AI Collaboration Log concept.'},
-  {type:'argumentative',level:'B2',text:'Is it ever acceptable to use AI to help write an essay? Argue your position with a counterargument and a rebuttal.',hook:'The central question of the book - asked of students themselves. Their answers will be revealing and specific.'},
-  {type:'argumentative',level:'B2',text:'Should schools teach students how to use AI responsibly - or focus on teaching them to work without it?',hook:'Genuinely contested. Both positions have strong arguments. Excellent for teaching counterargument structure.'},
-
-  {type:'paragraph',level:'A2',text:'Write one paragraph about your morning routine. Use at least three time connectives: first, then, after that, finally.',hook:'PIE structure. Clear task, concrete connectives to practise. The constraint is the scaffold.'},
-  {type:'paragraph',level:'A2',text:'Write one PIE paragraph about an animal. Three facts and one explanation of why it is interesting.',hook:'Three-part structure. Concrete, manageable, no opinion pressure. Good for A2 paragraph structure practice.'},
-  {type:'paragraph',level:'B1',text:'Write one PEEL paragraph explaining why your city is a good - or bad - place for young people.',hook:'Topic sentence + 2 examples + explanation + link. Practise the full PEEL cycle on a personally relevant topic.'},
-  {type:'paragraph',level:'B1',text:'Write one PEEL paragraph giving advice to a student who is just starting to learn English.',hook:'Connects to their own experience. Real audience: themselves one year ago. Personal and motivating.'},
-  {type:'paragraph',level:'B1',text:'Write one paragraph: the most useful thing you have learned in school that was not in any textbook.',hook:'Opinion-based. Requires a clear position and at least one specific example. Strong personal voice expected.'},
-  {type:'paragraph',level:'B2',text:'Write one analytical paragraph about why students disengage from writing tasks in L2 classrooms.',hook:'Meta-level reflection. They are the subject. Excellent for developing analytical voice at B2.'},
+// ---------------------------------------------------------------------
+// DATA
+// Each type has: key, label, hint (short structure reminder), prompts[]
+// Each prompt: { level: "A2"|"B1"|"B2", text: "...", drafted: true|false }
+// drafted:false  => verbatim / sourced from the book's appendices
+// drafted:true   => newly written for this page, needs author review
+// ---------------------------------------------------------------------
+const LIBRARY = [
+  {
+    key: "narrative",
+    label: "Narrative",
+    hint: "Six elements: hook, setting, characters, complication, turning point, resolution. (Appendix H: Majd Story Audit)",
+    prompts: [
+      { level: "A2", drafted: false, text: "Write about a time when you helped someone. What happened? How did you feel afterwards?" },
+      { level: "A2", drafted: false, text: "Write about your first day at a new school or in a new place. What did you see? What surprised you?" },
+      { level: "A2", drafted: false, text: "Write about a gift you received that was important to you. Who gave it? Why was it special?" },
+      { level: "A2", drafted: false, text: "Write about a time when you learned something new. What was it? How did you learn it?" },
+      { level: "A2", drafted: false, text: "Write about a journey you remember well. Where were you going? What happened on the way?" },
+      { level: "B1", drafted: false, text: "Write about a moment when you changed your mind about something important. What caused the change?" },
+      { level: "B1", drafted: false, text: "Write about a time when technology helped you — or failed you — at a critical moment." },
+      { level: "B1", drafted: false, text: "Write about a misunderstanding that taught you something about communication." },
+      { level: "B1", drafted: false, text: "Write about a moment when you felt genuinely proud of something you had made or done." },
+      { level: "B1", drafted: false, text: "Write about an experience that made you see a familiar place in a completely different way." },
+      { level: "B2", drafted: false, text: "Write about a moment when you were forced to make a decision without enough information." },
+      { level: "B2", drafted: false, text: "Write about an encounter with a stranger that had an unexpected effect on you." },
+      { level: "B2", drafted: false, text: "Write about a time when doing the right thing was not the easy thing." },
+      { level: "B2", drafted: true,  text: "Write about a moment when something you believed turned out to be wrong — and what changed as a result." },
+      { level: "B2", drafted: true,  text: "Write about a time you had to represent a group you belonged to, and what that responsibility taught you." }
+    ]
+  },
+  {
+    key: "descriptive",
+    label: "Descriptive",
+    hint: "Dominant impression + spatial organisation + showing, not telling. Push past big/good/nice toward precise sensory vocabulary (Ch.10's “Good-and-Nice intervention”).",
+    prompts: [
+      { level: "A2", drafted: false, text: "Describe your bedroom. What can you see, hear, and touch there?" },
+      { level: "A2", drafted: false, text: "Describe a rainy day you remember well. What did you see, hear, and feel?" },
+      { level: "A2", drafted: false, text: "Describe a busy market. Use at least three senses." },
+      { level: "B1", drafted: false, text: "Describe a crowded street at a moment you remember clearly. What was the dominant feeling?" },
+      { level: "B1", drafted: false, text: "Describe a quiet library, and how it felt different from the noise outside it." },
+      { level: "B1", drafted: true,  text: "Describe a place that changes completely depending on the time of day." },
+      { level: "B2", drafted: false, text: "Describe a storm — not just what happened, but the dominant impression it left." },
+      { level: "B2", drafted: true,  text: "Describe a moment of stillness in an otherwise chaotic environment." }
+    ]
+  },
+  {
+    key: "expository",
+    label: "Expository",
+    hint: "General claim → specific mechanism (how/why) → concrete example → link.",
+    prompts: [
+      { level: "A2", drafted: false, text: "Explain how you use your phone differently for schoolwork and for social life." },
+      { level: "A2", drafted: false, text: "Explain the process of making a traditional dish from your culture." },
+      { level: "A2", drafted: false, text: "Explain why young people spend so much time on social media." },
+      { level: "A2", drafted: false, text: "Explain how a library or school resource helps students learn." },
+      { level: "A2", drafted: false, text: "Explain the difference between studying alone and studying in a group." },
+      { level: "B1", drafted: false, text: "Explain the causes of climate change." },
+      { level: "B1", drafted: false, text: "Explain how the internet has changed the way people shop." },
+      { level: "B1", drafted: false, text: "Explain how exercise affects concentration and energy levels." },
+      { level: "B1", drafted: false, text: "Explain what makes a good teacher." },
+      { level: "B1", drafted: false, text: "Explain how learning a second language affects the way you think." },
+      { level: "B1", drafted: false, text: "Explain why some students prefer online learning to classroom learning." },
+      { level: "B2", drafted: false, text: "Explain how digital literacy skills differ from traditional literacy skills." },
+      { level: "B2", drafted: false, text: "Explain how climate affects cultural practices in your region." },
+      { level: "B2", drafted: false, text: "Explain the role of peer feedback in developing writing skills." },
+      { level: "B2", drafted: false, text: "Explain how automation is changing the skills employers value most." },
+      { level: "B2", drafted: false, text: "Explain the relationship between sleep and academic performance." },
+      { level: "B2", drafted: false, text: "Explain how urban design affects community wellbeing." },
+      { level: "B2", drafted: false, text: "Explain why some new technologies are adopted quickly while others fail." },
+      { level: "B2", drafted: true,  text: "Explain how a recommendation algorithm decides what content to show you next." },
+      { level: "B2", drafted: true,  text: "Explain why misinformation spreads faster online than accurate corrections." }
+    ]
+  },
+  {
+    key: "argumentative",
+    label: "Argumentative",
+    hint: "Claim → Evidence → Warrant. Address the strongest counterargument, then refute it. (Appendix K: Khalid Counterargument Cards)",
+    prompts: [
+      { level: "A2", drafted: false, text: "Should students have homework every night? Give reasons." },
+      { level: "A2", drafted: true, text: "Is it better to do homework right after school or later in the evening? Give reasons." },
+      { level: "B1", drafted: true, text: "Should schools replace printed textbooks with tablets? Consider both sides before you decide." },
+      { level: "B1", drafted: false, text: "Should social media be banned for teenagers?" },
+      { level: "B2", drafted: false, text: "Should schools allow laptops in the classroom? Engage with the claim that students who use laptops in lectures take worse notes and remember less than those who write by hand — and defend your position under those conditions." },
+      { level: "B2", drafted: false, text: "Does AI in education help students learn to write, or only to prompt? Take a position and address the distinction between productive AI use and AI misuse." },
+      { level: "B2", drafted: false, text: "Is social media creating disconnection, or a new kind of connection older generations don't recognise as valuable? Take a position." },
+      { level: "B2", drafted: false, text: "Do individual lifestyle changes matter for climate change, given that a small number of corporations produce most global emissions? Take a position." },
+      { level: "B2", drafted: false, text: "Is university education still a reliable path to employment, given the cost of student debt and employers' growing focus on skills over degrees? Take a position." },
+      { level: "B2", drafted: false, text: "Is the global spread of English a practical tool for communication, or a threat to linguistic and cultural diversity? Take a position." }
+    ]
+  },
+  {
+    key: "cause-effect",
+    label: "Cause & Effect",
+    hint: "State causes and effects with real English causal markers — don't double them up ('because of stress causes...' is a transfer error, not just a slip). Use more than one transition.",
+    prompts: [
+      { level: "A2", drafted: true, text: "What causes students to feel tired at school? What effect does this have on their studying?" },
+      { level: "A2", drafted: true, text: "What happens when a person doesn't get enough sleep before an exam?" },
+      { level: "B1", drafted: false, text: "Why do teenagers feel stressed about exams? Consider homework, expectations, sleep, and comparing themselves to others on social media." },
+      { level: "B1", drafted: true, text: "What are the causes and effects of screen time on teenagers' sleep habits?" },
+      { level: "B1", drafted: true, text: "What effect has online shopping had on shops in your town or city?" },
+      { level: "B2", drafted: true, text: "What are the underlying causes of student burnout, and what long-term effects does it have on learning?" },
+      { level: "B2", drafted: true, text: "Analyse the causes behind the decline of a language or dialect, and the cultural effects of that loss." }
+    ]
+  },
+  {
+    key: "compare-contrast",
+    label: "Compare & Contrast",
+    hint: "Chapter targets B1–B2. Choose block or point-by-point structure and stay consistent. Give roughly equal weight to both subjects; don't just describe A then describe B — connect them within each point.",
+    prompts: [
+      { level: "B1", drafted: false, text: "Compare two apps, cities, foods, or ways of studying that you know well. What's the most important difference, and why does it matter?" },
+      { level: "B1", drafted: false, text: "Compare online learning and in-person learning. What is the real trade-off — not just convenience, but what each requires from you?" },
+      { level: "B1", drafted: true,  text: "Compare learning English through an app with learning English in a classroom." },
+      { level: "B1", drafted: true,  text: "Compare how your grandparents' generation communicated with friends and how you do today." },
+      { level: "B2", drafted: true,  text: "Compare the trade-offs of remote learning and in-person learning for developing independent thinking skills." },
+      { level: "B2", drafted: true,  text: "Compare two approaches to using AI in education: banning it versus teaching students to use it critically." }
+    ]
+  },
+  {
+    key: "definition",
+    label: "Definition",
+    hint: "Chapter targets B2 only — this genre asks for abstract, layered thinking. Three-Layer Definition Framework: what it is (category + distinguishing features), what it is not (negative definition), why it matters (significance statement).",
+    prompts: [
+      { level: "B2", drafted: true, text: "Define 'academic integrity' in an era where AI tools can generate text on request." },
+      { level: "B2", drafted: true, text: "Define 'media literacy' and distinguish it from simply being able to use technology." },
+      { level: "B2", drafted: true, text: "Define 'digital literacy' — what it is, what it is often confused with, and why the distinction matters." },
+      { level: "B2", drafted: true, text: "Define 'creativity' — is it something people are born with, or something learned? What changes if we define it one way or the other?" }
+    ]
+  },
+  {
+    key: "problem-solution",
+    label: "Problem-Solution",
+    hint: "Chapter targets B2 only. Apply the Who-What-When test to every solution: Who does it? What exactly do they do? When or how often? \"Raise awareness\" is not a solution — it's the most common vague-solution error (Yasser's error).",
+    prompts: [
+      { level: "B2", drafted: false, text: "Many students feel stressed about exams. Propose a solution schools could put in place. Apply the Who-What-When test, and address one limitation of your proposal." },
+      { level: "B2", drafted: true, text: "Propose a solution to reduce how much time young people spend on their phones. Apply the Who-What-When test." },
+      { level: "B2", drafted: true, text: "Propose a realistic solution to the spread of misinformation on social media, and address one limitation of your proposal." },
+      { level: "B2", drafted: true, text: "Propose a policy schools could adopt for AI use in coursework, and address the strongest objection to it." }
+    ]
+  },
+  {
+    key: "opinion",
+    label: "Opinion",
+    hint: "Chapter targets B1–B2. Your thesis must state a specific opinion, not just name a topic — a qualifier makes the position more honest, not weaker. If you concede a point, return to your position by the end; don't let the essay stay balanced-but-empty.",
+    prompts: [
+      { level: "B1", drafted: true, text: "Do you think school uniforms are a good idea? Give your opinion and reasons." },
+      { level: "B1", drafted: true, text: "What is your opinion about homework? Should there be more or less of it?" },
+      { level: "B1", drafted: true, text: "In your opinion, should students be taught how to use AI tools in school?" },
+      { level: "B1", drafted: true, text: "What is your opinion on how much influence social media has on young people's choices?" },
+      { level: "B2", drafted: true, text: "In your opinion, should standardised testing remain the primary way students are assessed?" },
+      { level: "B2", drafted: true, text: "What is your opinion on requiring students to disclose their use of AI tools in every assignment?" }
+    ]
+  },
+  {
+    key: "classification",
+    label: "Classification",
+    hint: "Chapter targets B1–B2. Choose one organising principle and apply it to every category — no mixing principles, no category overlap, equal treatment for each, and parallel grammatical structure throughout.",
+    prompts: [
+      { level: "B1", drafted: false, text: "Classify the apps on your phone into three types. State your organising principle in the introduction and explain your categories." },
+      { level: "B1", drafted: true,  text: "Classify the different ways students in your class prefer to study." },
+      { level: "B1", drafted: true,  text: "Classify the types of feedback teachers give, and explain which type helps you most." },
+      { level: "B2", drafted: true,  text: "Classify the different ways people your age use AI tools." },
+      { level: "B2", drafted: true,  text: "Classify the main types of misinformation found online, and explain what makes each type effective." },
+      { level: "B2", drafted: true,  text: "Classify the different motivations people have for using social media, and what each motivation predicts about their behaviour." }
+    ]
+  },
+  {
+    key: "paragraph",
+    label: "Paragraph",
+    hint: "PEEL (Point → Evidence → Explanation → Link) or the simpler PIE (Point → Illustration → Explanation). One controlling idea per paragraph — topic sentence, support, concluding sentence.",
+    prompts: [
+      { level: "A2", drafted: true, text: "Write one paragraph about your favourite hobby. Start with a topic sentence." },
+      { level: "A2", drafted: true, text: "Write one paragraph describing your typical school day." },
+      { level: "B1", drafted: true, text: "Write one paragraph explaining why you use a particular app so often." },
+      { level: "B1", drafted: true, text: "Write one paragraph giving your opinion on whether homework should be reduced." },
+      { level: "B2", drafted: true, text: "Write one paragraph arguing for or against banning phones in classrooms, using PEEL." },
+      { level: "B2", drafted: true, text: "Write one paragraph explaining one cause of student stress, using PEEL." }
+    ]
+  }
 ];
 
-  {type:'cause-effect',level:'B1',text:'Write a paragraph explaining one cause and two effects of spending too much time on a phone before bed.',hook:'Personally relevant; easy to generate two genuine effects from experience rather than invented ones.'},
-  {type:'cause-effect',level:'B1',text:'Explain the causes of plastic pollution in the ocean and at least two effects on sea life.',hook:'Pairs well with the descriptive sensory word bank activity from Chapter 10.'},
-  {type:'cause-effect',level:'B2',text:'Explain a chain of causation: how does a small habit (e.g., skipping breakfast) lead, step by step, through several effects to a larger outcome?',hook:'Chain causation appropriate for B2 - requires at least three linked causal markers.'},
-  {type:'compare-contrast',level:'B1',text:'Compare two apps or games you use. Use point-by-point structure to discuss features, cost, and audience.',hook:'High-interest, concrete subject. Forces a genuine point-by-point comparison rather than two separate lists.'},
-  {type:'compare-contrast',level:'B1',text:'Compare studying online and studying in a classroom. Which has more advantages for someone learning English?',hook:'Requires a controlling idea, not just a list - connects to remote-learning experience many students share.'},
-  {type:'compare-contrast',level:'B2',text:'Compare two online communities you are part of (two Discord servers, two gaming clans, two fan groups). What makes one feel more welcoming than the other?',hook:'Draws directly on Gen Alpha digital-social experience; strong source of genuine, specific detail.'},
-  {type:'definition',level:'B2',text:'Write a definition essay answering: what does "respect" really mean? Go beyond the dictionary definition.',hook:'Abstract concept ideal for the three-layer framework (dictionary base, extended explanation, illustration).'},
-  {type:'definition',level:'B2',text:'Define "success" using the three-layer framework. Include at least one example of how the concept is commonly misunderstood.',hook:'Personally meaningful and genuinely contestable - strong source of original illustration examples.'},
-  {type:'problem-solution',level:'B2',text:'Identify a specific problem at your school and propose one realistic, specific solution. Use the Who-What-When test on your solution before submitting.',hook:'Authentic agency - students propose change to something that actually affects them.'},
-  {type:'problem-solution',level:'B2',text:'Identify a problem caused by excessive screen time among teenagers and propose two possible solutions, evaluating which is more realistic.',hook:'Two-solution template; connects directly to the Chapter 1 discussion of digital habits.'},
-  {type:'opinion',level:'B1',text:'Do you think school uniforms are a good idea? State your position clearly and support it with two reasons and an example.',hook:'Classic three-paragraph opinion structure; clear, debatable, accessible at B1.'},
-  {type:'opinion',level:'B1',text:'Is it better to have a few close friends or many casual friends? Give your opinion with a clear thesis and supporting reasons.',hook:'Personally relevant; good practice for the three-part thesis (position, scope, qualifier).'},
-  {type:'classification',level:'B2',text:'Classify the different types of content you watch online into three or four categories. State your organising principle clearly before describing each category.',hook:'Forces an explicit organising principle - run categories through the Three-Test System before drafting.'},
-  {type:'classification',level:'B2',text:'Classify types of learners in a language classroom (e.g., by motivation, by learning style, or by another principle you choose) into distinct, non-overlapping categories.',hook:'Meta-relevant to students themselves; strong capstone task after Chapters 9–17.'},
-
-
-
-function color(t){return TC[t]||'#555'}
-
-function render(){
-  const filtered=PROMPTS.filter(p=>
-    (activeType==='all'||p.type===activeType)&&
-    (activeLevel==='all'||p.level===activeLevel)
-  );
-  document.getElementById('count').textContent=`Showing ${filtered.length} prompt${filtered.length!==1?'s':''}`;
-  const g=document.getElementById('grid');
-  if(!filtered.length){g.innerHTML='<p class="none">No prompts match this combination - try a different filter.</p>';return;}
-  g.innerHTML=filtered.map(p=>`
-<div class="pcard" data-type="${p.type}">
-  <span class="type-tag" style="background:${color(p.type)}22;color:${color(p.type)}">${p.type}</span>
-  <span class="lvl-tag">${p.level}</span>
-  <div class="prompt-text">${p.text}</div>
-  <div class="hook">💡 ${p.hook}</div>
-</div>`).join('');
-}
-
-function filter(dim,val,btn){
-  if(dim==='type'){
-    activeType=val;
-    document.querySelectorAll('.pill:not(.level)').forEach(p=>p.classList.remove('on'));
-  } else {
-    activeLevel=val;
-    document.querySelectorAll('.pill.level').forEach(p=>p.classList.remove('on'));
+// ---------------------------------------------------------------------
+// GUIDES — the pop-up scaffold shown for each essay type. Deliberately
+// NOT a model answer: a structure checklist, a level-adaptable sentence
+// starter, and the book's own most-common error for that genre (from
+// the "Common ... Errors" tables in Chapters 9–18). This keeps every
+// prompt AI-resistant and protects the student's own voice, consistent
+// with the book's Not-My-Voice / Ask-Don't-Tell approach.
+// Source line numbers refer to the manuscript
+// "Teaching Writing to Generation Alpha" by Dr. Saad Torki.
+// ---------------------------------------------------------------------
+const GUIDES = {
+  "narrative": {
+    structure: [
+      "Hook — grab the reader in the first line (a question, a bold statement, a vivid image). Never open with “In this essay I will…”",
+      "Setting — when and where.",
+      "Characters — who is involved.",
+      "Complication — the problem or challenge.",
+      "Turning point — the moment something changes.",
+      "Resolution — how it ends, and (B1+) what you learned."
+    ],
+    starters: {
+      A2: "One day, I…",
+      B1: "I will never forget the time when…",
+      B2: "It was the kind of moment you don’t recognise as important until much later:…"
+    },
+    error: {
+      name: "Past-tense inconsistency",
+      example: "“I walked to school. Then I see my friend.”",
+      fix: "Keep the whole story in one consistent tense (usually past). Check every verb against the tense of your opening sentence."
+    },
+    source: "Appendix H · Ch.9 Table 9.4"
+  },
+  "descriptive": {
+    structure: [
+      "Choose ONE dominant impression (peaceful, chaotic, cold, welcoming) before writing a single sentence.",
+      "Organise spatially — top to bottom, near to far — or in the order you noticed things.",
+      "Show, don’t tell: replace a feeling-word with a specific detail that proves it.",
+      "Use at least three senses, not only sight."
+    ],
+    starters: {
+      A2: "The first thing I noticed was…",
+      B1: "Above / Beside / Beneath [the object], …",
+      B2: "[The place] felt like… — not because of the obvious reason, but because of…"
+    },
+    error: {
+      name: "Vague adjectives",
+      example: "“The place was nice. The food was good.”",
+      fix: "Every time you’re tempted to write nice, good, or big, replace it with one specific, sensory detail instead."
+    },
+    source: "Appendix I · Ch.10 Table 10.6"
+  },
+  "expository": {
+    structure: [
+      "General claim — the idea you're explaining.",
+      "Specific mechanism — explain HOW or WHY, not just what.",
+      "Concrete example — ground it in something the reader can picture.",
+      "Link (B2+) — connect back to why this matters."
+    ],
+    starters: {
+      A2: "[Topic] happens because…",
+      B1: "One reason [topic] happens is…",
+      B2: "The reason [X] happens is not [the obvious answer] — it’s…"
+    },
+    error: {
+      name: "Overuse of “and then”",
+      example: "“And then I did X. And then I did Y.”",
+      fix: "Replace “and then” with a transition that names the actual logical relationship: as a result, because, this leads to."
+    },
+    source: "Appendix J · Ch.11 Table 11.3"
+  },
+  "argumentative": {
+    structure: [
+      "Claim — specific and debatable, not a vague statement.",
+      "Evidence — facts, examples, or data that support it.",
+      "Warrant — explain why the evidence actually proves the claim.",
+      "Address the strongest counterargument, then refute it — don’t ignore it."
+    ],
+    starters: {
+      A2: "I believe [position] because…",
+      B1: "I believe [position] because…",
+      B2: "While some argue [counterclaim], … because…"
+    },
+    error: {
+      name: "Weak claim",
+      example: "“Homework is bad.” (too vague, not debatable)",
+      fix: "Make the claim specific enough that a reasonable person could disagree with the exact wording — not just the general idea."
+    },
+    source: "Appendix K · Ch.12 Table 12.4"
+  },
+  "cause-effect": {
+    structure: [
+      "Name the cause(s) or effect(s) clearly.",
+      "Explain the mechanism — HOW one leads to the other, don’t just list events in order.",
+      "Use a different causal transition for each point (as a result, consequently, this leads to…).",
+      "B2: build a causal chain — A causes B, B causes C."
+    ],
+    starters: {
+      A2: "One reason [effect] happens is…",
+      B1: "One reason [effect] happens is…",
+      B2: "At first glance, [X] looks like the cause of [Y] — but the deeper cause is…"
+    },
+    error: {
+      name: "Doubled causal marker",
+      example: "“Because of stress causes students to forget.”",
+      fix: "Use “because” OR “because of” — never both in the same sentence. This is a transfer error from Arabic, not a careless slip, so it needs to be named and practised explicitly."
+    },
+    source: "Ch.13 Table 13.7"
+  },
+  "compare-contrast": {
+    structure: [
+      "Pick block or point-by-point structure and stay consistent for the whole essay.",
+      "Connect A and B within each point — don’t just describe them separately.",
+      "Give roughly equal space to both subjects.",
+      "End by explaining why the comparison matters, not just what the differences are."
+    ],
+    starters: {
+      A2: "Both [A] and [B]…, but…",
+      B1: "Both [A] and [B]…, but…",
+      B2: "On the surface, [A] and [B] look similar — but the real difference is…"
+    },
+    error: {
+      name: "Description without comparison",
+      example: "Seven sentences about A, then seven about B, never connected.",
+      fix: "In every paragraph, mention both subjects and state the relationship between them — not just their separate features."
+    },
+    source: "Ch.14 Table 14.6"
+  },
+  "definition": {
+    structure: [
+      "Layer 1 — what it is: category + distinguishing features.",
+      "Layer 2 — what it is not: negative definition, what it's commonly confused with.",
+      "Layer 3 — why it matters: a significance statement that's entirely your own view."
+    ],
+    starters: {
+      A2: "[Concept] is often confused with [X], but…",
+      B1: "[Concept] is often confused with [X], but…",
+      B2: "[Concept] is often confused with [X], but…"
+    },
+    error: {
+      name: "Dictionary copying",
+      example: "“According to the dictionary, freedom is the power or right to act, speak, or think as one wants.”",
+      fix: "Define it in your own words, from your own reasoning — never open with “according to the dictionary.”"
+    },
+    source: "Ch.15 Table 15.7"
+  },
+  "problem-solution": {
+    structure: [
+      "Problem — specific, who's affected, how seriously.",
+      "Cause — briefly explain why the problem exists.",
+      "Solution — apply the Who-What-When test: WHO does it, WHAT exactly, WHEN or how often.",
+      "Evaluation — acknowledge one limitation, then explain why it's still worth attempting."
+    ],
+    starters: {
+      A2: "One effective solution would be for [WHO] to [WHAT] [WHEN]…",
+      B1: "One effective solution would be for [WHO] to [WHAT] [WHEN]…",
+      B2: "One effective solution would be for [WHO] to [WHAT] [WHEN]…"
+    },
+    error: {
+      name: "Vague solution (the passive-voice wish)",
+      example: "“The government should raise awareness about this issue.”",
+      fix: "Never write “raise awareness.” Name who acts, what exactly they do, and when — the Who-What-When test."
+    },
+    source: "Ch.16 Table 16.6"
+  },
+  "opinion": {
+    structure: [
+      "Thesis — a clear, specific position, not just a topic.",
+      "Reason 1 + example.",
+      "Reason 2 + example.",
+      "B2: acknowledge one counterpoint, then return to your position.",
+      "Conclusion — restate the opinion; don’t soften it into “it depends.”"
+    ],
+    starters: {
+      A2: "In my opinion, … because…",
+      B1: "In my opinion, … because…",
+      B2: "In my opinion, … because…"
+    },
+    error: {
+      name: "The balanced-but-empty essay",
+      example: "Introduction states an opinion; body lists arguments for and against equally; conclusion says ‘it depends.’",
+      fix: "Pick a side by the end of paragraph one and don’t let go of it — every paragraph should support the thesis, not just describe the topic."
+    },
+    source: "Ch.17 Table 17.6"
+  },
+  "classification": {
+    structure: [
+      "State the subject and ONE organising principle in the introduction.",
+      "One paragraph per category, same structure each time (parallel).",
+      "Roughly equal treatment for every category.",
+      "Conclusion — explain what the classification reveals."
+    ],
+    starters: {
+      A2: "[Subject] can be classified into [number] categories based on [principle]…",
+      B1: "[Subject] can be classified into [number] categories based on [principle]…",
+      B2: "[Subject] can be classified into [number] categories based on [principle]…"
+    },
+    error: {
+      name: "Mixed organising principle",
+      example: "Categories defined by behaviour, personality, and circumstance simultaneously.",
+      fix: "Pick ONE principle and check every category against it before you start writing. If a member could fit two categories, the principle isn’t consistent yet."
+    },
+    source: "Ch.18 Table 18.6"
+  },
+  "paragraph": {
+    structure: [
+      "Topic sentence — states the one main idea of the paragraph.",
+      "2–3 supporting sentences — evidence, examples, explanation (PEEL or the simpler PIE).",
+      "Concluding sentence — links back to the main idea."
+    ],
+    starters: {
+      A2: "[One sentence stating your main idea]…",
+      B1: "[One sentence stating your main idea]…",
+      B2: "[One sentence stating your main idea]…"
+    },
+    error: {
+      name: "“Five paragraphs in a trench coat”",
+      example: "No blank lines or indentation, but five different ideas are smashed together inside what looks like one paragraph.",
+      fix: "Before writing, state your one main idea in a single sentence. If you can’t, you have more than one paragraph’s worth of content — split it."
+    },
+    source: "Ch.8 §8.1"
   }
-  btn.classList.add('on');
-  render();
+};
+
+function pickStarter(section, level) {
+  const g = GUIDES[section];
+  if (!g) return "";
+  return g.starters[level] || g.starters.B1 || Object.values(g.starters)[0];
 }
 
-render();
+// ---------------------------------------------------------------------
+// LENGTH_GUIDE — suggested word count & time per level.
+// EDITORIAL NOTE: the manuscript does not give one canonical length
+// table across all 11 essay types — instead it gives specific word
+// counts inside individual sample lesson plans (e.g. "narrative essay
+// homework: 150 to 200 words", "argumentative essay: 250 to 300 words",
+// "cause and effect paragraph: 100–150 words", "problem-solution essay:
+// 180–220 words", "point-by-point paragraph: 120–160 words"). These
+// bands were built by generalising from those examples across CEFR
+// levels, split into "essay" (multi-paragraph: Narrative, Descriptive,
+// Expository, Argumentative, Cause & Effect, Compare & Contrast,
+// Definition, Problem-Solution, Opinion, Classification) versus
+// "paragraph" (the single-paragraph Ch.8 genre). Please have the author
+// confirm/adjust before publishing — this is the one piece of content
+// on this page that isn't tied to a single specific source line.
+// ---------------------------------------------------------------------
+const LENGTH_GUIDE = {
+  essay: {
+    A2: "80–120 words · about 20–25 minutes",
+    B1: "150–200 words · about 30–35 minutes",
+    B2: "220–300 words · about 40–45 minutes"
+  },
+  paragraph: {
+    A2: "50–70 words · about 12–15 minutes",
+    B1: "80–120 words · about 15–20 minutes",
+    B2: "120–160 words · about 20–25 minutes"
+  }
+};
+
+function pickLength(sectionKey, level) {
+  const band = sectionKey === "paragraph" ? LENGTH_GUIDE.paragraph : LENGTH_GUIDE.essay;
+  return band[level] || band.B1;
+}
+
+// ---------------------------------------------------------------------
+// RENDER
+// ---------------------------------------------------------------------
+const libraryEl = document.getElementById("library");
+
+function renderLibrary() {
+  libraryEl.innerHTML = LIBRARY.map(section => `
+    <section class="type-section" data-type-section="${section.key}">
+      <h2>${section.label}</h2>
+      <p class="type-hint">${section.hint}</p>
+      <div class="card-grid">
+        ${section.prompts.map((p, idx) => `
+          <article class="card" data-type="${section.key}" data-level="${p.level}">
+            <p class="prompt-text">${p.text}</p>
+            <div class="meta">
+              <div class="meta-left">
+                <span class="level-tag">${p.level}</span>
+              </div>
+              <div class="meta-right">
+                <button class="copy-btn" data-copy-text="${p.text.replace(/"/g, '&quot;')}">Copy</button>
+                <button class="guide-btn" data-section="${section.key}" data-idx="${idx}">Guide</button>
+              </div>
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `).join("");
+}
+renderLibrary();
+
+// ---------------------------------------------------------------------
+// GUIDE MODAL
+// ---------------------------------------------------------------------
+const modalOverlay = document.getElementById("guide-modal");
+const modalEyebrow = document.getElementById("modal-eyebrow");
+const modalPromptText = document.getElementById("modal-prompt-text");
+const modalStructure = document.getElementById("modal-structure");
+const modalStarter = document.getElementById("modal-starter");
+const modalErrorName = document.getElementById("modal-error-name");
+const modalErrorExample = document.getElementById("modal-error-example");
+const modalErrorFix = document.getElementById("modal-error-fix");
+const modalSource = document.getElementById("modal-source");
+const modalLength = document.getElementById("modal-length");
+
+function openGuide(sectionKey, idx) {
+  const section = LIBRARY.find(s => s.key === sectionKey);
+  if (!section) return;
+  const prompt = section.prompts[idx];
+  const guide = GUIDES[sectionKey];
+  if (!prompt || !guide) return;
+
+  modalEyebrow.textContent = `${section.label} · ${prompt.level}`;
+  modalPromptText.textContent = prompt.text;
+  modalStructure.innerHTML = guide.structure.map(step => `<li>${step}</li>`).join("");
+  modalStarter.textContent = pickStarter(sectionKey, prompt.level);
+  modalLength.innerHTML = `<strong>${pickLength(sectionKey, prompt.level)}</strong> — a guideline, not a hard limit.`;
+  modalErrorName.textContent = guide.error.name;
+  modalErrorExample.textContent = guide.error.example;
+  modalErrorFix.textContent = guide.error.fix;
+  modalSource.textContent = `Structure and error pattern from the book: ${guide.source}. This is a scaffold, not a model answer — the writing is the student's own.`;
+
+  modalOverlay.classList.add("open");
+}
+
+function closeGuide() {
+  modalOverlay.classList.remove("open");
+}
+
+libraryEl.addEventListener("click", (e) => {
+  const guideBtn = e.target.closest(".guide-btn");
+  if (guideBtn) {
+    openGuide(guideBtn.dataset.section, Number(guideBtn.dataset.idx));
+    return;
+  }
+
+  const copyBtn = e.target.closest(".copy-btn");
+  if (copyBtn) {
+    copyPromptText(copyBtn);
+  }
+});
+
+function copyPromptText(btn) {
+  const text = btn.dataset.copyText;
+  const showCopied = () => {
+    const original = btn.textContent;
+    btn.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove("copied");
+    }, 1500);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(showCopied).catch(() => fallbackCopy(text, showCopied));
+  } else {
+    fallbackCopy(text, showCopied);
+  }
+}
+
+function fallbackCopy(text, onDone) {
+  const tmp = document.createElement("textarea");
+  tmp.value = text;
+  tmp.style.position = "fixed";
+  tmp.style.opacity = "0";
+  document.body.appendChild(tmp);
+  tmp.focus();
+  tmp.select();
+  try { document.execCommand("copy"); } catch (err) { /* no-op */ }
+  document.body.removeChild(tmp);
+  onDone();
+}
+
+document.getElementById("modal-close-btn").addEventListener("click", closeGuide);
+modalOverlay.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) closeGuide();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeGuide();
+});
+
+// ---------------------------------------------------------------------
+// FILTERING
+// ---------------------------------------------------------------------
+let activeType = "all";
+let activeLevel = "all";
+
+function wirePills(containerId, onSelect) {
+  const container = document.getElementById(containerId);
+  container.addEventListener("click", (e) => {
+    const btn = e.target.closest(".pill");
+    if (!btn) return;
+    container.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    onSelect(btn.dataset.value);
+    applyFilters();
+  });
+}
+
+wirePills("type-pills", (val) => activeType = val);
+wirePills("level-pills", (val) => activeLevel = val);
+
+function applyFilters() {
+  const cards = document.querySelectorAll(".card");
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const matchesType = activeType === "all" || card.dataset.type === activeType;
+    const matchesLevel = activeLevel === "all" || card.dataset.level === activeLevel;
+    const show = matchesType && matchesLevel;
+    card.classList.toggle("hidden", !show);
+    if (show) visibleCount++;
+  });
+
+  // Hide whole section headers if every card inside is hidden
+  document.querySelectorAll(".type-section").forEach(section => {
+    const anyVisible = section.querySelectorAll(".card:not(.hidden)").length > 0;
+    section.classList.toggle("hidden", !anyVisible);
+  });
+
+  document.getElementById("result-count").textContent = visibleCount;
+  document.getElementById("empty-state").style.display = visibleCount === 0 ? "block" : "none";
+}
+
+applyFilters();
 </script>
 
-
-
-<div class="gw-footer-slim">
-  <img src="data:image/png;base64,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" alt="WriteAlpha logo">
-  <strong>GenAlphaWrite Companion Website</strong>
+<div class="gw-footer-slim" style="max-width:900px">
+  <strong>WriteAlpha Companion Website</strong>
   <span class="sep">|</span>
   <a href="index.html">writealpha.com</a>
   <span class="sep">|</span>
   <span>&copy; Dr. Saad Torki</span>
-  <span class="sep">|</span>
-  <span>Last update: 10 July 2026</span>
 </div>
-<div class="gw-sitemap">
+<div class="gw-sitemap" style="max-width:900px">
   <a href="index.html">Home</a>
   <a href="about-the-book.html">About the Book</a>
   <a href="about-the-author.html">About the Author</a>
@@ -232,12 +1189,8 @@ render();
   <a href="appendices.html">Appendices</a>
   <a href="glossary.html">Glossary</a>
   <a href="whats-new.html">What's New</a>
-  <a href="tools-resources.html">Tools & Resources</a>
+  <a href="tools-resources.html">Tools &amp; Resources</a>
   <a href="contact.html">Contact</a>
-</div>
-<div class="gw-nav">
-  <a href="lesson-plans.html">← Implementation</a>
-  <a href="prompt-generator.html">Generator →</a>
 </div>
 </body>
 </html>
