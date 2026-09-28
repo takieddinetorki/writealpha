@@ -173,6 +173,36 @@
     margin:6px 0 0;
   }
 
+  .access-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--paper-edge);
+  }
+  .access-field{ display:flex; flex-direction:column; gap:6px; }
+  .access-field .name-input{ width:180px; max-width:100%; }
+  .access-field .name-input.invalid{ border-color:var(--gram); }
+  .required-mark{ color:var(--gram); }
+
+  .forgot-toggle{
+    background:none; border:none; color:var(--ink-faint);
+    font-size:12.5px; text-decoration:underline; text-underline-offset:3px;
+    cursor:pointer; padding:0; margin-top:8px;
+  }
+  .forgot-toggle:hover{ color:var(--ink); }
+  .forgot-row{
+    display:none;
+    gap:10px; align-items:flex-end; flex-wrap:wrap;
+    margin-top:12px; padding-top:12px; border-top:1px dashed var(--paper-edge);
+  }
+  .forgot-row.show{ display:flex; }
+  .forgot-row .name-input{ width:240px; max-width:100%; }
+  .forgot-status{ font-size:12.5px; margin-top:8px; }
+  .forgot-status.ok{ color:var(--struct); }
+  .forgot-status.err{ color:var(--gram); }
+
   textarea{
     width:100%;
     min-height:220px;
@@ -564,6 +594,28 @@
     <span class="name-label">Your name or ID (optional)</span>
     <input type="text" class="name-input" id="studentName" placeholder="e.g. Saad TORKI">
     <p class="name-hint">This is just so your teacher can tell sessions apart. It isn't verified, so use whatever name you like.</p>
+
+    <div class="access-row">
+      <div class="access-field">
+        <span class="name-label">Access Code <span class="required-mark">*</span></span>
+        <input type="text" class="name-input" id="accessCode" placeholder="Your code" autocomplete="off">
+      </div>
+      <div class="access-field">
+        <span class="name-label">PIN <span class="required-mark">*</span></span>
+        <input type="text" class="name-input" id="accessPin" placeholder="4-digit PIN" autocomplete="off" inputmode="numeric" maxlength="4">
+      </div>
+    </div>
+    <p class="name-hint">Enter the Access Code and PIN your teacher gave you — both are required to check your writing.</p>
+
+    <button type="button" class="forgot-toggle" id="forgotToggle">Forgot your Access Code or PIN?</button>
+    <div class="forgot-row" id="forgotRow">
+      <div class="access-field">
+        <span class="name-label">Your Email</span>
+        <input type="email" class="name-input" id="forgotEmail" placeholder="you@example.com" autocomplete="off">
+      </div>
+      <button class="btn-ghost" id="forgotSendBtn" type="button">Request my code</button>
+    </div>
+    <p class="forgot-status" id="forgotStatus"></p>
   </div>
 
   <div class="intro-card">
@@ -683,6 +735,13 @@ const viewToggle = document.getElementById('viewToggle');
 const nextStepNote = document.getElementById('nextStepNote');
 const stepper = document.getElementById('stepper');
 const studentNameInput = document.getElementById('studentName');
+const accessCodeInput = document.getElementById('accessCode');
+const accessPinInput = document.getElementById('accessPin');
+const forgotToggle = document.getElementById('forgotToggle');
+const forgotRow = document.getElementById('forgotRow');
+const forgotEmail = document.getElementById('forgotEmail');
+const forgotSendBtn = document.getElementById('forgotSendBtn');
+const forgotStatus = document.getElementById('forgotStatus');
 const editHint = document.getElementById('editHint');
 
 let round = 0; // 0 = not yet checked, 1 = first check done, 2+ = revision checked
@@ -785,6 +844,18 @@ function setStatus(html){
 
 // ── CHECK WRITING ──────────────────────────────────────────────────────
 async function checkWriting(){
+  const code = accessCodeInput.value.trim();
+  const pin = accessPinInput.value.trim();
+  accessCodeInput.classList.remove('invalid');
+  accessPinInput.classList.remove('invalid');
+
+  if(!code || !pin){
+    if(!code) accessCodeInput.classList.add('invalid');
+    if(!pin) accessPinInput.classList.add('invalid');
+    setStatus('<p class="error-note">Please enter both your Access Code and PIN before checking your writing.</p>');
+    return;
+  }
+
   const text = (round === 0) ? input.value.trim() : annotatedEl.textContent.trim();
   if(!text){
     setStatus('<p class="error-note">Paste some writing first — there is nothing to check yet.</p>');
@@ -811,11 +882,17 @@ async function checkWriting(){
     const response = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ text: text, attempt: round + 1 })
+      body: JSON.stringify({ text: text, attempt: round + 1, studentId: code, pin: pin })
     });
 
     const data = await response.json();
-    if(data.error){ throw new Error(data.error); }
+    if(data.error){
+      if(data.error.indexOf('session has expired') !== -1 || data.error.indexOf('invalid') !== -1){
+        accessCodeInput.classList.add('invalid');
+        accessPinInput.classList.add('invalid');
+      }
+      throw new Error(data.error);
+    }
 
     const clean = (data.raw || '').replace(/```json/g,'').replace(/```/g,'').trim();
     let parsed;
@@ -921,6 +998,8 @@ async function saveSession(modelAnswerText, totalErrors){
   const payload = {
     action: 'save',
     name: (studentNameInput.value || '').trim() || 'Anonymous',
+    studentId: accessCodeInput.value.trim(),
+    pin: accessPinInput.value.trim(),
     timestamp: new Date().toISOString(),
     originalText: lastOriginalText,
     selfCorrectedText: annotatedEl.textContent.trim(),
@@ -929,17 +1008,12 @@ async function saveSession(modelAnswerText, totalErrors){
     tally: lastCounts
   };
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {
+    await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
     });
-    const data = await res.json();
-    if(data && data.saved){
-      setStatus('<p class="save-note">✓ Saved to your teacher\'s records.</p>');
-    } else {
-      throw new Error((data && data.error) || 'Save did not complete.');
-    }
+    setStatus('<p class="save-note">✓ Saved to your teacher\'s records.</p>');
   } catch(err){
     console.error('Save failed:', err);
     setStatus('<p class="error-note">Could not save this session automatically. Your feedback above is still here to copy or screenshot.</p>');
@@ -986,6 +1060,54 @@ function hideTooltip(e){
   if(e && e.target && e.target.tagName === 'MARK') return;
   tooltip.classList.remove('show');
 }
+
+// ── FORGOT CODE / PIN ────────────────────────────────────────────────
+forgotToggle.addEventListener('click', () => {
+  forgotRow.classList.toggle('show');
+  if (forgotRow.classList.contains('show')) {
+    forgotEmail.focus();
+  }
+});
+
+async function sendForgotCode(){
+  const email = forgotEmail.value.trim();
+  forgotStatus.className = 'forgot-status';
+  forgotStatus.textContent = '';
+
+  if(!email){
+    forgotStatus.className = 'forgot-status err';
+    forgotStatus.textContent = 'Please enter your email first.';
+    return;
+  }
+
+  forgotSendBtn.disabled = true;
+  forgotSendBtn.textContent = 'Sending…';
+
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: 'resend_code', email: email })
+    });
+    const data = await res.json();
+    if(data.sent){
+      forgotStatus.className = 'forgot-status ok';
+      forgotStatus.textContent = 'Request received. The Learning Resource & Support Centre team will send you your Access Code and PIN directly — usually within one working day.';
+    } else {
+      forgotStatus.className = 'forgot-status err';
+      forgotStatus.textContent = data.error || 'Something went wrong. Please try again.';
+    }
+  } catch(err){
+    forgotStatus.className = 'forgot-status err';
+    forgotStatus.textContent = 'Something went wrong sending that. Please try again.';
+  } finally {
+    forgotSendBtn.disabled = false;
+    forgotSendBtn.textContent = 'Request my code';
+  }
+}
+
+forgotSendBtn.addEventListener('click', sendForgotCode);
+forgotEmail.addEventListener('keydown', (e) => { if(e.key === 'Enter') sendForgotCode(); });
 
 checkBtn.addEventListener('click', checkWriting);
 input.addEventListener('keydown', (e) => {
