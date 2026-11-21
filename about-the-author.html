@@ -97,6 +97,18 @@ p{margin-bottom:10px;font-size:16px}
   padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px}
 .gw-topnav a{color:#9fb8d1;text-decoration:none;font-size:12.5px}
 .gw-topnav a:hover{color:#F4A62A;text-decoration:underline}
+/* About the Author */
+.author-card{display:flex;gap:24px;align-items:flex-start;background:var(--wh);
+  border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:24px}
+.author-photo{width:170px;height:170px;object-fit:cover;border-radius:50%;
+  border:4px solid var(--lt);flex-shrink:0}
+.author-card h2{margin-top:0}
+.author-role{color:var(--tl);font-weight:700;margin-bottom:12px}
+.pub-list{list-style:none;margin:8px 0 16px}
+.pub-list li{background:var(--wh);border:1px solid var(--border);border-left:4px solid var(--tl);
+  border-radius:6px;padding:10px 14px;margin-bottom:8px;font-size:15px}
+.pub-list a{color:var(--bl);word-break:break-all}
+@media(max-width:600px){.author-card{flex-direction:column;align-items:center;text-align:center}}
 </style>
 </head>
 <body>
@@ -151,15 +163,6 @@ p{margin-bottom:10px;font-size:16px}
   <li><a href="https://sites.google.com/view/saadtorki/home" target="_blank" rel="noopener">sites.google.com/view/saadtorki/home</a></li>
   <li><a href="https://torkisaad.wixsite.com/home" target="_blank" rel="noopener">torkisaad.wixsite.com/home</a></li>
 </ul>
-After the change, that part of the page reads in this order:
-
-<div class="hero">
-  <h1>About the Author</h1>
-</div>
-
-<div class="author-card">   ← new bio starts here
-...
-</ul>                       ← new bio ends here
 
 </div>
 
